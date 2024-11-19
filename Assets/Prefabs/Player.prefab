@@ -662,7 +662,8 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials: []
+  m_Materials:
+  - {fileID: 2100000, guid: ce95509ad80c82f409c657523309636a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -721,9 +722,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprintTime: 5
   maxSprintTime: 5
-  canusePanel: 0
-  f: 0
-  codePanelInfo: {fileID: 0}
   moveSpeed: 14
   sound: {fileID: 5470496876595637387}
   cineCam: {fileID: 674166195690216447}
@@ -739,6 +737,9 @@ MonoBehaviour:
   heartbeatM: {fileID: 0}
   heartbeatF: {fileID: 0}
   walking: {fileID: 5172062496260263737}
+  canusePanel: 0
+  f: 0
+  codePanelInfo: {fileID: 0}
 --- !u!54 &5694337983767438559
 Rigidbody:
   m_ObjectHideFlags: 0
