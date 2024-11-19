@@ -10,7 +10,8 @@ Material:
   m_Name: spirit
   m_Shader: {fileID: -6465566751694194690, guid: cce7a4fab7045e34289c3cb1238c6433,
     type: 3}
-  m_Parent: {fileID: 0}
+  m_Parent: {fileID: -876546973899608171, guid: cce7a4fab7045e34289c3cb1238c6433,
+    type: 3}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -23,24 +24,10 @@ Material:
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs:
-    - unity_Lightmaps:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_LightmapsInd:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_ShadowMasks:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+    m_TexEnvs: []
     m_Ints: []
     m_Floats:
     - _Cutoff: -0.39
-    - _QueueControl: 0
-    - _QueueOffset: 0
     m_Colors:
     - _MainColor: {r: 0.05700427, g: 0.45326144, b: 0.5754717, a: 0}
   m_BuildTextureStacks: []
