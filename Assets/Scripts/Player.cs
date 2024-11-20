@@ -1,6 +1,5 @@
 using Cinemachine;
 using System.Collections;
-using DialogueEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -64,15 +63,18 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject codePanelInfo;
     private CapsuleCollider _capsuleCollider;
 
+    //Item switching 
+    private int _slotNumber;
     //Torch 
-    private bool torchActive;
+    private bool _equipedTorch, _equipedFlashlight;
+    private bool torchActive,flashlightActive;
     private float fuelLeft;
     //Ice melting
 
     void Start()
     {
         //turn on and off when needed
-        torchActive = true;
+       // torchActive = true;
 
 
         _capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
@@ -133,7 +135,21 @@ public class Player : MonoBehaviour
         CheckSprint();
     }
 
+    public void CheckIfActive()
+    {
+        print("working");
+        if (_equipedTorch )
+        {
+           torchActive = !torchActive;
+        }
 
+        if (_equipedFlashlight)
+        {
+            flashlightActive = !flashlightActive;
+            torchActive = false;
+
+        }
+    }
 
     private void FixedUpdate()
     {
@@ -273,24 +289,60 @@ public class Player : MonoBehaviour
             HidingCam = null;
             hitbox.SetActive(true);
         }
-
-
     }
+    
+    public void ChangeItem(float slot)
+    {
+        var slotNumber = slot;
+        switch (slotNumber)
+        {
+            case 1:
+                _equipedFlashlight = true;
+                _equipedTorch = false;
+                torchActive = false;
+                if (_equipedFlashlight) ;
+                break;
+            case 2:
+                _equipedTorch = true;
+                _equipedFlashlight = false;
+                flashlightActive = false;
+                break;
+        }
+    }
+        
+    private void CheckSprint()
+    {
+        if (isSprinting )
+        {
+            sprintTime -= Time.deltaTime;
+            switch (sprintTime)
+            {
+                case >= 0:
+                    rb.velocity = smoothedMoveDir * (moveSpeed * 1.5f);
+                    break;
+                case <= 0:
+                    StartCoroutine(Cooldown(2));
+                    isSprinting = false;
+                    rb.velocity = Vector3.zero;
+                    sprintTime = 0;
+                    break;
+            }
+        }
+        if (isSprinting && !(sprintTime <= 0)) return;
+        if (!(sprintTime <= 2) && !(sprintTime <= maxSprintTime)) return;
+        if (!onCoolDown)
+        {
+            sprintTime += Time.deltaTime;
+        }
+    }
+    
 
     public void leftClick()
     {
         rightClick();
     }
 
-    public void interactable()
-    {
-        isTalking = true;
-    }
-
-    public void notInteractable()
-    {
-        isTalking = false;
-    }
+  
 
     public void stopWalkingSound()
     {
@@ -306,39 +358,17 @@ public class Player : MonoBehaviour
     {
         return torchActive;
     }
-        
-
-
-        
-    private void CheckSprint()
+    
+  
+    public void interactable()
     {
-        if (isSprinting )
-        {
-            sprintTime -= Time.deltaTime;
-            switch (sprintTime)
-            {
-                case >= 0:
-                    rb.velocity = smoothedMoveDir * (moveSpeed * 1.5f);
-                    break;
-                case <= 0:
-                    StartCoroutine(Cooldown(2));
-                    isSprinting = false;
-                    rb.velocity = Vector3.zero; 
-                    sprintTime = 0;
-                    break;
-            }
-        }
-        if (isSprinting && !(sprintTime <= 0)) return;
-        if (!(sprintTime <= 2) && !(sprintTime <= maxSprintTime)) return;
-        if (!onCoolDown)
-        {
-            sprintTime += Time.deltaTime;
-        }
+        isTalking = true;
     }
 
-
-   
-
+    public void notInteractable()
+    {
+        isTalking = false;
+    }
 
     public void rightClick()
     {
@@ -353,7 +383,8 @@ public class Player : MonoBehaviour
         }
     
     }
-  
+
+    
 }
     
 

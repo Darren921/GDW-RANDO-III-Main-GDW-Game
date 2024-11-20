@@ -51,6 +51,15 @@ public class InputManager : MonoBehaviour
         {
             player.notInteractable();
         };
+        controls.InGame.ItemSwap.performed += _ =>
+        {
+            player.ChangeItem(_.ReadValue<float>());
+        };
+        controls.InGame.OffOn.performed += _ =>
+        {
+            print(true);
+            player.CheckIfActive();
+        };
 
     }
    

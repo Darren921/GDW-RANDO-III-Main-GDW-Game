@@ -10,7 +10,7 @@
                     "type": "PassThrough",
                     "id": "d09d3345-405b-4981-b6d4-53d64eeb51dc",
                     "expectedControlType": "Vector3",
-                    "processors": "",
+                    "processors": "NormalizeVector3",
                     "interactions": "",
                     "initialStateCheck": true
                 },
@@ -54,16 +54,34 @@
                     "name": "LeftClick",
                     "type": "Button",
                     "id": "18efa476-2647-4845-8f00-d423d63266d4",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
+                    "name": "ItemSwap",
+                    "type": "Button",
+                    "id": "e746beba-5da3-4771-9735-ccf978e07f49",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "OffOn",
+                    "type": "Button",
+                    "id": "12afe2fa-73b0-42b7-875a-a1059f3530ed",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Talk",
                     "type": "Button",
                     "id": "e1fed016-48d5-4059-a047-944fde4c2ad1",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -210,6 +228,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "Talk",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1654f0b7-b7dc-453e-9ee3-eb164a21438d",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "Scale",
+                    "groups": "",
+                    "action": "ItemSwap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4a9c0cc4-f666-4d3c-bc98-1cdc5c328c56",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "Scale(factor=2)",
+                    "groups": "",
+                    "action": "ItemSwap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1359a0c1-15c2-4d54-af19-3a18a2af7dc6",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OffOn",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
