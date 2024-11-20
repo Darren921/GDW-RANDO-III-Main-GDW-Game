@@ -122,6 +122,18 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &75245171 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9108513677593590456, guid: c37324977053f394d99c4b2a09447b4b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1967904451}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &143262156 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9168733723683071939, guid: c37324977053f394d99c4b2a09447b4b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1967904451}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &831420081
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,7 +272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6971cf94ffc1e1c42af98b0f1b4ccd14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meltingTime: 5
+  meltingTime: 1
 --- !u!23 &874441012
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -414,6 +426,16 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 4715102595307289083, guid: c37324977053f394d99c4b2a09447b4b,
+        type: 3}
+      propertyPath: Flashlight
+      value: 
+      objectReference: {fileID: 143262156}
+    - target: {fileID: 4715102595307289083, guid: c37324977053f394d99c4b2a09447b4b,
+        type: 3}
+      propertyPath: flashlightSource
+      value: 
+      objectReference: {fileID: 75245171}
     - target: {fileID: 7630487390039147589, guid: c37324977053f394d99c4b2a09447b4b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -484,6 +506,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: ce95509ad80c82f409c657523309636a, type: 2}
+    - target: {fileID: 9168733723683071939, guid: c37324977053f394d99c4b2a09447b4b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8533753193544887965, guid: c37324977053f394d99c4b2a09447b4b, type: 3}
     m_RemovedGameObjects: []

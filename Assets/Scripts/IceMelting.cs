@@ -15,6 +15,7 @@ public class IceMelting : MonoBehaviour
     void Start()
     {
         _player = FindObjectOfType<Player>();
+        meltingProgress = 400;
     }
 
     private void OnTriggerStay(Collider other)
@@ -41,15 +42,19 @@ public class IceMelting : MonoBehaviour
             active = true;
             StartCoroutine(CheckIsMelting());
         }
-        if (curMeltingTime >= meltingTime)
+        if (curMeltingTime >= meltingTime && meltingProgress <= 0)
         {
-            meltingProgress += Time.deltaTime;
+            meltingProgress -= 1 ;
         }
         if (isMelting)
         {
-            if (curMeltingTime <= 5)
+            if (curMeltingTime <= meltingTime)
             {
-                curMeltingTime += Time.deltaTime;
+                curMeltingTime += 1 * Time.deltaTime;
+            }
+            else
+            {
+                curMeltingTime = 0;
             }
         }
         else
@@ -62,30 +67,36 @@ public class IceMelting : MonoBehaviour
 
     private void CheckMeltingProgress()
     {
-        if (meltingProgress >= 25)
+        if (meltingProgress <= 0)
         {
             checkPoint1 = true;
+            print("Final checkpoint");
         }
-        if (meltingProgress >= 50)
+        if (meltingProgress <= 100)
         {
             checkPoint2 = true;
+            print("third last checkpoint");
+
         }
 
-        if (meltingProgress >= 75)
+        if (meltingProgress <= 200)
         {
             checkPoint3 = true;
+            print("second checkpoint");
+
         }
 
-        if (meltingProgress >= 100)
+        if (meltingProgress <= 300)
         {
             checkPoint4 = true;
+            print("first checkpoint");
         }
     }
 
     private IEnumerator CheckIsMelting()
     {
+        print("melting active ");
         yield return new WaitUntil(() =>isMelting == false );
         active = false;
-
     }
 }

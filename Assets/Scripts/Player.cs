@@ -64,7 +64,9 @@ public class Player : MonoBehaviour
     private CapsuleCollider _capsuleCollider;
 
     //Item switching 
+    [Header("Item switching ")]
     private int _slotNumber;
+    [SerializeField] GameObject Flashlight,Torch,flashlightSource,torchSource;
     //Torch 
     private bool _equipedTorch, _equipedFlashlight;
     private bool torchActive,flashlightActive;
@@ -79,7 +81,10 @@ public class Player : MonoBehaviour
 
         _capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
         _enemy = FindObjectOfType<Enemy>();
-
+Flashlight.SetActive(false);
+//Torch.SetActive(false);
+flashlightSource.SetActive(false);
+//torchSource.SetActive(false);
         playerCam = gameObject.GetComponentInChildren<Camera>();
         rb = GetComponent<Rigidbody>();
         InputManager.Init(this);
@@ -137,17 +142,25 @@ public class Player : MonoBehaviour
 
     public void CheckIfActive()
     {
+        
         print("working");
         if (_equipedTorch )
         {
            torchActive = !torchActive;
+         
         }
 
         if (_equipedFlashlight)
         {
             flashlightActive = !flashlightActive;
-            torchActive = false;
-
+            if (flashlightActive)
+            {
+                flashlightSource.SetActive(true);
+            }
+            else
+            {
+                flashlightSource.SetActive(false);
+            }
         }
     }
 
@@ -297,15 +310,21 @@ public class Player : MonoBehaviour
         switch (slotNumber)
         {
             case 1:
+                print("equipped flashlight");
                 _equipedFlashlight = true;
                 _equipedTorch = false;
                 torchActive = false;
-                if (_equipedFlashlight) ;
+                flashlightSource.SetActive(false);
+                Flashlight.gameObject.SetActive(true);
                 break;
             case 2:
+                print("equipped torch");
                 _equipedTorch = true;
                 _equipedFlashlight = false;
                 flashlightActive = false;
+               
+                flashlightSource.SetActive(false);
+                Flashlight.gameObject.SetActive(false);
                 break;
         }
     }
