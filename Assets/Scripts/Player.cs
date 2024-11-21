@@ -68,24 +68,28 @@ public class Player : MonoBehaviour
     private int _slotNumber;
     [SerializeField] GameObject Flashlight,Torch,flashlightSource,torchSource;
     //Torch 
-    private bool _equipedTorch, _equipedFlashlight;
     private bool torchActive,flashlightActive;
     private float fuelLeft;
-    //Ice melting
+    //Flashlight
+    private bool _equipedTorch, _equipedFlashlight;
+    private float _chargeleft;
+    private bool CheckActive;
+
 
     void Start()
     {
         //turn on and off when needed
        // torchActive = true;
 
-
-        _capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
-        _enemy = FindObjectOfType<Enemy>();
-Flashlight.SetActive(false);
-//Torch.SetActive(false);
-flashlightSource.SetActive(false);
-//torchSource.SetActive(false);
-        playerCam = gameObject.GetComponentInChildren<Camera>();
+       fuelLeft = 100;
+       _chargeleft = 150;
+       _capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
+       _enemy = FindObjectOfType<Enemy>();
+       Flashlight.SetActive(false);
+       //Torch.SetActive(false);
+       flashlightSource.SetActive(false);
+       //torchSource.SetActive(false);
+       playerCam = gameObject.GetComponentInChildren<Camera>();
         rb = GetComponent<Rigidbody>();
         InputManager.Init(this);
         InputManager.EnableInGame();
@@ -135,9 +139,19 @@ flashlightSource.SetActive(false);
             }
         }
     */
-
+       
         //sprinting
         CheckSprint();
+        if (_chargeleft > 0 && flashlightActive)
+        {
+            _chargeleft -= Time.deltaTime;
+        }
+        if (fuelLeft > 0 && torchActive)
+        {
+            fuelLeft -= Time.deltaTime;
+        }
+        
+        
     }
 
     public void CheckIfActive()
@@ -147,20 +161,60 @@ flashlightSource.SetActive(false);
         if (_equipedTorch )
         {
            torchActive = !torchActive;
-         
+           if (fuelLeft > 0)
+           {
+               if (torchActive && !CheckActive)
+               {
+                   CheckActive = true;
+                   //torchSource.SetActive(true);
+                   StartCoroutine(CheckCharge("Torch")) ;
+               }
+               else
+               {
+                   //torchSource.SetActive(false);
+               }
+           }
+           else
+           {
+               //torchSource.SetActive(false);
+           }
         }
-
         if (_equipedFlashlight)
         {
             flashlightActive = !flashlightActive;
-            if (flashlightActive)
+            if (_chargeleft > 0)
             {
-                flashlightSource.SetActive(true);
+                if (flashlightActive && !CheckActive)
+                {
+                    CheckActive = true;
+                    flashlightSource.SetActive(true);
+                   StartCoroutine(CheckCharge("Flashlight")) ;
+                }
+                else
+                {
+                    flashlightSource.SetActive(false);
+                }
             }
             else
             {
                 flashlightSource.SetActive(false);
             }
+        }
+    }
+
+    private IEnumerator CheckCharge(string item)
+    {
+        if (item == "Flashlight")
+        {
+            yield return new WaitUntil(() => flashlightActive == false );
+            CheckActive = false;
+
+        }
+        else if (item == "Torch")
+        {
+            yield return new WaitUntil(() => torchActive == false );
+            CheckActive = false;
+
         }
     }
 
@@ -322,7 +376,6 @@ flashlightSource.SetActive(false);
                 _equipedTorch = true;
                 _equipedFlashlight = false;
                 flashlightActive = false;
-               
                 flashlightSource.SetActive(false);
                 Flashlight.gameObject.SetActive(false);
                 break;
