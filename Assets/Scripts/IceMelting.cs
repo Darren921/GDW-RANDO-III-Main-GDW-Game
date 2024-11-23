@@ -8,20 +8,31 @@ public class IceMelting : MonoBehaviour
 {
    private bool isMelting { get; set; }
    private float curMeltingTime;
+   private Material iceMat;
+   private float _curOpacity; 
    [SerializeField]private float meltingTime;
    private Player _player;
    private float meltingProgress;
    private bool active , checkPoint1, checkPoint2, checkPoint3, checkPoint4;
-    void Start()
-    {
+   private Renderer _renderer;
+   private BoxCollider _boxCollider;
+
+   void Start()
+   {
+       //Time.timeScale = 10;
+        _boxCollider = GetComponent<BoxCollider>();
+        _renderer = GetComponent<Renderer>();
         _player = FindObjectOfType<Player>();
         meltingProgress = 400;
+        _curOpacity = 1;
+        iceMat = GetComponent<Renderer>().material;
     }
-
+ 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player") && _player.returnTorchState())
+        if  (other.CompareTag("Player")  && _player.returnTorchState())
         {
+            print(other.gameObject.tag);
             isMelting = true;
         }
         else
@@ -37,6 +48,7 @@ public class IceMelting : MonoBehaviour
 
     void Update()
     {
+        print(_player.returnTorchState());
         if (isMelting && !active)
         {
             active = true;
@@ -46,6 +58,8 @@ public class IceMelting : MonoBehaviour
         if (isMelting)
         {
             meltingProgress -= Time.deltaTime;
+            _curOpacity -= 0.0025f * Time.deltaTime;
+            iceMat.SetFloat("_Opacity", _curOpacity);
         }
         CheckMeltingProgress();
     }
@@ -56,25 +70,30 @@ public class IceMelting : MonoBehaviour
         {
             checkPoint1 = true;
             print("Final checkpoint");
+            PlayerPrefs.SetFloat("CheckpointOpacity", 0);
+             _renderer.enabled = false;
+             _boxCollider.enabled = false;
+
         }
         if (meltingProgress <= 100)
         {
             checkPoint2 = true;
             print("third last checkpoint");
-
+            PlayerPrefs.SetFloat("CheckpointOpacity", 25);
         }
 
         if (meltingProgress <= 200)
         {
             checkPoint3 = true;
             print("second checkpoint");
-
+            PlayerPrefs.SetFloat("CheckpointOpacity", 50);
         }
 
         if (meltingProgress <= 300)
         {
             checkPoint4 = true;
             print("first checkpoint");
+            PlayerPrefs.SetFloat("CheckpointOpacity", 75);
         }
     }
 

@@ -28,6 +28,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _Cutoff: -0.39
+    - _QueueControl: 0
     m_Colors:
     - _MainColor: {r: 0.05700427, g: 0.45326144, b: 0.5754717, a: 0}
   m_BuildTextureStacks: []

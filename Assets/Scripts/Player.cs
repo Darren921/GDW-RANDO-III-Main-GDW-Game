@@ -80,21 +80,22 @@ public class Player : MonoBehaviour
     {
         //turn on and off when needed
        // torchActive = true;
-
+       //fuelLeft = 500;
        fuelLeft = 100;
+       
        _chargeleft = 150;
        _capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
        _enemy = FindObjectOfType<Enemy>();
        Flashlight.SetActive(false);
-       //Torch.SetActive(false);
+       Torch.SetActive(false);
        flashlightSource.SetActive(false);
-       //torchSource.SetActive(false);
+       torchSource.SetActive(false);
        playerCam = gameObject.GetComponentInChildren<Camera>();
         rb = GetComponent<Rigidbody>();
         InputManager.Init(this);
         InputManager.EnableInGame();
         CamTransform = Camera.main.transform;
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Confined;
 
 
     }
@@ -166,17 +167,17 @@ public class Player : MonoBehaviour
                if (torchActive && !CheckActive)
                {
                    CheckActive = true;
-                   //torchSource.SetActive(true);
+                   torchSource.SetActive(true);
                    StartCoroutine(CheckCharge("Torch")) ;
                }
                else
                {
-                   //torchSource.SetActive(false);
+                   torchSource.SetActive(false);
                }
            }
            else
            {
-               //torchSource.SetActive(false);
+               torchSource.SetActive(false);
            }
         }
         if (_equipedFlashlight)
@@ -370,12 +371,16 @@ public class Player : MonoBehaviour
                 torchActive = false;
                 flashlightSource.SetActive(false);
                 Flashlight.gameObject.SetActive(true);
+                torchSource.gameObject.SetActive(false);
+                Torch.gameObject.SetActive(false);
                 break;
             case 2:
                 print("equipped torch");
                 _equipedTorch = true;
                 _equipedFlashlight = false;
                 flashlightActive = false;
+                torchSource.gameObject.SetActive(false);
+                Torch.gameObject.SetActive(true);
                 flashlightSource.SetActive(false);
                 Flashlight.gameObject.SetActive(false);
                 break;

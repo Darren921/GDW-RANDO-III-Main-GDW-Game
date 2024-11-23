@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Exit
   - WalkinBypass
+  - Torch
   layers:
   - Default
   - TransparentFX
