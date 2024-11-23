@@ -42,26 +42,11 @@ public class IceMelting : MonoBehaviour
             active = true;
             StartCoroutine(CheckIsMelting());
         }
-        if (curMeltingTime >= meltingTime && meltingProgress <= 0)
-        {
-            meltingProgress -= 1 ;
-        }
+
         if (isMelting)
         {
-            if (curMeltingTime <= meltingTime)
-            {
-                curMeltingTime += 1 * Time.deltaTime;
-            }
-            else
-            {
-                curMeltingTime = 0;
-            }
+            meltingProgress -= Time.deltaTime;
         }
-        else
-        {
-            curMeltingTime = 0;
-        }
-
         CheckMeltingProgress();
     }
 
@@ -96,7 +81,7 @@ public class IceMelting : MonoBehaviour
     private IEnumerator CheckIsMelting()
     {
         print("melting active ");
-        yield return new WaitUntil(() =>isMelting == false );
+        yield return new WaitUntil(() => isMelting == false );
         active = false;
     }
 }
