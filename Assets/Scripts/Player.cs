@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
@@ -74,8 +75,8 @@ public class Player : MonoBehaviour
     private bool _equipedTorch, _equipedFlashlight;
     private float _chargeleft;
     private bool CheckActive;
-
-
+    private bool IsLooking;
+    [SerializeField]LayerMask CollisionLayer;
     void Start()
     {
         //turn on and off when needed
@@ -95,7 +96,7 @@ public class Player : MonoBehaviour
         InputManager.Init(this);
         InputManager.EnableInGame();
         CamTransform = Camera.main.transform;
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.Locked;
 
 
     }
@@ -121,26 +122,9 @@ public class Player : MonoBehaviour
         {
             heartBeat.Stop();
         }
-        /*
-        Input.GetMouseButtonDown(0);
-        {
-            Mouse mouse = Mouse.current;
-            if (mouse.leftButton.wasPressedThisFrame)
-            {
-                mousePos = playerCam.ScreenToWorldPoint(InputManager.GetMousePos());
+        LookCheck();
 
 
-                Ray ray = playerCam.ScreenPointToRay(mousePos);
-                if (Physics.Raycast(ray, out RaycastHit hit))
-                {
-                    Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red, 10);
-                    print(hit.collider.name);
-                }
-
-            }
-        }
-    */
-       
         //sprinting
         CheckSprint();
         if (_chargeleft > 0 && flashlightActive)
@@ -151,8 +135,36 @@ public class Player : MonoBehaviour
         {
             fuelLeft -= Time.deltaTime;
         }
+        if(fuelLeft < 0)
+        {
+            torchSource.SetActive(false);
+            torchActive = false;
+        }
+        if(_chargeleft < 0) 
+        { 
+            flashlightSource.SetActive(false);
+            flashlightActive = false;
+
+        }
         
         
+    }
+
+    private void LookCheck()
+    {
+        Ray ray = new Ray(CamTransform.position, CamTransform.forward);
+        if (Physics.Raycast(ray, out RaycastHit hit, 300,CollisionLayer))
+        {
+            if (hit.collider.gameObject.tag == "IceWall")
+            {
+                IsLooking = true;
+            }
+            else
+            {
+                IsLooking = false;
+            }
+            print(hit.collider.tag);
+        }
     }
 
     public void CheckIfActive()
@@ -369,6 +381,7 @@ public class Player : MonoBehaviour
                 _equipedFlashlight = true;
                 _equipedTorch = false;
                 torchActive = false;
+                flashlightActive = false;
                 flashlightSource.SetActive(false);
                 Flashlight.gameObject.SetActive(true);
                 torchSource.gameObject.SetActive(false);
@@ -379,6 +392,7 @@ public class Player : MonoBehaviour
                 _equipedTorch = true;
                 _equipedFlashlight = false;
                 flashlightActive = false;
+                torchActive = false;
                 torchSource.gameObject.SetActive(false);
                 Torch.gameObject.SetActive(true);
                 flashlightSource.SetActive(false);
@@ -461,7 +475,11 @@ public class Player : MonoBehaviour
     
     }
 
-    
+
+    public bool returnIsLooking()
+    {
+        return IsLooking;
+    }
 }
     
 

@@ -9,10 +9,11 @@ public class IceMelting : MonoBehaviour
    private bool isMelting { get; set; }
    private float curMeltingTime;
    private Material iceMat;
+  [SerializeField] private float opacityLoss;
    private float _curOpacity; 
    [SerializeField]private float meltingTime;
    private Player _player;
-   private float meltingProgress;
+   [SerializeField] private float meltingProgress;
    private bool active , checkPoint1, checkPoint2, checkPoint3, checkPoint4;
    private Renderer _renderer;
    private BoxCollider _boxCollider;
@@ -23,14 +24,14 @@ public class IceMelting : MonoBehaviour
         _boxCollider = GetComponent<BoxCollider>();
         _renderer = GetComponent<Renderer>();
         _player = FindObjectOfType<Player>();
-        meltingProgress = 400;
+      //  meltingProgress = 400;
         _curOpacity = 1;
         iceMat = GetComponent<Renderer>().material;
     }
  
     private void OnTriggerStay(Collider other)
     {
-        if  (other.CompareTag("Player")  && _player.returnTorchState())
+        if  (other.CompareTag("Player")  && _player.returnTorchState() && _player.returnIsLooking())
         {
             print(other.gameObject.tag);
             isMelting = true;
@@ -58,7 +59,8 @@ public class IceMelting : MonoBehaviour
         if (isMelting)
         {
             meltingProgress -= Time.deltaTime;
-            _curOpacity -= 0.0025f * Time.deltaTime;
+            //base = 0.0025 mod(action block) = 0.0050
+            _curOpacity -=  opacityLoss * Time.deltaTime;
             iceMat.SetFloat("_Opacity", _curOpacity);
         }
         CheckMeltingProgress();

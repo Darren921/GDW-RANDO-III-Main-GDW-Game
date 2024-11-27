@@ -7,16 +7,17 @@ TagManager:
   - Exit
   - WalkinBypass
   - Torch
+  - IceWall
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - IceBreaker
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Player
+  - Wall
+  - SafeArea
   - 
   - 
   - 

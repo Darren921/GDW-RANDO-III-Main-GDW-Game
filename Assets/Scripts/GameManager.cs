@@ -7,36 +7,35 @@ using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
-    private GameObject[] Boards;
-    private List<GameObject> codeSpawnPoints;
+    //  [SerializeField]private float Timer;
+    // [SerializeField] TextMeshProUGUI TimerDisplay;
+    //  [SerializeField] Enemy monsterAI;
+    private GameObject Battery,Fuel;
+    private float batteriesInScene,fuelInScene;
+    private float minItems;
+    private List<GameObject> ItemSpawnPoints;
     private List<int> RandomNum;
-    [SerializeField]private float Timer;
-    [SerializeField] TextMeshProUGUI TimerDisplay;
-    [SerializeField] Enemy monsterAI;
-    public List<int> comboNums;
-    Player player;  
+    private List<int> discaredNum;
     void Start()
     {
-        Boards = GameObject.FindGameObjectsWithTag("Boards");
-        
-        codeSpawnPoints = new List<GameObject>();
-        codeSpawnPoints.AddRange(GameObject.FindGameObjectsWithTag("CodeSpawnPoints"));
+      //  Boards = GameObject.FindGameObjectsWithTag("Boards");
+      ItemSpawnPoints = new List<GameObject>();
+      ItemSpawnPoints.AddRange(GameObject.FindGameObjectsWithTag("ItemSpawnPoint"));
         RandomNum = new List<int>();
-        for (int i = 0; i < codeSpawnPoints.Count; i++)
+        for (int i = 0; i < ItemSpawnPoints.Count; i++)
         {
             RandomNum.Add(i);
         }
         
-        for (int k = 0; k < Boards.Length; k++)
+        for (int k = 0; k < ItemSpawnPoints.Count; k++)
         {        
             int index = Random.Range(0,RandomNum.Count );
             int sortednum = RandomNum[index];
-                Boards[k].transform.position = codeSpawnPoints[sortednum].transform.position;
-                Boards[k].transform.Rotate( codeSpawnPoints[sortednum].transform.rotation.eulerAngles);
+               
                 RandomNum.Remove(sortednum);
+                discaredNum.Add(sortednum);
         }
 
-        player = FindObjectOfType<Player>();
         /*
         codePanel = FindObjectOfType<CodePanel>();
         for (int j = 0; j < 4; j++) 
@@ -54,12 +53,13 @@ public class GameManager : MonoBehaviour
             codePanel.comboNumstemp.Add(item);
         }
         */
-        Timer = 240;
+      //  Timer = 240;
     }
 
 
     void Update()
     {
+        /*
         float minutes = Mathf.FloorToInt(Timer / 60f);
         float seconds = Mathf.FloorToInt(Timer - minutes * 60);
         string displayTime = string.Format("{0:00}:{1:00}", minutes, seconds);
@@ -71,6 +71,7 @@ public class GameManager : MonoBehaviour
             TimerDisplay.text = "YOU CAN'T HIDE!";
             monsterAI._IsHunting = true;
         }
+        */
         
     }
 
