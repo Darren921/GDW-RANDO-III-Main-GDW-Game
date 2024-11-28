@@ -14,8 +14,8 @@ public class GameManager : MonoBehaviour
     private float batteriesInScene,fuelInScene;
     private float minItems;
     private List<GameObject> ItemSpawnPoints;
-    private List<int> RandomNum;
-    private List<int> discaredNum;
+    private List<int> RandomNum,discaredNum,SpawnedList;
+   
     bool active;
 
     void Start()
@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
         minItems = 2;
       //  Boards = GameObject.FindGameObjectsWithTag("Boards");
       discaredNum = new List<int>();
+      SpawnedList = new List<int>();
       ItemSpawnPoints = new List<GameObject>();
       ItemSpawnPoints.AddRange(GameObject.FindGameObjectsWithTag("ItemSpawnPoint"));
         RandomNum = new List<int>();
@@ -58,45 +59,65 @@ public class GameManager : MonoBehaviour
         if (!active)
         {
             active = true;
-            fuelInScene = GameObject.FindGameObjectsWithTag("Fuel").Length;
-            batteriesInScene = GameObject.FindGameObjectsWithTag("Batteries").Length;
+           
             if (fuelInScene < minItems)
             {
-                for (int k = 0; k < ItemSpawnPoints.Count; k++)
+                for (int k = 0; k <= ItemSpawnPoints.Count; k++)
                 {
-                    if (RandomNum.Count > 2)
+                    int index = Random.Range(0, 1);
+                    int sortednum = RandomNum[index];
+                    if (fuelInScene < minItems)
                     {
-                        int index = Random.Range(0, RandomNum.Count);
-                        int sortednum = RandomNum[index];
-                        discaredNum.Add(sortednum);
-                        RandomNum.Remove(sortednum);
-                    }
+                        if (!SpawnedList.Contains(index))
+                        {
+                          var fuelPickup =  Instantiate(Fuel, ItemSpawnPoints[sortednum].transform.position, Quaternion.identity);
+                            SpawnedList.Add(sortednum);
+                            fuelInScene = GameObject.FindGameObjectsWithTag("Fuel").Length;
 
-                    if (discaredNum.Contains(k))
-                        {
-                            Instantiate(Fuel, ItemSpawnPoints[k].transform.position, Quaternion.identity);
                         }
-                        if(!discaredNum.Contains(k))
+
+                        if (SpawnedList.Contains(sortednum) && fuelInScene < minItems)
                         {
+                            for (int l = 0; l <= ItemSpawnPoints.Count; l++)
+                            {
+                                if (!SpawnedList.Contains(sortednum) && fuelInScene < minItems)
+                                {
+                                    fuelInScene = GameObject.FindGameObjectsWithTag("Fuel").Length;
+                                    Instantiate(Fuel, ItemSpawnPoints[k].transform.position, Quaternion.identity);
+                                }
+                            }
+                           
                         }
-                    
-                  
+                       
+                    }
+                   
                 }
+                 
+                
             }
             else if (batteriesInScene < minItems)
             {
             
             }
+            
+            batteriesInScene = GameObject.FindGameObjectsWithTag("Batteries").Length;
+            yield return new WaitForSeconds(10);
+            active = false;
+
         }
-        yield return new WaitForSeconds(5);
-        active = false;
+        
+      
     }
 
 
     void Update()
     {
-        StartCoroutine(itemSpawn());
-        /*
+        if (!active)
+        {
+            print("Start");
+            StartCoroutine(itemSpawn());
+        }
+/*
         float minutes = Mathf.FloorToInt(Timer / 60f);
         float seconds = Mathf.FloorToInt(Timer - minutes * 60);
         string displayTime = string.Format("{0:00}:{1:00}", minutes, seconds);
