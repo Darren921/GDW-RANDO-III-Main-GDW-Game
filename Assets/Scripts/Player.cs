@@ -270,13 +270,13 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(maxCoolDown);
         onCoolDown = false;
     }
-
+ 
     private void OnTriggerEnter(Collider other)
     {
         switch (other.tag)
         {
            
-            case "Battery":
+            case "Batteries":
                 if (_chargeleft < 150)
                 {
                     _chargeleft += 30;
