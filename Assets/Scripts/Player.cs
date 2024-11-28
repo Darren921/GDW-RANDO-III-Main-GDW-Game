@@ -277,10 +277,10 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Exit"))
+        switch (other.tag)
         {
-            Cursor.lockState = CursorLockMode.None;
-            SceneManager.LoadScene("WinArea");
+            case "IceWall":
+                break;
         }
 
     }
