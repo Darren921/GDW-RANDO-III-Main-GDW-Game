@@ -63,12 +63,13 @@ public class GameManager : MonoBehaviour
            
             if (fuelInScene < minItems)
             {
-                for (int k = 0; k < ItemSpawnPoints.Count; k++)
+                for (int k = 0; k <= ItemSpawnPoints.Count; k++)
                 {
+                     if (fuelInScene < minItems)
+                    {
                     int index = Random.Range(0, RandomNum.Count);
                     int sortednum = RandomNum[index];
-                    if (fuelInScene < minItems)
-                    {
+                   
                         if (!SpawnedList.Contains(index))
                         {
                           var fuelPickup =  Instantiate(Fuel, ItemSpawnPoints[sortednum].transform.position, Quaternion.identity);
@@ -77,16 +78,17 @@ public class GameManager : MonoBehaviour
                             fuelInScene = GameObject.FindGameObjectsWithTag("Fuel").Length;
                             trackedIndexs.Add(sortednum);
                         }
+                        fuelInScene = GameObject.FindGameObjectsWithTag("Fuel").Length;
 
                         if (SpawnedList.Contains(index) && fuelInScene < minItems)
                         {
-                            for (int l = 0; l <= ItemSpawnPoints.Count; l++)
+                            for (int l = 0; l < ItemSpawnPoints.Count; l++)
                             {
                                 if (!SpawnedList.Contains(index) && fuelInScene < minItems)
                                 {
-                                    fuelInScene = GameObject.FindGameObjectsWithTag("Fuel").Length;
                                     var fuelPickup = Instantiate(Fuel, ItemSpawnPoints[k].transform.position, Quaternion.identity);
                                     fuelPickup.GetComponent<Tracker>().tracker = sortednum;
+                                    fuelInScene = GameObject.FindGameObjectsWithTag("Fuel").Length;
                                     trackedIndexs.Add(k);
                                     
                                 }
@@ -103,45 +105,48 @@ public class GameManager : MonoBehaviour
                 
             }
             //WIP
-            else if (batteriesInScene < minItems)
+             if (batteriesInScene < minItems)
             {
-                for (int k = 0; k < ItemSpawnPoints.Count; k++)
+                for (int k = 0; k <= ItemSpawnPoints.Count; k++)
                 {
+                    if (batteriesInScene < minItems)
+                    {
                     int index = Random.Range(0, RandomNum.Count);
                     int sortednum = RandomNum[index];
                     if (batteriesInScene < minItems)
                     {
                         if (!SpawnedList.Contains(index))
                         {
-                            var batteryPickup  =  Instantiate(Fuel, ItemSpawnPoints[sortednum].transform.position, Quaternion.identity);
-                            battries.GetComponent<Tracker>().tracker = sortednum;
+                            var batteryPickup = Instantiate(Battery, ItemSpawnPoints[sortednum].transform.position,
+                                Quaternion.identity);
+                            batteryPickup.GetComponent<Tracker>().tracker = sortednum;
                             SpawnedList.Add(sortednum);
-                            fuelInScene = GameObject.FindGameObjectsWithTag("Fuel").Length;
+                            batteriesInScene = GameObject.FindGameObjectsWithTag("Batteries").Length;
                             trackedIndexs.Add(sortednum);
                         }
 
-                        if (SpawnedList.Contains(index) && fuelInScene < minItems)
+                        if (SpawnedList.Contains(index) && batteriesInScene < minItems)
                         {
                             for (int l = 0; l <= ItemSpawnPoints.Count; l++)
                             {
-                                if (!SpawnedList.Contains(index) && fuelInScene < minItems)
+                                if (!SpawnedList.Contains(index) && batteriesInScene < minItems)
                                 {
-                                    fuelInScene = GameObject.FindGameObjectsWithTag("Fuel").Length;
-                                    var fuelPickup = Instantiate(Fuel, ItemSpawnPoints[k].transform.position, Quaternion.identity);
-                                    fuelPickup.GetComponent<Tracker>().tracker = sortednum;
-                                    trackedIndexs.Add(k);
-                                    
+                                    var batteryPickup = Instantiate(Battery, ItemSpawnPoints[k].transform.position,
+                                        Quaternion.identity);
+                                    batteryPickup.GetComponent<Tracker>().tracker = sortednum;
+                                    batteriesInScene = GameObject.FindGameObjectsWithTag("Batteries").Length;
+                                    trackedIndexs.Add(sortednum);
+
                                 }
                             }
-                           
+
                         }
-                       
+                    }
                     }
                    
                 }
             }
-            
-            batteriesInScene = GameObject.FindGameObjectsWithTag("Batteries").Length;
+            Debug.Log($"Updated Fuel in Scene: {fuelInScene}, Updated Batteries in Scene: {batteriesInScene}");
             yield return new WaitForSeconds(10);
             active = false;
 
