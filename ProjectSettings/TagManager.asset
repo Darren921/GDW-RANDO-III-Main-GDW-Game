@@ -8,6 +8,9 @@ TagManager:
   - WalkinBypass
   - Torch
   - IceWall
+  - ItemSpawnPoint
+  - Fuel
+  - Batteries
   layers:
   - Default
   - TransparentFX
