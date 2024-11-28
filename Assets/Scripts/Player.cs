@@ -105,11 +105,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         //HeartBeats sounds
-        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) ||
-            Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D))
-        {
-            stopWalkingSound();
-        }
+    
 
         // remove this after
         // distance = Vector3.Distance(transform.position, _enemy.transform.position);
@@ -279,7 +275,26 @@ public class Player : MonoBehaviour
     {
         switch (other.tag)
         {
-            case "IceWall":
+           
+            case "Battery":
+                if (_chargeleft < 150)
+                {
+                    _chargeleft += 30;
+                    if (_chargeleft > 150)
+                    {
+                        _chargeleft = 150;
+                    }
+                }
+                break;
+            case "Fuel":
+                if ( fuelLeft < 100)
+                {
+                    fuelLeft += 25;
+                    if (fuelLeft > 100)
+                    {
+                        fuelLeft = 100;
+                    }
+                }
                 break;
         }
 

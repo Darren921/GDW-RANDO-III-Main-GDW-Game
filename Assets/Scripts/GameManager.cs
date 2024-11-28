@@ -10,30 +10,26 @@ public class GameManager : MonoBehaviour
     //  [SerializeField]private float Timer;
     // [SerializeField] TextMeshProUGUI TimerDisplay;
     //  [SerializeField] Enemy monsterAI;
-    [SerializeField]private GameObject Battery,Fuel;
-    internal float batteriesInScene,fuelInScene;
+    [SerializeField] private GameObject Battery, Fuel;
+    internal float batteriesInScene, fuelInScene;
     private float minItems;
     private List<GameObject> ItemSpawnPoints;
     private List<int> RandomNum;
     internal List<int> SpawnedList;
     internal List<int> trackedIndexs;
-    bool active;
+    private bool active;
 
-    void Start()
+    private void Start()
     {
         minItems = 2;
-      //  Boards = GameObject.FindGameObjectsWithTag("Boards");
-      trackedIndexs = new List<int>();
-      SpawnedList = new List<int>();
-      ItemSpawnPoints = new List<GameObject>();
-      ItemSpawnPoints.AddRange(GameObject.FindGameObjectsWithTag("ItemSpawnPoint"));
+        //  Boards = GameObject.FindGameObjectsWithTag("Boards");
+        trackedIndexs = new List<int>();
+        SpawnedList = new List<int>();
+        ItemSpawnPoints = new List<GameObject>();
+        ItemSpawnPoints.AddRange(GameObject.FindGameObjectsWithTag("ItemSpawnPoint"));
         RandomNum = new List<int>();
-        for (int i = 0; i < ItemSpawnPoints.Count; i++)
-        {
-            RandomNum.Add(i);
-        }
+        for (var i = 0; i < ItemSpawnPoints.Count; i++) RandomNum.Add(i);
 
-        
 
         /*
         codePanel = FindObjectOfType<CodePanel>();
@@ -60,108 +56,78 @@ public class GameManager : MonoBehaviour
         if (!active)
         {
             active = true;
-           
+
             if (fuelInScene < minItems)
-            {
-                for (int k = 0; k <= ItemSpawnPoints.Count; k++)
-                {
-                     if (fuelInScene < minItems)
+                for (var k = 0; k <= ItemSpawnPoints.Count; k++)
+                    if (fuelInScene < minItems)
                     {
-                    int index = Random.Range(0, RandomNum.Count);
-                    int sortednum = RandomNum[index];
-                   
+                        var index = Random.Range(0, RandomNum.Count);
+                        var sortednum = RandomNum[index];
+
                         if (!SpawnedList.Contains(index))
                         {
-                          var fuelPickup =  Instantiate(Fuel, ItemSpawnPoints[sortednum].transform.position, Quaternion.identity);
-                          fuelPickup.GetComponent<Tracker>().tracker = sortednum;
+                            var fuelPickup = Instantiate(Fuel, ItemSpawnPoints[sortednum].transform.position,
+                                ItemSpawnPoints[sortednum].transform.rotation);
+                            fuelPickup.GetComponent<Tracker>().tracker = sortednum;
                             SpawnedList.Add(sortednum);
                             fuelInScene = GameObject.FindGameObjectsWithTag("Fuel").Length;
                             trackedIndexs.Add(sortednum);
                         }
+
                         fuelInScene = GameObject.FindGameObjectsWithTag("Fuel").Length;
 
                         if (SpawnedList.Contains(index) && fuelInScene < minItems)
-                        {
-                            for (int l = 0; l < ItemSpawnPoints.Count; l++)
-                            {
+                            for (var l = 0; l < ItemSpawnPoints.Count; l++)
                                 if (!SpawnedList.Contains(index) && fuelInScene < minItems)
                                 {
-                                    var fuelPickup = Instantiate(Fuel, ItemSpawnPoints[k].transform.position, Quaternion.identity);
+                                    var fuelPickup = Instantiate(Fuel, ItemSpawnPoints[l].transform.position,
+                                        ItemSpawnPoints[l].transform.rotation);
                                     fuelPickup.GetComponent<Tracker>().tracker = sortednum;
                                     fuelInScene = GameObject.FindGameObjectsWithTag("Fuel").Length;
                                     trackedIndexs.Add(k);
-                                    
                                 }
-                            }
-                           
-                        }
-                       
                     }
-                   
-                }
 
-               
-                 
-                
-            }
             //WIP
-             if (batteriesInScene < minItems)
-            {
-                for (int k = 0; k <= ItemSpawnPoints.Count; k++)
-                {
+            if (batteriesInScene < minItems)
+                for (var k = 0; k <= ItemSpawnPoints.Count; k++)
                     if (batteriesInScene < minItems)
                     {
-                    int index = Random.Range(0, RandomNum.Count);
-                    int sortednum = RandomNum[index];
-                    if (batteriesInScene < minItems)
-                    {
-                        if (!SpawnedList.Contains(index))
+                        var index = Random.Range(0, RandomNum.Count);
+                        var sortednum = RandomNum[index];
+                        if (batteriesInScene < minItems)
                         {
-                            var batteryPickup = Instantiate(Battery, ItemSpawnPoints[sortednum].transform.position,
-                                Quaternion.identity);
-                            batteryPickup.GetComponent<Tracker>().tracker = sortednum;
-                            SpawnedList.Add(sortednum);
-                            batteriesInScene = GameObject.FindGameObjectsWithTag("Batteries").Length;
-                            trackedIndexs.Add(sortednum);
-                        }
-
-                        if (SpawnedList.Contains(index) && batteriesInScene < minItems)
-                        {
-                            for (int l = 0; l <= ItemSpawnPoints.Count; l++)
+                            if (!SpawnedList.Contains(index))
                             {
-                                if (!SpawnedList.Contains(index) && batteriesInScene < minItems)
-                                {
-                                    var batteryPickup = Instantiate(Battery, ItemSpawnPoints[k].transform.position,
-                                        Quaternion.identity);
-                                    batteryPickup.GetComponent<Tracker>().tracker = sortednum;
-                                    batteriesInScene = GameObject.FindGameObjectsWithTag("Batteries").Length;
-                                    trackedIndexs.Add(sortednum);
-
-                                }
+                                var batteryPickup = Instantiate(Battery, ItemSpawnPoints[sortednum].transform.position,
+                                    ItemSpawnPoints[sortednum].transform.rotation);
+                                batteryPickup.GetComponent<Tracker>().tracker = sortednum;
+                                SpawnedList.Add(sortednum);
+                                batteriesInScene = GameObject.FindGameObjectsWithTag("Batteries").Length;
+                                trackedIndexs.Add(sortednum);
                             }
 
+                            if (SpawnedList.Contains(index) && batteriesInScene < minItems)
+                                for (var l = 0; l < ItemSpawnPoints.Count; l++)
+                                    if (!SpawnedList.Contains(index) && batteriesInScene < minItems)
+                                    {
+                                        var batteryPickup = Instantiate(Battery, ItemSpawnPoints[index].transform.position,
+                                            ItemSpawnPoints[index].transform.rotation);
+                                        batteryPickup.GetComponent<Tracker>().tracker = sortednum;
+                                        batteriesInScene = GameObject.FindGameObjectsWithTag("Batteries").Length;
+                                        trackedIndexs.Add(sortednum);
+                                    }
                         }
                     }
-                    }
-                   
-                }
-            }
+
             Debug.Log($"Updated Fuel in Scene: {fuelInScene}, Updated Batteries in Scene: {batteriesInScene}");
             yield return new WaitForSeconds(10);
             active = false;
-
         }
-        
-      
     }
 
 
-    public void DeleteIndexes()
-    {
-        
-    } 
-
-    void Update()
+    private void Update()
     {
         if (!active)
         {
@@ -181,10 +147,5 @@ public class GameManager : MonoBehaviour
             monsterAI._IsHunting = true;
         }
         */
-        
     }
-
-   
-  
-
 }
