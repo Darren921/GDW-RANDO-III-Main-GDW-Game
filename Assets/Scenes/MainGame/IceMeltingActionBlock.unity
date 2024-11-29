@@ -722,7 +722,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!108 &44576241
 Light:
   m_ObjectHideFlags: 0
@@ -734,7 +734,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 1, g: 0.94558215, b: 0.7971698, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -27363,17 +27363,17 @@ PrefabInstance:
     - target: {fileID: 3391022808655799028, guid: 83b18ff302f22bf45b0a27ca34d2b190,
         type: 3}
       propertyPath: m_Color.b
-      value: 0.9433962
+      value: 0.5613208
       objectReference: {fileID: 0}
     - target: {fileID: 3391022808655799028, guid: 83b18ff302f22bf45b0a27ca34d2b190,
         type: 3}
       propertyPath: m_Color.g
-      value: 0.9433962
+      value: 0.9004748
       objectReference: {fileID: 0}
     - target: {fileID: 3391022808655799028, guid: 83b18ff302f22bf45b0a27ca34d2b190,
         type: 3}
       propertyPath: m_Color.r
-      value: 0.9433962
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3391022808655799028, guid: 83b18ff302f22bf45b0a27ca34d2b190,
         type: 3}
