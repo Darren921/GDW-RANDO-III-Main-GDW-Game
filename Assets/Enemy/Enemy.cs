@@ -73,7 +73,7 @@ public class Enemy : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            soundSource.Play();
+           // soundSource.Play();
         }
     }
     IEnumerator countdown()

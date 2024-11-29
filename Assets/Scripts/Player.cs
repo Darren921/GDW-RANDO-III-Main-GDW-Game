@@ -344,13 +344,14 @@ public class Player : MonoBehaviour
 
     public IEnumerator LookatDeath()
     {
-        heartBeat.clip = heartbeatF;
-        heartBeat.Play();
-        cineCam.Priority = 100;
-        sound.Play();
-        yield return new WaitForSeconds(3);
+        //heartBeat.clip = heartbeatF;
+        //heartBeat.Play();
+        //cineCam.Priority = 100;
+        //sound.Play();
+        //yield return new WaitForSeconds(3);
+        yield return null;
         Cursor.lockState = CursorLockMode.None;
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("NewMainMenu");
     }
 
     internal void Hide()
