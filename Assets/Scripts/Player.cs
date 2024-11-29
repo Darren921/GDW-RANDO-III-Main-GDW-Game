@@ -77,13 +77,16 @@ public class Player : MonoBehaviour
     private bool CheckActive;
     private bool IsLooking;
     [SerializeField]LayerMask CollisionLayer;
+    private float slotNumber;
+
     void Start()
     {
+        slotNumber = 1;
         //turn on and off when needed
        // torchActive = true;
        //fuelLeft = 500;
-       fuelLeft = 100;
-       
+      // fuelLeft = 100;
+      fuelLeft = 50;
        _chargeleft = 150;
        _capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
        _enemy = FindObjectOfType<Enemy>();
@@ -297,7 +300,7 @@ public class Player : MonoBehaviour
                 }
                 break;
             case "Exit":
-                SceneManager.LoadScene("GoodEnding");
+                SceneManager.LoadScene("NewMainMenu");
                 break;
         }
 
@@ -392,7 +395,7 @@ public class Player : MonoBehaviour
     
     public void ChangeItem(float slot)
     {
-        var slotNumber = slot;
+         slotNumber = slot;
         switch (slotNumber)
         {
             case 1:

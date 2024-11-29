@@ -29417,9 +29417,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6971cf94ffc1e1c42af98b0f1b4ccd14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  opacityLoss: 0.005
+  opacityLoss: 0.01
   meltingTime: 1
-  meltingProgress: 200
+  meltingProgress: 100
 --- !u!114 &3518553822715796523
 MonoBehaviour:
   m_ObjectHideFlags: 3
