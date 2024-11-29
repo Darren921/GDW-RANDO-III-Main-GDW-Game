@@ -296,6 +296,9 @@ public class Player : MonoBehaviour
                     }
                 }
                 break;
+            case "Exit":
+                SceneManager.LoadScene("GoodEnding");
+                break;
         }
 
     }
@@ -452,12 +455,19 @@ public class Player : MonoBehaviour
 
     public void stopWalkingSound()
     {
-        walking.enabled = false;
+        if (walking != null)
+        {
+            walking.enabled = false;
+        }
     }
 
     public void walkingSound()
     {
-        walking.enabled = true;
+        if (walking != null && !walking.isPlaying)
+        {
+            walking.enabled = true;
+            walking.Play();
+        }
     }
 
     public bool returnTorchState()
