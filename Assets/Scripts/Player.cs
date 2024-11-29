@@ -301,6 +301,8 @@ public class Player : MonoBehaviour
                 break;
             case "Exit":
                 SceneManager.LoadScene("NewMainMenu");
+                Cursor.lockState = CursorLockMode.None;
+
                 break;
         }
 

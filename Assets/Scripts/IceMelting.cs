@@ -17,6 +17,7 @@ public class IceMelting : MonoBehaviour
    private bool active , checkPoint1, checkPoint2, checkPoint3, checkPoint4;
    private Renderer _renderer;
    private BoxCollider _boxCollider;
+   [SerializeField] GameObject _DoorHitbox;
 
    void Start()
    {
@@ -75,6 +76,7 @@ public class IceMelting : MonoBehaviour
             PlayerPrefs.SetFloat("CheckpointOpacity", 0);
              _renderer.enabled = false;
              _boxCollider.enabled = false;
+            _DoorHitbox.SetActive(false);
 
         }
         if (meltingProgress <= 100)
