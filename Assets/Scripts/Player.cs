@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -71,11 +72,13 @@ public class Player : MonoBehaviour
     //Torch 
     private bool torchActive,flashlightActive;
     private float fuelLeft;
+    [SerializeField] Slider TorchSlider;
     //Flashlight
     private bool _equipedTorch, _equipedFlashlight;
     private float _chargeleft;
     private bool CheckActive;
     private bool IsLooking;
+    [SerializeField] Slider FlashlightSlider;
     [SerializeField]LayerMask CollisionLayer;
     private float slotNumber;
 
@@ -108,8 +111,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         //HeartBeats sounds
-    
-
+        TorchSlider.value = fuelLeft;
+        FlashlightSlider.value = _chargeleft;
         // remove this after
         // distance = Vector3.Distance(transform.position, _enemy.transform.position);
 
