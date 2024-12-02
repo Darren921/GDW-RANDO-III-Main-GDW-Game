@@ -236,6 +236,7 @@ Transform:
   - {fileID: 7716474077158242796}
   - {fileID: 7184147531227531582}
   - {fileID: 3109647190852572316}
+  - {fileID: 8359637500912029771}
   m_Father: {fileID: 6369932214995612995}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &1335151217313164591
@@ -594,6 +595,59 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.8989579, y: 4.3473053, z: 9.401273}
   m_Center: {x: 0.0004444867, y: -1.6049019, z: 1.5528429}
+--- !u!1 &6283160367248574278
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8359637500912029771}
+  - component: {fileID: 4126289690639386688}
+  m_Layer: 0
+  m_Name: TorchCollision
+  m_TagString: Torch
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8359637500912029771
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6283160367248574278}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.00000003774895, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.7999972, z: 5.540002}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2013126338121583553}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4126289690639386688
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6283160367248574278}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.173072, y: 1, z: 3.2489157}
+  m_Center: {x: 0.04854997, y: -5.9722476e-15, z: 1.1244575}
 --- !u!1 &7800469650693544431
 GameObject:
   m_ObjectHideFlags: 0

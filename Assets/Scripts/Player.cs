@@ -1,3 +1,4 @@
+using System;
 using Cinemachine;
 using System.Collections;
 using UnityEngine;
@@ -73,6 +74,8 @@ public class Player : MonoBehaviour
     private bool torchActive,flashlightActive;
     private float fuelLeft;
     [SerializeField] Slider TorchSlider;
+    private bool AtMeltingPoint;
+
     //Flashlight
     private bool _equipedTorch, _equipedFlashlight;
     private float _chargeleft;
@@ -124,7 +127,7 @@ public class Player : MonoBehaviour
         {
             heartBeat.Stop();
         }
-        LookCheck();
+
 
 
         //sprinting
@@ -152,23 +155,9 @@ public class Player : MonoBehaviour
         
     }
 
-    private void LookCheck()
-    {
-        Ray ray = new Ray(CamTransform.position, CamTransform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, 300,CollisionLayer))
-        {
-            if (hit.collider.gameObject.tag == "IceWall")
-            {
-                IsLooking = true;
-            }
-            else
-            {
-                IsLooking = false;
-            }
-            print(hit.collider.tag);
-            
-        }
-    }
+  
+    
+   
 
     public void CheckIfActive()
     {
@@ -176,7 +165,7 @@ public class Player : MonoBehaviour
         {
             flashlightActive = GameObject.Find("Spot Light");
         }
-        print("working");
+       // print("working");
         if (_equipedTorch )
         {
            torchActive = !torchActive;
@@ -328,6 +317,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        
         if (other.tag == "hidingSpot")
         {
             inhidingRange = true;
@@ -411,7 +401,7 @@ public class Player : MonoBehaviour
         switch (slotNumber)
         {
             case 1:
-                print("equipped flashlight");
+               // print("equipped flashlight");
                 _equipedFlashlight = true;
                 _equipedTorch = false;
                 torchActive = false;
@@ -422,7 +412,7 @@ public class Player : MonoBehaviour
                 Torch.gameObject.SetActive(false);
                 break;
             case 2:
-                print("equipped torch");
+             //   print("equipped torch");
                 _equipedTorch = true;
                 _equipedFlashlight = false;
                 flashlightActive = false;
@@ -467,7 +457,9 @@ public class Player : MonoBehaviour
         rightClick();
     }
 
-  
+   
+    
+    
 
     public void stopWalkingSound()
     {
@@ -517,10 +509,7 @@ public class Player : MonoBehaviour
     }
 
 
-    public bool returnIsLooking()
-    {
-        return IsLooking;
-    }
+   
 }
     
 

@@ -18,6 +18,7 @@ public class IceMelting : MonoBehaviour
    private Renderer _renderer;
    private BoxCollider _boxCollider;
    [SerializeField] GameObject _DoorHitbox;
+   private bool AtMeltingPoint;
 
    void Start()
    {
@@ -32,14 +33,20 @@ public class IceMelting : MonoBehaviour
  
     private void OnTriggerStay(Collider other)
     {
-        if  (other.CompareTag("Player")  && _player.returnTorchState() && _player.returnIsLooking())
+        if (other.tag == "Torch")
         {
-            print(other.gameObject.tag);
+            AtMeltingPoint = true;
+        }
+        if  (_player.returnTorchState()&& AtMeltingPoint)
+        {
+           // print(other.gameObject.tag);
             isMelting = true;
         }
         else
         {
             isMelting = false;
+            AtMeltingPoint = false;
+
         }
     }
 
@@ -78,25 +85,25 @@ public class IceMelting : MonoBehaviour
              _boxCollider.enabled = false;
             _DoorHitbox.SetActive(false);
 
-        }
-        if (meltingProgress <= 100)
+        } 
+        else if (meltingProgress <= 100)
         {
             checkPoint2 = true;
-            print("third last checkpoint");
+          //  print("third last checkpoint");
             PlayerPrefs.SetFloat("CheckpointOpacity", 25);
         }
 
-        if (meltingProgress <= 200)
+        else if (meltingProgress <= 200)
         {
             checkPoint3 = true;
-            print("second checkpoint");
+         //   print("second checkpoint");
             PlayerPrefs.SetFloat("CheckpointOpacity", 50);
         }
 
-        if (meltingProgress <= 300)
+        else if (meltingProgress <= 300)
         {
             checkPoint4 = true;
-            print("first checkpoint");
+           // print("first checkpoint");
             PlayerPrefs.SetFloat("CheckpointOpacity", 75);
         }
     }
