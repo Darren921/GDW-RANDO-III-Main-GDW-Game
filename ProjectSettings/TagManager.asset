@@ -12,6 +12,7 @@ TagManager:
   - Fuel
   - Batteries
   - Enemy
+  - FlashLight
   layers:
   - Default
   - TransparentFX

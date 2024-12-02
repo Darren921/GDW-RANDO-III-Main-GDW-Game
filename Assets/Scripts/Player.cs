@@ -166,12 +166,16 @@ public class Player : MonoBehaviour
                 IsLooking = false;
             }
             print(hit.collider.tag);
+            
         }
     }
 
     public void CheckIfActive()
     {
-        
+        if (flashlightSource == null)
+        {
+            flashlightActive = GameObject.Find("Spot Light");
+        }
         print("working");
         if (_equipedTorch )
         {
@@ -207,7 +211,9 @@ public class Player : MonoBehaviour
                 }
                 else
                 {
+                   
                     flashlightSource.SetActive(false);
+
                 }
             }
             else
@@ -357,6 +363,7 @@ public class Player : MonoBehaviour
         //cineCam.Priority = 100;
         //sound.Play();
         //yield return new WaitForSeconds(3);
+        InputManager.DisableInGame();
         yield return null;
         Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene("NewMainMenu");
