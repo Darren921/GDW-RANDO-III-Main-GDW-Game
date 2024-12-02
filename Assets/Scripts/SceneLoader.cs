@@ -18,6 +18,6 @@ public class SceneLoader : MonoBehaviour
     }
     public void mainScene()
     {
-        SceneManager.LoadScene("IceMeltingActionBlock");
+        SceneManager.LoadScene("MainScene");
     }
 }

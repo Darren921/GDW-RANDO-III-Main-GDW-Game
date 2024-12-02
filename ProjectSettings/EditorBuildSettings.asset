@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainGame/IceMeltingActionBlock.unity
     guid: c482fb1adc917cd44a2e3479ad4e9d45
+  - enabled: 1
+    path: Assets/Scenes/MainGame/MainScene.unity
+    guid: 593842428adbb1c4b9a7ec3b5d46efde
   m_configObjects: {}
