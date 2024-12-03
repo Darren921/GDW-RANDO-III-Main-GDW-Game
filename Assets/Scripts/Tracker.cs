@@ -19,12 +19,27 @@ public class Tracker : MonoBehaviour
    {
       if (other.tag == "Player")
       {
-         if (gm.trackedIndexs.Contains(tracker))
+         switch (tag)
          {
-            gm.SpawnedList.Remove(tracker);
-            gm.trackedIndexs.Remove(tracker);
-            gm.fuelInScene--;
+            case "Fuel":
+               if (gm.trackedIndexs.Contains(tracker))
+               {
+                  gm.SpawnedList.Remove(tracker);
+                  gm.trackedIndexs.Remove(tracker);
+                  gm.fuelInScene--;
+               }
+               break;
+            
+            case "Batteries":
+               if (gm.trackedIndexs.Contains(tracker))
+               {
+                  gm.SpawnedList.Remove(tracker);
+                  gm.trackedIndexs.Remove(tracker);
+                  gm.batteriesInScene--;
+               }
+               break;
          }
+        
          Destroy(gameObject,0.1f);
       }
    }
