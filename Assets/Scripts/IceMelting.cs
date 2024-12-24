@@ -33,7 +33,7 @@ public class IceMelting : MonoBehaviour
  
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Torch")
+        if (other.CompareTag("Torch"))
         {
             AtMeltingPoint = true;
         }

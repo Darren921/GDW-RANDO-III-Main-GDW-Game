@@ -47,18 +47,6 @@ public class InputManager : MonoBehaviour
         {
             player.Hide();
         };
-        controls.InGame.LeftClick.performed += _ =>
-        {
-            player.leftClick();
-        };
-        controls.InGame.Talk.performed += _ =>
-        {
-            player.interactable();
-        };
-        controls.InGame.Talk.canceled += _ =>
-        {
-            player.notInteractable();
-        };
         controls.InGame.ItemSwap.performed += _ =>
         {
             player.ChangeItem(_.ReadValue<float>());

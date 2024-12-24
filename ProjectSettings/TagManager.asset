@@ -13,6 +13,7 @@ TagManager:
   - Batteries
   - Enemy
   - FlashLight
+  - hidingSpot
   layers:
   - Default
   - TransparentFX

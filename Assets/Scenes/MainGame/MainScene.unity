@@ -1159,6 +1159,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: FlashLight
       objectReference: {fileID: 0}
+    - target: {fileID: 2663862701929498783, guid: be063c56650e85b4eb735cfd44234ee5,
+        type: 3}
+      propertyPath: sprintSpeed
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2675755900709846574, guid: be063c56650e85b4eb735cfd44234ee5,
         type: 3}
       propertyPath: m_AnchorMax.x

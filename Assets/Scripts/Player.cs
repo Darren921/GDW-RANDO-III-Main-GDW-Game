@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     private bool isSprinting;
     [SerializeField] float sprintTime;
     private bool onCoolDown;
+    [SerializeField] private float sprintSpeed;
 
     [SerializeField] private float maxSprintTime;
 
@@ -55,15 +56,9 @@ public class Player : MonoBehaviour
     private Enemy _enemy;
     [SerializeField] AudioClip heartbeatS, heartbeatSM, heartbeatM, heartbeatF;
 
-    //Storybased
-    public bool isTalking { get; set; }
+    
 
     [SerializeField] AudioSource walking;
-
-    //Code panel
-    [SerializeField] bool canusePanel;
-    [SerializeField] float f;
-    [SerializeField] GameObject codePanelInfo;
     private CapsuleCollider _capsuleCollider;
 
     //Item switching 
@@ -127,11 +122,10 @@ public class Player : MonoBehaviour
         {
             heartBeat.Stop();
         }
-
-
-
+        
         //sprinting
         CheckSprint();
+        
         if (_chargeleft > 0 && flashlightActive)
         {
             _chargeleft -= Time.deltaTime;
@@ -235,7 +229,7 @@ public class Player : MonoBehaviour
             //smoothed movement
             smoothedMoveDir = Vector3.SmoothDamp(smoothedMoveDir, moveDir, ref smoothedMoveVelo, 0.1f);
             smoothedMoveDir = CamTransform.forward * moveDir.z + CamTransform.right * moveDir.x;
-            rb.velocity = new Vector3(smoothedMoveDir.x * moveSpeed, -3, smoothedMoveDir.z * moveSpeed);
+            rb.velocity = isSprinting ? new Vector3(smoothedMoveDir.x * (moveSpeed * sprintSpeed) , -3, smoothedMoveDir.z * (moveSpeed * sprintSpeed)) : new Vector3(smoothedMoveDir.x * moveSpeed, -3, smoothedMoveDir.z * moveSpeed);
         }
 
 
@@ -265,7 +259,7 @@ public class Player : MonoBehaviour
     }
 
     //sprint cooldown
-    public IEnumerator Cooldown(float maxCoolDown)
+    private IEnumerator Cooldown(float maxCoolDown)
     {
         onCoolDown = true;
         yield return new WaitForSeconds(maxCoolDown);
@@ -308,7 +302,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.CompareTag("Enemy"))
         {
             dead = true;
             StartCoroutine(LookatDeath());
@@ -318,29 +312,16 @@ public class Player : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         
-        if (other.tag == "hidingSpot")
+        if (other.CompareTag("hidingSpot"))
         {
             inhidingRange = true;
             HidingCam = other.gameObject.GetComponent<CinemachineVirtualCamera>();
-        }
-
-        if (other.tag == "CodePanel")
-        {
-            canusePanel = true;
-            codePanelInfo.SetActive(true);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "CodePanel")
-        {
-            canusePanel = false;
-            codePanelInfo.SetActive(false);
-
-        }
-
-        if (other.tag == "hidingSpot")
+        if (other.CompareTag("hidingSpot"))
         {
             HidingCam = null;
         }
@@ -432,9 +413,6 @@ public class Player : MonoBehaviour
             sprintTime -= Time.deltaTime;
             switch (sprintTime)
             {
-                case >= 0:
-                    rb.velocity = smoothedMoveDir * (moveSpeed * 1.5f);
-                    break;
                 case <= 0:
                     StartCoroutine(Cooldown(2));
                     isSprinting = false;
@@ -451,16 +429,6 @@ public class Player : MonoBehaviour
         }
     }
     
-
-    public void leftClick()
-    {
-        rightClick();
-    }
-
-   
-    
-    
-
     public void stopWalkingSound()
     {
         if (walking != null)
@@ -482,34 +450,6 @@ public class Player : MonoBehaviour
     {
         return torchActive;
     }
-    
-  
-    public void interactable()
-    {
-        isTalking = true;
-    }
-
-    public void notInteractable()
-    {
-        isTalking = false;
-    }
-
-    public void rightClick()
-    {
-        if (canusePanel)
-        {
-            codePanelInfo.SetActive(true);
-            f++;
-        }
-        else
-        {
-            Debug.Log(f);
-        }
-    
-    }
-
-
-   
 }
     
 
