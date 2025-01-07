@@ -8,8 +8,8 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-
     //Sprinting
+    [Header("Sprinting")]
     Vector3 previousPos;
     private bool isSprinting;
     [SerializeField] float sprintTime;
@@ -20,16 +20,17 @@ public class Player : MonoBehaviour
 
     //Camera location
     private Transform CamTransform;
-
+    
+    [Header("Movement")]
     //standard movement
     [SerializeField] float moveSpeed;
     Rigidbody rb;
     private Vector3 smoothedMoveDir;
     private Vector3 smoothedMoveVelo;
-
     private Vector3 moveDir;
 
-    //Death and sounds
+    //Death and Sounds
+    [Header("Death and Sounds")]
     [SerializeField] AudioSource sound;
     [SerializeField] CinemachineVirtualCamera cineCam;
     public bool dead;
@@ -38,7 +39,6 @@ public class Player : MonoBehaviour
     //testing 
     private Vector3 mousePos;
     Camera playerCam;
-
     RaycastHit hit;
 
     //hiding 
@@ -46,10 +46,10 @@ public class Player : MonoBehaviour
     bool inhidingRange;
     public bool isHiding;
     [SerializeField] GameObject hitbox;
-
     [SerializeField] GameObject flashlight;
-
-    //Heartbeat 
+    
+    //Heartbeat
+    [Header("HeartBeat")]    
     private float distance;
     private bool isPlaying;
     [SerializeField] AudioSource heartBeat;
@@ -57,7 +57,6 @@ public class Player : MonoBehaviour
     [SerializeField] AudioClip heartbeatS, heartbeatSM, heartbeatM, heartbeatF;
 
     
-
     [SerializeField] AudioSource walking;
     private CapsuleCollider _capsuleCollider;
 
@@ -111,7 +110,6 @@ public class Player : MonoBehaviour
         //HeartBeats sounds
         TorchSlider.value = fuelLeft;
         FlashlightSlider.value = _chargeleft;
-        // remove this after
         // distance = Vector3.Distance(transform.position, _enemy.transform.position);
 
         if (distance < 150f)

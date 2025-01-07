@@ -16,13 +16,21 @@ public class GameManager : MonoBehaviour
     [Header("SpawnManager")]
     [SerializeField] private GameObject Battery, Fuel;
     internal float batteriesInScene, fuelInScene,targetF,targetB;
-    private float minItems;
+    [SerializeField] private float minItems;
     private List<GameObject> ItemSpawnPoints;
     private List<int> RandomNum;
     internal List<int> SpawnedList;
     internal List<int> trackedIndexs;
     private bool active;
     private bool firstSpawn;
+
+    [Header("Frost")]
+    bool isFreezing;
+    private float _frost;
+    [SerializeField] private float maxFrost;
+    
+    
+    [Header("References")]
     [SerializeField] private Player _player;
 
     private void Start()
@@ -35,8 +43,9 @@ public class GameManager : MonoBehaviour
         ItemSpawnPoints.AddRange(GameObject.FindGameObjectsWithTag("ItemSpawnPoint"));
         RandomNum = new List<int>();
         for (var i = 0; i < ItemSpawnPoints.Count; i++) RandomNum.Add(i);
-
-
+        //use this to toggle off and on freezing in areas, maybe tut area?
+        isFreezing = true;
+        _frost = 0;
         /*
         codePanel = FindObjectOfType<CodePanel>();
         for (int j = 0; j < 4; j++)
@@ -56,6 +65,7 @@ public class GameManager : MonoBehaviour
         */
         //  Timer = 240;
     }
+    
 
     private IEnumerator itemSpawn(int amount)
     {
@@ -96,8 +106,7 @@ public class GameManager : MonoBehaviour
                                 }
                     }
             }
-
-            //WIP
+            
             if (batteriesInScene <= targetB && batteriesInScene < minItems)
             {
                 for (var k = 0; k <= ItemSpawnPoints.Count; k++)
@@ -145,18 +154,39 @@ public class GameManager : MonoBehaviour
     {
        
          if(!active )
-        {
-            StartCoroutine(itemSpawn(1));
-        }
+         {
+             StartCoroutine(itemSpawn(1));
+         }
 
-        if (_player.returnTorchState())
-        {
-            
-        }
+         switch (isFreezing)
+         {
+             case false:
+                 return;
+             case true when _player.returnTorchState():
+             {
+                 _frost -= Time.deltaTime;
+                 if (_frost <= 0)
+                 {
+                     _frost = 0;
+                 }
+
+                 break;
+             }
+             case true when !_player.returnTorchState():
+             {
+                 _frost += Time.deltaTime;
+                 if (_frost >= maxFrost)
+                 {
+                     StartCoroutine(_player.LookatDeath());
+                     _frost = 0;
+                 }
+
+                 break;
+             }
+         }
 
 
-      
-/*
+         /*
         float minutes = Mathf.FloorToInt(Timer / 60f);
         float seconds = Mathf.FloorToInt(Timer - minutes * 60);
         string displayTime = string.Format("{0:00}:{1:00}", minutes, seconds);

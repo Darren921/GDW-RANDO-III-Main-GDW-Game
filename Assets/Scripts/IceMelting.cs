@@ -6,17 +6,23 @@ using UnityEngine;
 
 public class IceMelting : MonoBehaviour
 {
+    [SerializeField] private float opacityLoss;
    private bool isMelting { get; set; }
    private float curMeltingTime;
-   private Material iceMat;
-  [SerializeField] private float opacityLoss;
    private float _curOpacity; 
    [SerializeField]private float meltingTime;
-   private Player _player;
    [SerializeField] private float meltingProgress;
+      private float melted;
+
    private bool active , checkPoint1, checkPoint2, checkPoint3, checkPoint4;
    private Renderer _renderer;
    private BoxCollider _boxCollider;
+   private Player _player;
+   private Material iceMat;
+
+
+ 
+  
    [SerializeField] GameObject _DoorHitbox;
    private bool AtMeltingPoint;
 
@@ -76,7 +82,7 @@ public class IceMelting : MonoBehaviour
 
     private void CheckMeltingProgress()
     {
-        if (meltingProgress <= 0)
+        if (meltingProgress <= melted)
         {
             checkPoint1 = true;
             print("Final checkpoint");

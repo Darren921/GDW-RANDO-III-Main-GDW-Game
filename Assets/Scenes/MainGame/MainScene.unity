@@ -1621,6 +1621,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 857094183}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1271478420 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2663862701929498783, guid: be063c56650e85b4eb735cfd44234ee5,
+    type: 3}
+  m_PrefabInstance: {fileID: 857094183}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d930f1a079bceb546a5768fff5bcb16c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1350001977 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -516098083770646512, guid: 12a5ea547b4866b40bc05df23029b94a,
@@ -2585,6 +2597,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Battery: {fileID: 5002360986888236374, guid: c7834891679ef4247bea190951332a31, type: 3}
   Fuel: {fileID: 8266241314038867389, guid: fce6ce3c65a480949bd51ec38c3236c6, type: 3}
+  minItems: 5
+  maxFrost: 200
+  _player: {fileID: 1271478420}
 --- !u!4 &1949689918
 Transform:
   m_ObjectHideFlags: 0
