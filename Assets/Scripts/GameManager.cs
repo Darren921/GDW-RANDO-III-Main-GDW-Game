@@ -10,6 +10,10 @@ public class GameManager : MonoBehaviour
     //  [SerializeField]private float Timer;
     // [SerializeField] TextMeshProUGUI TimerDisplay;
     //  [SerializeField] Enemy monsterAI;
+    
+    
+    
+    [Header("SpawnManager")]
     [SerializeField] private GameObject Battery, Fuel;
     internal float batteriesInScene, fuelInScene,targetF,targetB;
     private float minItems;
@@ -19,6 +23,7 @@ public class GameManager : MonoBehaviour
     internal List<int> trackedIndexs;
     private bool active;
     private bool firstSpawn;
+    [SerializeField] private Player _player;
 
     private void Start()
     {
@@ -143,6 +148,14 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(itemSpawn(1));
         }
+
+        if (_player.returnTorchState())
+        {
+            
+        }
+
+
+      
 /*
         float minutes = Mathf.FloorToInt(Timer / 60f);
         float seconds = Mathf.FloorToInt(Timer - minutes * 60);
@@ -157,4 +170,6 @@ public class GameManager : MonoBehaviour
         }
         */
     }
+
+   
 }
