@@ -67,14 +67,12 @@ public class GameManager : MonoBehaviour
     }
     
 
-    private IEnumerator itemSpawn(int amount)
+    private IEnumerator itemSpawn(int amount,int cap)
     {
         if (!active)
         {
             active = true;
-            targetF = fuelInScene + amount;
-            targetB = batteriesInScene + amount;
-            if(fuelInScene < minItems && fuelInScene <= targetF) 
+            if(fuelInScene < minItems && fuelInScene <= cap) 
             {
                 for (var k = 0; k <= ItemSpawnPoints.Count; k++)
                     if (fuelInScene < minItems)
@@ -83,7 +81,7 @@ public class GameManager : MonoBehaviour
                         var sortednum = RandomNum[index];
 
 
-                        if (!SpawnedList.Contains(index) && fuelInScene < targetF)
+                        if (!SpawnedList.Contains(index) && fuelInScene < cap)
                         {
                             var fuelPickup = Instantiate(Fuel, ItemSpawnPoints[sortednum].transform.position,
                                 ItemSpawnPoints[sortednum].transform.rotation);
@@ -155,7 +153,7 @@ public class GameManager : MonoBehaviour
        
          if(!active )
          {
-             StartCoroutine(itemSpawn(1));
+             StartCoroutine(itemSpawn(1,5));
          }
 
          switch (isFreezing)

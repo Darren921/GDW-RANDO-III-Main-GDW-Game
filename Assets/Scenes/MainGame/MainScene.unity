@@ -1211,8 +1211,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2663862701929498783, guid: be063c56650e85b4eb735cfd44234ee5,
         type: 3}
+      propertyPath: sprintTime
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2663862701929498783, guid: be063c56650e85b4eb735cfd44234ee5,
+        type: 3}
       propertyPath: sprintSpeed
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2663862701929498783, guid: be063c56650e85b4eb735cfd44234ee5,
+        type: 3}
+      propertyPath: maxSprintTime
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2675755900709846574, guid: be063c56650e85b4eb735cfd44234ee5,
         type: 3}
@@ -3269,7 +3279,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   opacityLoss: 0.05
   meltingTime: 1
-  meltingProgress: 100
+  timeToMelt: 0
   _DoorHitbox: {fileID: 1285008434170953475}
 --- !u!4 &4431349181136923903
 Transform:

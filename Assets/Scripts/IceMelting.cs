@@ -11,7 +11,7 @@ public class IceMelting : MonoBehaviour
    private float curMeltingTime;
    private float _curOpacity; 
    [SerializeField]private float meltingTime;
-   [SerializeField] private float meltingProgress;
+   [SerializeField] private float timeToMelt;
       private float melted;
 
    private bool active , checkPoint1, checkPoint2, checkPoint3, checkPoint4;
@@ -72,7 +72,7 @@ public class IceMelting : MonoBehaviour
 
         if (isMelting)
         {
-            meltingProgress -= Time.deltaTime;
+            timeToMelt -= Time.deltaTime;
             //base = 0.0025 mod(action block) = 0.0050
             _curOpacity -=  opacityLoss * Time.deltaTime;
             iceMat.SetFloat("_Opacity", _curOpacity);
@@ -82,7 +82,7 @@ public class IceMelting : MonoBehaviour
 
     private void CheckMeltingProgress()
     {
-        if (meltingProgress <= melted)
+        if (timeToMelt <= melted)
         {
             checkPoint1 = true;
             print("Final checkpoint");
@@ -92,21 +92,21 @@ public class IceMelting : MonoBehaviour
             _DoorHitbox.SetActive(false);
 
         } 
-        else if (meltingProgress <= 100)
+        else if (timeToMelt <= 100)
         {
             checkPoint2 = true;
           //  print("third last checkpoint");
             PlayerPrefs.SetFloat("CheckpointOpacity", 25);
         }
 
-        else if (meltingProgress <= 200)
+        else if (timeToMelt <= 200)
         {
             checkPoint3 = true;
          //   print("second checkpoint");
             PlayerPrefs.SetFloat("CheckpointOpacity", 50);
         }
 
-        else if (meltingProgress <= 300)
+        else if (timeToMelt <= 300)
         {
             checkPoint4 = true;
            // print("first checkpoint");

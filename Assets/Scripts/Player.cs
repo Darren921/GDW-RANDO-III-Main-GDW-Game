@@ -1,6 +1,7 @@
 using System;
 using Cinemachine;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -13,7 +14,8 @@ public class Player : MonoBehaviour
     Vector3 previousPos;
     private bool isSprinting;
     [SerializeField] float sprintTime;
-    private bool onCoolDown;
+    private bool onCoolDownFull;
+    private bool onCoolDownNormal;
     [SerializeField] private float sprintSpeed;
 
     [SerializeField] private float maxSprintTime;
@@ -100,8 +102,7 @@ public class Player : MonoBehaviour
         InputManager.EnableInGame();
         CamTransform = Camera.main.transform;
         Cursor.lockState = CursorLockMode.Locked;
-
-
+        sprintTime = maxSprintTime;
     }
 
 
@@ -227,7 +228,7 @@ public class Player : MonoBehaviour
             //smoothed movement
             smoothedMoveDir = Vector3.SmoothDamp(smoothedMoveDir, moveDir, ref smoothedMoveVelo, 0.1f);
             smoothedMoveDir = CamTransform.forward * moveDir.z + CamTransform.right * moveDir.x;
-            rb.velocity = isSprinting ? new Vector3(smoothedMoveDir.x * (moveSpeed * sprintSpeed) , -3, smoothedMoveDir.z * (moveSpeed * sprintSpeed)) : new Vector3(smoothedMoveDir.x * moveSpeed, -3, smoothedMoveDir.z * moveSpeed);
+            rb.velocity = isSprinting && !onCoolDownFull && !onCoolDownNormal ? new Vector3(smoothedMoveDir.x * (moveSpeed * sprintSpeed) , -3, smoothedMoveDir.z * (moveSpeed * sprintSpeed)) : new Vector3(smoothedMoveDir.x * moveSpeed, -3, smoothedMoveDir.z * moveSpeed);
         }
 
 
@@ -247,23 +248,69 @@ public class Player : MonoBehaviour
 
     public void startSprint()
     {
+        if(!onCoolDownFull && !onCoolDownNormal)
         isSprinting = true;
     }
 
     public void cancelSprint()
     {
+        if(!onCoolDownFull && !onCoolDownNormal)
         isSprinting = false;
 
+        if(!onCoolDownFull && !onCoolDownNormal)
+        {
+            onCoolDownNormal = true;
+            StartCoroutine(onSprintEnd(1));
+        }
+       
+    
     }
 
-    //sprint cooldown
-    private IEnumerator Cooldown(float maxCoolDown)
+   
+
+    private void CheckSprint()
     {
-        onCoolDown = true;
-        yield return new WaitForSeconds(maxCoolDown);
-        onCoolDown = false;
+        if (isSprinting && !onCoolDownFull && !onCoolDownNormal && !torchActive)
+        {
+            sprintTime -= Time.deltaTime;
+            if (sprintTime <= 0)
+            {
+                StartCoroutine(onSprintEmpty(3));
+                isSprinting = false;
+                rb.velocity = Vector3.zero;
+                sprintTime = 0;
+                return;
+            }
+            if (isSprinting && !(sprintTime <= 0)) return;
+            if (!(sprintTime <= 2) && !(sprintTime <= maxSprintTime)) return;
+        }
+        if (!onCoolDownFull && !onCoolDownNormal && sprintTime !<= maxSprintTime)
+        {
+            sprintTime += Time.deltaTime;   
+        }
     }
- 
+    private IEnumerator onSprintEnd(int cooldown)
+    {
+        if (!onCoolDownFull)
+        {
+            onCoolDownNormal = true;
+            yield return new WaitForSecondsRealtime(cooldown);
+            onCoolDownNormal = false;
+        }
+    }
+    private IEnumerator onSprintEmpty(int cooldown )
+    {
+        if (!onCoolDownNormal)
+        {
+            onCoolDownFull = true;
+            yield return new WaitForSecondsRealtime(cooldown);
+            onCoolDownFull = false;
+            sprintTime = maxSprintTime;
+        }
+    
+    }
+
+
     private void OnTriggerEnter(Collider other)
     {
         switch (other.tag)
@@ -404,29 +451,7 @@ public class Player : MonoBehaviour
         }
     }
         
-    private void CheckSprint()
-    {
-        if (isSprinting )
-        {
-            sprintTime -= Time.deltaTime;
-            switch (sprintTime)
-            {
-                case <= 0:
-                    StartCoroutine(Cooldown(2));
-                    isSprinting = false;
-                    rb.velocity = Vector3.zero;
-                    sprintTime = 0;
-                    break;
-            }
-        }
-        if (isSprinting && !(sprintTime <= 0)) return;
-        if (!(sprintTime <= 2) && !(sprintTime <= maxSprintTime)) return;
-        if (!onCoolDown)
-        {
-            sprintTime += Time.deltaTime;
-        }
-    }
-    
+   
     public void stopWalkingSound()
     {
         if (walking != null)
