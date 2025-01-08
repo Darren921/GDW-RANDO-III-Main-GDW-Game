@@ -356,12 +356,9 @@ public class Player : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        
-        if (other.CompareTag("hidingSpot"))
-        {
-            inhidingRange = true;
-            HidingCam = other.gameObject.GetComponent<CinemachineVirtualCamera>();
-        }
+        if (!other.CompareTag("hidingSpot")) return;
+        inhidingRange = true;
+        HidingCam = other.gameObject.GetComponent<CinemachineVirtualCamera>();
     }
 
     private void OnTriggerExit(Collider other)

@@ -76,8 +76,9 @@ public class IceMelting : MonoBehaviour
             //base = 0.0025 mod(action block) = 0.0050
             _curOpacity -=  opacityLoss * Time.deltaTime;
             iceMat.SetFloat("_Opacity", _curOpacity);
+            CheckMeltingProgress();
+
         }
-        CheckMeltingProgress();
     }
 
     private void CheckMeltingProgress()

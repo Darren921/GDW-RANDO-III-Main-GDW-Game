@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
     bool isFreezing;
     private float _frost;
     [SerializeField] private float maxFrost;
+    [SerializeField] private Material frostTexture;
+    private float _curOpacity;
     
     
     [Header("References")]
@@ -35,7 +37,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        minItems = 5;
+        _curOpacity = -1;
+            minItems = 5;
         //  Boards = GameObject.FindGameObjectsWithTag("Boards");
         trackedIndexs = new List<int>();
         SpawnedList = new List<int>();
@@ -150,12 +153,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-       
          if(!active )
          {
              StartCoroutine(itemSpawn(1,5));
          }
-
+         if(_player is null) return;
          switch (isFreezing)
          {
              case false:
@@ -163,6 +165,8 @@ public class GameManager : MonoBehaviour
              case true when _player.returnTorchState():
              {
                  _frost -= Time.deltaTime;
+                 _curOpacity -= 0.01f * Time.deltaTime;
+                 frostTexture.SetFloat("_Opacity",_curOpacity ); 
                  if (_frost <= 0)
                  {
                      _frost = 0;
@@ -173,10 +177,14 @@ public class GameManager : MonoBehaviour
              case true when !_player.returnTorchState():
              {
                  _frost += Time.deltaTime;
+                 _curOpacity += 0.01f * Time.deltaTime;
+                 frostTexture.SetFloat("_Opacity",_curOpacity ); 
                  if (_frost >= maxFrost)
                  {
-                     StartCoroutine(_player.LookatDeath());
                      _frost = 0;
+                     frostTexture.SetFloat("_Opacity",0 ); 
+
+                     StartCoroutine(_player.LookatDeath());
                  }
 
                  break;

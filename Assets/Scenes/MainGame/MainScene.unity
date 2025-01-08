@@ -510,6 +510,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1860055559444709653, guid: 74af5e596116d8a458a1e13ec24d0203,
+        type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6026581397000444931, guid: 74af5e596116d8a458a1e13ec24d0203,
         type: 3}
       propertyPath: player
@@ -1217,7 +1222,7 @@ PrefabInstance:
     - target: {fileID: 2663862701929498783, guid: be063c56650e85b4eb735cfd44234ee5,
         type: 3}
       propertyPath: sprintSpeed
-      value: 1.5
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 2663862701929498783, guid: be063c56650e85b4eb735cfd44234ee5,
         type: 3}
@@ -2609,6 +2614,7 @@ MonoBehaviour:
   Fuel: {fileID: 8266241314038867389, guid: fce6ce3c65a480949bd51ec38c3236c6, type: 3}
   minItems: 5
   maxFrost: 200
+  frostTexture: {fileID: 2100000, guid: d8fcb42a126ee60429873b0f30b0249a, type: 2}
   _player: {fileID: 1271478420}
 --- !u!4 &1949689918
 Transform:
