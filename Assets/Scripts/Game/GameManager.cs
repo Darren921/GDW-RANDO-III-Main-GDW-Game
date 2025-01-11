@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Frost")]
     bool isFreezing;
-    private float _frost;
+    [SerializeField]private float _frost;
     [SerializeField] private float maxFrost;
     [SerializeField] private Material frostTexture;
     private float _curOpacity;
@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
         RandomNum = new List<int>();
         for (var i = 0; i < ItemSpawnPoints.Count; i++) RandomNum.Add(i);
         //use this to toggle off and on freezing in areas, maybe tut area?
-        isFreezing = true;
+       // isFreezing = true;
         _frost = 0;
         /*
         codePanel = FindObjectOfType<CodePanel>();
@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
         if (!active)
         {
             active = true;
-            if(fuelInScene < minItems && fuelInScene <= cap) 
+            if(fuelInScene < minItems && fuelInScene < cap ) 
             {
                 for (var k = 0; k <= ItemSpawnPoints.Count; k++)
                     if (fuelInScene < minItems)
@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour
                     }
             }
             
-            if (batteriesInScene <= targetB && batteriesInScene < minItems)
+            if (batteriesInScene <= targetB && batteriesInScene <= cap)
             {
                 for (var k = 0; k <= ItemSpawnPoints.Count; k++)
                     if (batteriesInScene < minItems)
@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour
                         if (batteriesInScene < minItems)
                         {
 
-                            if (!SpawnedList.Contains(index) && batteriesInScene < targetB)
+                            if (!SpawnedList.Contains(index) && batteriesInScene <= cap )
                             {
                                 var batteryPickup = Instantiate(Battery, ItemSpawnPoints[sortednum].transform.position,
                                     ItemSpawnPoints[sortednum].transform.rotation);
@@ -144,7 +144,7 @@ public class GameManager : MonoBehaviour
                     }
             }
 
-            Debug.Log($"Updated Fuel in Scene: {fuelInScene}, Updated Batteries in Scene: {batteriesInScene}");
+                Debug.Log($"Updated Fuel in Scene: {fuelInScene}, Updated Batteries in Scene: {batteriesInScene}");
             yield return new WaitForSeconds(10);
             active = false;
         }

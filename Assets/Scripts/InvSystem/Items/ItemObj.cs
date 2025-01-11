@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
+
 
     public enum ItemType
     {
+        Empty,
         Stun,
         Traps,
         Slow,
@@ -26,9 +29,9 @@ using UnityEngine;
     {
         public int Id;
         public Sprite uiDisplay;
-        public ItemType type;
+        public ItemType itemType;
         [TextArea(15, 20)] public string description;
-
+        public GameObject thisGameObject;
         public Item CreateItem()
         {
             Item newItem = new Item(this);
@@ -41,11 +44,14 @@ using UnityEngine;
     {
         public string Name;
         public int Id;
-
+        public Sprite icon;
+        public ItemType itemType;
         public Item(ItemObj item)
         {
             Name = item.name;
             Id = item.Id;
+            icon = item.uiDisplay;
+            itemType = item.itemType;
 
         }
     }
