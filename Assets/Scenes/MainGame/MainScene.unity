@@ -4154,6 +4154,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1949689918}
   - component: {fileID: 1949689917}
+  - component: {fileID: 1949689919}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -4173,9 +4174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7176baf43cc7d4041bcdbd394e998597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Battery: {fileID: 5002360986888236374, guid: c7834891679ef4247bea190951332a31, type: 3}
-  Fuel: {fileID: 8266241314038867389, guid: fce6ce3c65a480949bd51ec38c3236c6, type: 3}
-  minItems: 5
+  _frost: 0
   maxFrost: 200
   frostTexture: {fileID: 2100000, guid: d8fcb42a126ee60429873b0f30b0249a, type: 2}
   _player: {fileID: 1271478420}
@@ -4194,6 +4193,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1949689919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1949689916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c2805a3cf0f65242955852142e0ee19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Items:
+  - {fileID: 11400000, guid: be4b5b00e147cc340a4739e88b713cd1, type: 2}
+  - {fileID: 11400000, guid: 94df7c2a7f9463d49bfa753c30326bce, type: 2}
+  minItems: 5
 --- !u!1 &2002242809
 GameObject:
   m_ObjectHideFlags: 0

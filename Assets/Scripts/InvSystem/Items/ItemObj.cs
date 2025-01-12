@@ -46,13 +46,14 @@ using UnityEngine.Serialization;
         public int Id;
         public Sprite icon;
         public ItemType itemType;
+        public GameObject thisGameobject;
         public Item(ItemObj item)
         {
             Name = item.name;
             Id = item.Id;
             icon = item.uiDisplay;
             itemType = item.itemType;
-
+            thisGameobject = item.thisGameObject;
         }
     }
 

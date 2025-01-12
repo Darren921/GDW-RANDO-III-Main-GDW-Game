@@ -13,8 +13,6 @@ public class Enemy : MonoBehaviour
     NavMeshAgent _Agent;
     bool _IsActive = true;
     public bool _IsHunting = false;
-  
-
     public bool Spotted;
     // Start is called before the first frame update
     void Start()
@@ -51,14 +49,11 @@ public class Enemy : MonoBehaviour
         {
             _Agent.SetDestination(gameObject.transform.position);
         }
-
-
     }
     private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Player")
         {
-            
             Spotted = true;
         }
     }
@@ -87,7 +82,6 @@ public class Enemy : MonoBehaviour
     {
         _IsActive = false;
         NavMeshHit hit;
-        
         Vector3 BasicDestination = new Vector3(Random.Range(-219, 85),0, Random.Range(-53, 150));
         NavMesh.SamplePosition(BasicDestination, out hit,40 , NavMesh.AllAreas);
         Vector3 Endpoint = hit.position;
