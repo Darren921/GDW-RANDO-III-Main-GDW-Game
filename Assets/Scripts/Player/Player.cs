@@ -79,7 +79,6 @@ public class Player : MonoBehaviour
     private bool CheckActive;
     private bool IsLooking;
     [SerializeField] Slider FlashlightSlider;
-    [SerializeField]LayerMask CollisionLayer;
     private float slotNumber;
 
     void Start()
@@ -155,6 +154,10 @@ public class Player : MonoBehaviour
 
     public void CheckIfActive()
     {
+        
+        
+        
+        
         if (flashlightSource == null)
         {
             flashlightActive = GameObject.Find("Spot Light");
@@ -422,6 +425,7 @@ public class Player : MonoBehaviour
     public void ChangeItem(float slot)
     {
          slotNumber = slot;
+         
         switch (slotNumber)
         {
             case 1:

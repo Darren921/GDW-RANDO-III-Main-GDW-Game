@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
         _curOpacity = -1;
      
         //use this to toggle off and on freezing in areas, maybe tut area?
-       // isFreezing = true;
+        isFreezing = true;
         _frost = 0;
         /*
         codePanel = FindObjectOfType<CodePanel>();
@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
              case true when _player.returnTorchState():
              {
                  _frost -= Time.deltaTime;
-                 _curOpacity -= 0.01f * Time.deltaTime;
+                 _curOpacity -= 0.02f * Time.deltaTime;
                  frostTexture.SetFloat("_Opacity",_curOpacity ); 
                  if (_frost <= 0)
                  {
@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
              case true when !_player.returnTorchState():
              {
                  _frost += Time.deltaTime;
-                 _curOpacity += 0.01f * Time.deltaTime;
+                 _curOpacity += 0.015f * Time.deltaTime;
                  frostTexture.SetFloat("_Opacity",_curOpacity ); 
                  if (_frost >= maxFrost)
                  {

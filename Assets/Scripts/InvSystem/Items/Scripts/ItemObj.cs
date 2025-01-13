@@ -4,13 +4,11 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 
-    public enum ItemType
+    public enum ItemTypes
     {
         Empty,
-        Stun,
+        Equipment,
         Traps,
-        Slow,
-        Distraction,
         CloseRange,
         LongRange,
         Consumable,
@@ -19,9 +17,9 @@ using UnityEngine.Serialization;
 
     public enum Attributes
     {
-        Agility,
-        Intellect,
-        Stamina,
+        Stun,
+        Distraction,
+        Slow,
         Strength
     }
 
@@ -29,9 +27,10 @@ using UnityEngine.Serialization;
     {
         public int Id;
         public Sprite uiDisplay;
-        public ItemType itemType;
+        public ItemTypes ItemType;
         [TextArea(15, 20)] public string description;
         public GameObject thisGameObject;
+        public int itemLimit;
         public Item CreateItem()
         {
             Item newItem = new Item(this);
@@ -45,15 +44,18 @@ using UnityEngine.Serialization;
         public string Name;
         public int Id;
         public Sprite icon;
-        public ItemType itemType;
+        public ItemTypes itemType;
         public GameObject thisGameobject;
+        public int ItemLimit;
         public Item(ItemObj item)
         {
             Name = item.name;
             Id = item.Id;
             icon = item.uiDisplay;
-            itemType = item.itemType;
+            itemType = item.ItemType;
             thisGameobject = item.thisGameObject;
+            ItemLimit = item.itemLimit;
+            
         }
     }
 
