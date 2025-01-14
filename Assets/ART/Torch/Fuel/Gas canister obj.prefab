@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5644028018655408290}
   - component: {fileID: 7617674794428679272}
   - component: {fileID: -7674378769609483141}
-  - component: {fileID: 2162978544430040563}
+  - component: {fileID: 4051718033622231155}
   m_Layer: 0
   m_Name: Gas canister obj
   m_TagString: Fuel
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 8266241314038867389}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 62.346153, y: 5.250099, z: 89.120255}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b14316e60d03f8e4d93fa34eb5161821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &2162978544430040563
+--- !u!65 &4051718033622231155
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -112,9 +112,9 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 7.435669, y: 2.0099518, z: 9.642975}
-  m_Center: {x: 0.31048584, y: 0.004975915, z: 0.5419769}
+  m_Size: {x: 2.0009801, y: 2.0099518, z: 7.9342527}
+  m_Center: {x: 0.0004900694, y: 0.004975915, z: 0.48976088}
