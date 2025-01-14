@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 0
   uiDisplay: {fileID: 0}
-  itemType: 7
+  ItemType: 5
   description: 
   thisGameObject: {fileID: 8266241314038867389, guid: fce6ce3c65a480949bd51ec38c3236c6,
     type: 3}
+  itemLimit: 5
