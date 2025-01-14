@@ -6,7 +6,7 @@ public class ConsumablesObj : ItemObj
 {
     private void Awake()
     {
-        ItemType = ItemTypes.Consumable;
+        itemType = ItemTypes.Consumable;
     }
 
 }

@@ -10,6 +10,6 @@ public class TestItemObj : ItemObj
 {
     private void Awake()
     {
-        ItemType = ItemTypes.Empty;
+        itemType = ItemTypes.Empty;
     }
 }

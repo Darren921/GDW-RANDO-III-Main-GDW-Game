@@ -10,7 +10,7 @@ public class EquipmentObj : ItemObj
     // Start is called before the first frame update
     void Awake()
     {
-        ItemType = ItemTypes.Equipment;
+        itemType = ItemTypes.Equipment;
     }
 
  

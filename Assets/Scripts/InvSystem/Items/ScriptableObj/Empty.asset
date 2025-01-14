@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bf50485aa4f2a84eaffaa2f77e309b3, type: 3}
   m_Name: Empty
   m_EditorClassIdentifier: 
-  Id: 0
+  id: 0
   uiDisplay: {fileID: 0}
-  itemType: 0
+  itemType: 5
   description: 
-  thisGameObject: {fileID: 0}
+  thisGameObject: {fileID: 8266241314038867389, guid: 27f6bdb5927c2054d8ed96102ab6cb15,
+    type: 3}
+  itemLimit: 5
+  itemRarity: 0.1

@@ -25,12 +25,13 @@ using UnityEngine.Serialization;
 
     public abstract class ItemObj : ScriptableObject
     {
-        public int Id;
+        public int id;
         public Sprite uiDisplay;
-        public ItemTypes ItemType;
+        public ItemTypes itemType;
         [TextArea(15, 20)] public string description;
         public GameObject thisGameObject;
         public int itemLimit;
+        public float itemRarity;
         public Item CreateItem()
         {
             Item newItem = new Item(this);
@@ -43,19 +44,20 @@ using UnityEngine.Serialization;
     {
         public string Name;
         public int Id;
-        public Sprite icon;
-        public ItemTypes itemType;
-        public GameObject thisGameobject;
+        public Sprite Icon;
+        public ItemTypes ItemType;
+        public GameObject ThisGameobject;
         public int ItemLimit;
+        public float ItemRarity;
         public Item(ItemObj item)
         {
             Name = item.name;
-            Id = item.Id;
-            icon = item.uiDisplay;
-            itemType = item.ItemType;
-            thisGameobject = item.thisGameObject;
+            Id = item.id;
+            Icon = item.uiDisplay;
+            ItemType = item.itemType;
+            ThisGameobject = item.thisGameObject;
             ItemLimit = item.itemLimit;
-            
+            ItemRarity = item.itemRarity;
         }
     }
 
