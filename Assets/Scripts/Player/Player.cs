@@ -35,7 +35,12 @@ public class Player : MonoBehaviour
     [Header("Death and Sounds")]
     [SerializeField] AudioSource sound;
     [SerializeField] CinemachineVirtualCamera cineCam;
-    public bool dead;
+
+    public bool dead
+    {
+        get;
+        private set;
+    }
     [SerializeField] GameObject enemylookat;
 
     //testing 
@@ -379,7 +384,7 @@ public class Player : MonoBehaviour
         //heartBeat.Play();
         //cineCam.Priority = 100;
         //sound.Play();
-        //yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(0.1f);
         InputManager.DisableInGame();
         yield return null;
         Cursor.lockState = CursorLockMode.None;
@@ -475,6 +480,7 @@ public class Player : MonoBehaviour
     {
         return torchActive;
     }
+    
 }
     
 

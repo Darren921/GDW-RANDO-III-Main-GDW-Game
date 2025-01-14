@@ -25,7 +25,7 @@ public class SpawnManager : MonoBehaviour
         RandomNum = new List<int>();
         for (var i = 0; i < ItemSpawnPoints.Count; i++) RandomNum.Add(i);
     }
-   private IEnumerator itemSpawn(ItemObj[] item, int amount, int cap)
+   private IEnumerator itemSpawn(ItemObj[] item, int amount)
 {
     if (active) yield break;
 
@@ -35,7 +35,7 @@ public class SpawnManager : MonoBehaviour
     {
         var tag = item[i].thisGameObject.tag;
         var curItemCount = GameObject.FindGameObjectsWithTag(tag).Length;
-        
+        int cap = item[i].itemLimit;
         
         if (curItemCount < cap && curItemCount < minItems)
         {
@@ -51,17 +51,26 @@ public class SpawnManager : MonoBehaviour
             {
                 if (curItemCount >= cap || spawnCount >= amount) break;
 
-                var pickup = Instantiate(
-                    item[i].thisGameObject,
-                    ItemSpawnPoints[sortednum].transform.position,
-                    ItemSpawnPoints[sortednum].transform.rotation
-                );
+                if (Physics.Raycast(ItemSpawnPoints[sortednum].transform.position, Vector3.down, out RaycastHit hit,
+                        Mathf.Infinity))
+                {
+                    var pickUp = Instantiate(item[i].thisGameObject,ItemSpawnPoints[sortednum].transform.position, ItemSpawnPoints[sortednum].transform.rotation);
+                    
+                    var Collider = pickUp.GetComponent<Collider>();
+                    if (Collider is not null)
+                    {
+                        float objHeight = Collider.bounds.extents.y;
+                        pickUp.transform.position = hit.point + Vector3.up * objHeight;
+                    }
+                    
+                    SpawnedList.Add(sortednum);
+                    trackedIndexs.Add(sortednum);
+                    spawnCount++; 
 
-                pickup.GetComponent<Tracker>().tracker = sortednum;
-                SpawnedList.Add(sortednum);
-                trackedIndexs.Add(sortednum);
-                spawnCount++; 
 
+                }
+
+            
                 // Update item count only after spawning
                 curItemCount = GameObject.FindGameObjectsWithTag(tag).Length;
             }
@@ -87,9 +96,9 @@ public class SpawnManager : MonoBehaviour
         {
             if (firstSpawn)
             {
-                StartCoroutine(itemSpawn(Items, minItems, 5));
+                StartCoroutine(itemSpawn(Items, minItems));
             }
-            StartCoroutine(itemSpawn(Items,1,5));
+            StartCoroutine(itemSpawn(Items,1));
         }
     }
 }

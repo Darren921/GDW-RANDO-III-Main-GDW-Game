@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
+    private static readonly int Opacity = Shader.PropertyToID("_Opacity");
     //  [SerializeField]private float Timer;
     // [SerializeField] TextMeshProUGUI TimerDisplay;
     //  [SerializeField] Enemy monsterAI;
@@ -69,7 +71,7 @@ public class GameManager : MonoBehaviour
              {
                  _frost -= Time.deltaTime;
                  _curOpacity -= 0.02f * Time.deltaTime;
-                 frostTexture.SetFloat("_Opacity",_curOpacity ); 
+                 frostTexture.SetFloat(Opacity,_curOpacity ); 
                  if (_frost <= 0)
                  {
                      _frost = 0;
@@ -81,20 +83,23 @@ public class GameManager : MonoBehaviour
              {
                  _frost += Time.deltaTime;
                  _curOpacity += 0.015f * Time.deltaTime;
-                 frostTexture.SetFloat("_Opacity",_curOpacity ); 
-                 if (_frost >= maxFrost)
+                 frostTexture.SetFloat(Opacity,_curOpacity ); 
+                 if (_frost >= maxFrost || _player.dead)
                  {
+                     frostTexture.SetFloat(Opacity,-1 ); 
                      _frost = 0;
-                     frostTexture.SetFloat("_Opacity",0 ); 
 
                      StartCoroutine(_player.LookatDeath());
                  }
 
                  break;
              }
+
+                
          }
 
-
+      
+ 
          /*
         float minutes = Mathf.FloorToInt(Timer / 60f);
         float seconds = Mathf.FloorToInt(Timer - minutes * 60);
@@ -109,6 +114,11 @@ public class GameManager : MonoBehaviour
         }
         */
     }
+    void OnApplicationQuit()
+    {
+        if(frostTexture is null) return;
+        frostTexture.SetFloat(Opacity,-1 ); 
+        _frost = 0;
+    }
 
-   
 }
