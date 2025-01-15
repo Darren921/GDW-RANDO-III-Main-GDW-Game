@@ -65,6 +65,7 @@ public class Player : MonoBehaviour
     //Item switching 
     [Header("Item switching ")]
     private int _slotNumber;
+    
     [SerializeField] GameObject Flashlight,Torch,flashlightSource,torchSource;
     //Torch 
     private bool torchActive,flashlightActive;
