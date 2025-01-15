@@ -6,12 +6,12 @@ using UnityEngine;
 public class Tracker : MonoBehaviour
 {
    internal int tracker;
-   private SpawnManager _spawnManager;
+   GameManager gm;
    private void Start()
    {
       if (this != null)
-      { 
-         _spawnManager = FindObjectOfType<SpawnManager>();
+      {
+         gm = FindObjectOfType<GameManager>();
       }
    }
 
@@ -21,18 +21,20 @@ public class Tracker : MonoBehaviour
       switch (tag)
       {
          case "Fuel":
-            if (_spawnManager.trackedIndexs.Contains(tracker))
+            if (gm.trackedIndexs.Contains(tracker))
             {
-               _spawnManager.SpawnedList.Remove(tracker);
-               _spawnManager.trackedIndexs.Remove(tracker);
+               gm.SpawnedList.Remove(tracker);
+               gm.trackedIndexs.Remove(tracker);
+               gm.fuelInScene--;
             }
             break;
             
          case "Batteries":
-            if (_spawnManager.trackedIndexs.Contains(tracker))
+            if (gm.trackedIndexs.Contains(tracker))
             {
-               _spawnManager.SpawnedList.Remove(tracker);
-               _spawnManager.trackedIndexs.Remove(tracker);
+               gm.SpawnedList.Remove(tracker);
+               gm.trackedIndexs.Remove(tracker);
+               gm.batteriesInScene--;
             }
             break;
       }
