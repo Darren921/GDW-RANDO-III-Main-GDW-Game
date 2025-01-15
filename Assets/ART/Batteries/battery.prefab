@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7403522078315388358}
   - component: {fileID: 6279397644738052738}
   - component: {fileID: 8135040867087377766}
-  - component: {fileID: 5675853093275206621}
+  - component: {fileID: 5504682954436233639}
   m_Layer: 0
   m_Name: battery
   m_TagString: Batteries
@@ -29,11 +29,10 @@ Transform:
   m_GameObject: {fileID: 5002360986888236374}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.275, y: 0.275, z: 0.275}
+  m_LocalPosition: {x: 24.951, y: 5.158, z: -25.25}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 5329409175974914661}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7403522078315388358
@@ -98,66 +97,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b14316e60d03f8e4d93fa34eb5161821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &5675853093275206621
+--- !u!65 &5504682954436233639
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5002360986888236374}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.3238909, y: 1.3238909, z: 3.5790195}
-  m_Center: {x: 0, y: 0, z: 1.0888286}
---- !u!1 &8660889051695701892
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5329409175974914661}
-  - component: {fileID: 7726252969949228328}
-  m_Layer: 0
-  m_Name: Collider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5329409175974914661
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8660889051695701892}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3429100929140993587}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &7726252969949228328
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8660889051695701892}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2

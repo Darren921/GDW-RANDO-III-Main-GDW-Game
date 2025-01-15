@@ -14,7 +14,6 @@ TagManager:
   - Enemy
   - FlashLight
   - hidingSpot
-  - TestObj
   layers:
   - Default
   - TransparentFX

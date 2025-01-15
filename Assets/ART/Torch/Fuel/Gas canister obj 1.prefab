@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2162978544430040563}
   m_Layer: 0
   m_Name: Gas canister obj 1
-  m_TagString: TestObj
+  m_TagString: Batteries
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
