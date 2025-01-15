@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e8ba416a5486624c913c9424fb1ec7d, type: 3}
   m_Name: Batteries
   m_EditorClassIdentifier: 
-  Id: 0
+  id: 0
   uiDisplay: {fileID: 0}
   itemType: 7
   description: 
   thisGameObject: {fileID: 5002360986888236374, guid: c7834891679ef4247bea190951332a31,
     type: 3}
+  itemLimit: 5
+  itemRarity: 0.5

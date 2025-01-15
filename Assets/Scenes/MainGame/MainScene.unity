@@ -4208,7 +4208,7 @@ MonoBehaviour:
   Items:
   - {fileID: 11400000, guid: be4b5b00e147cc340a4739e88b713cd1, type: 2}
   - {fileID: 11400000, guid: 94df7c2a7f9463d49bfa753c30326bce, type: 2}
-  minItems: 5
+  MaxItems: 10
 --- !u!1 &2002242809
 GameObject:
   m_ObjectHideFlags: 0

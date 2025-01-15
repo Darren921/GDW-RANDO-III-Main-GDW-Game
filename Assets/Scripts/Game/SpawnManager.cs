@@ -1,21 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     [Header("SpawnManager")]
     [SerializeField] private ItemObj[] Items;
-    [SerializeField] private float minItems;
+    [SerializeField] private int MaxItems;
     private List<GameObject> ItemSpawnPoints;
     private List<int> RandomNum;
     internal List<int> SpawnedList;
     internal List<int> trackedIndexs;
     private bool active;
     private bool firstSpawn;
-    // Start is called before the first frame update
+
     void Start()
     {
-        // minItems = 5;
+        firstSpawn = true;
         trackedIndexs = new List<int>();
         SpawnedList = new List<int>();
         ItemSpawnPoints = new List<GameObject>();
@@ -23,58 +24,121 @@ public class SpawnManager : MonoBehaviour
         RandomNum = new List<int>();
         for (var i = 0; i < ItemSpawnPoints.Count; i++) RandomNum.Add(i);
     }
-    private IEnumerator itemSpawn(ItemObj[] item, int amount, int cap)
+    
+    private IEnumerator itemSpawn(ItemObj[] item, int amount)
     {
         if (active) yield break;
 
         active = true;
+      
+        int spawnCount = 0; // Total spawned items during this cycle
 
-        for (int i = 0; i < item.Length; i++)
+        for (int i = 0; i < item.Length && SpawnedList.Count < MaxItems; i++)
         {
             var tag = item[i].thisGameObject.tag;
             var curItemCount = GameObject.FindGameObjectsWithTag(tag).Length;
+            var cap = item[i].itemLimit;
 
-            // Ensure item count does not exceed limits
-            if (curItemCount < cap && curItemCount <= minItems)
+            if (curItemCount < cap && SpawnedList.Count < MaxItems)
             {
-                int spawnCount = 0; // Track the number of items spawned in this cycle
-
-                for (var k = 0; k < ItemSpawnPoints.Count && spawnCount < amount; k++)
+                // get available spawn points, and randomize them
+                var availableSpawns = RandomNum.Except(SpawnedList).OrderBy(x => Random.value).ToList();
+                if (availableSpawns.Count == 0)
                 {
-                    if (curItemCount >= cap) break;
+                    Debug.LogWarning("No available spawn points!");
+                    break;
+                }
 
-                    var index = Random.Range(0, RandomNum.Count);
-                    var sortednum = RandomNum[index];
+                foreach (var spawn in availableSpawns)
+                {
+                    if (curItemCount >= cap || spawnCount >= amount || SpawnedList.Count >= MaxItems) break;
 
-                    if (!SpawnedList.Contains(index))
+                    float SpawnChance = Random.value;
+                    if (SpawnChance <= item[i].itemRarity)
                     {
-                        // Spawn the item
+                        if (Physics.Raycast(ItemSpawnPoints[spawn].transform.position, Vector3.down, out RaycastHit hit, Mathf.Infinity))
+                        {
+                            var pickup = Instantiate(
+                                item[i].thisGameObject,
+                                ItemSpawnPoints[spawn].transform.position,
+                                ItemSpawnPoints[spawn].transform.rotation
+                            );
+                            var collider = pickup.GetComponent<Collider>();
+                            if (collider is not null)
+                            {
+                                float objHeight = collider.bounds.extents.y;
+                                pickup.transform.position = hit.point + Vector3.up * objHeight;
+                            }
+
+                            pickup.GetComponent<Tracker>().tracker = spawn;
+                            SpawnedList.Add(spawn);
+                            trackedIndexs.Add(spawn);
+                            spawnCount++;
+                            curItemCount = GameObject.FindGameObjectsWithTag(tag).Length;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log($"Skipping spawn for tag {tag} (Current count: {curItemCount}, Cap: {cap})");
+            }
+            if (curItemCount < cap && SpawnedList.Count < MaxItems)
+            {
+                // get available spawn points, and randomize them
+                var availableSpawns = RandomNum.Except(SpawnedList).OrderBy(x => Random.value).ToList();
+                if (availableSpawns.Count == 0)
+                {
+                    Debug.LogWarning("No available spawn points!");
+                    break;
+                }
+
+                foreach (var spawn in availableSpawns)
+                {
+                    Debug.Log("Fallback activated, filling in leftover items");
+                    if (curItemCount >= cap || spawnCount >= amount || SpawnedList.Count >= MaxItems) break;
+
+
+                    if (Physics.Raycast(ItemSpawnPoints[spawn].transform.position, Vector3.down, out RaycastHit hit,
+                            Mathf.Infinity))
+                    {
                         var pickup = Instantiate(
                             item[i].thisGameObject,
-                            ItemSpawnPoints[sortednum].transform.position,
-                            ItemSpawnPoints[sortednum].transform.rotation
+                            ItemSpawnPoints[spawn].transform.position,
+                            ItemSpawnPoints[spawn].transform.rotation
                         );
+                        var collider = pickup.GetComponent<Collider>();
+                        if (collider is not null)
+                        {
+                            float objHeight = collider.bounds.extents.y;
+                            pickup.transform.position = hit.point + Vector3.up * objHeight;
+                        }
 
-                        pickup.GetComponent<Tracker>().tracker = sortednum;
-                        SpawnedList.Add(sortednum);
-                        trackedIndexs.Add(sortednum);
-                        spawnCount++; // Increment spawn count
+                        pickup.GetComponent<Tracker>().tracker = spawn;
+                        SpawnedList.Add(spawn);
+                        trackedIndexs.Add(spawn);
+                        spawnCount++;
                         curItemCount = GameObject.FindGameObjectsWithTag(tag).Length;
+
                     }
                 }
             }
         }
-
-        yield return new WaitForSeconds(10);
+        Debug.Log($"Spawning complete. Total items spawned: {spawnCount}/{amount}.");
+        yield return new WaitForSeconds(15);
         active = false;
+        firstSpawn = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!active)
         {
-            StartCoroutine(itemSpawn(Items,1,5));
+            if (firstSpawn)
+            {
+                StartCoroutine(itemSpawn(Items,MaxItems));
+            }
+            StartCoroutine(itemSpawn(Items, 1));
         }
     }
 }

@@ -7,14 +7,9 @@ using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
-    //  [SerializeField]private float Timer;
-    // [SerializeField] TextMeshProUGUI TimerDisplay;
-    //  [SerializeField] Enemy monsterAI;
+ 
+    private static readonly int Opacity = Shader.PropertyToID("_Opacity");
     
-    
-    
-   
-
     [Header("Frost")]
     bool isFreezing;
     [SerializeField]private float _frost;
@@ -31,32 +26,10 @@ public class GameManager : MonoBehaviour
         _curOpacity = -1;
      
         //use this to toggle off and on freezing in areas, maybe tut area?
-       // isFreezing = true;
+         isFreezing = true;
         _frost = 0;
-        /*
-        codePanel = FindObjectOfType<CodePanel>();
-        for (int j = 0; j < 4; j++)
-        {
-            comboNums.Add(Random.Range(0,9));
-        }
-
-        foreach(int values in comboNums)
-        {
-            print(values);
-        }
-
-        foreach (var item in comboNums)
-        {
-            codePanel.comboNumstemp.Add(item);
-        }
-        */
-        //  Timer = 240;
+      
     }
-    
-
-   
-
-
     private void Update()
     {
        
@@ -69,7 +42,7 @@ public class GameManager : MonoBehaviour
              {
                  _frost -= Time.deltaTime;
                  _curOpacity -= 0.01f * Time.deltaTime;
-                 frostTexture.SetFloat("_Opacity",_curOpacity ); 
+                 frostTexture.SetFloat(Opacity,_curOpacity ); 
                  if (_frost <= 0)
                  {
                      _frost = 0;
@@ -81,11 +54,11 @@ public class GameManager : MonoBehaviour
              {
                  _frost += Time.deltaTime;
                  _curOpacity += 0.01f * Time.deltaTime;
-                 frostTexture.SetFloat("_Opacity",_curOpacity ); 
+                 frostTexture.SetFloat(Opacity,_curOpacity ); 
                  if (_frost >= maxFrost)
                  {
                      _frost = 0;
-                     frostTexture.SetFloat("_Opacity",0 ); 
+                     frostTexture.SetFloat(Opacity,0 ); 
 
                      StartCoroutine(_player.LookatDeath());
                  }
@@ -94,20 +67,13 @@ public class GameManager : MonoBehaviour
              }
          }
 
-
-         /*
-        float minutes = Mathf.FloorToInt(Timer / 60f);
-        float seconds = Mathf.FloorToInt(Timer - minutes * 60);
-        string displayTime = string.Format("{0:00}:{1:00}", minutes, seconds);
-        TimerDisplay.text = "Time till the HUNT: " + displayTime;
-        Timer -= Time.deltaTime;
-        if (Timer <= 0)
-        {
-            Timer = 0;
-            TimerDisplay.text = "YOU CAN'T HIDE!";
-            monsterAI._IsHunting = true;
-        }
-        */
+        
+    }
+    void OnApplicationQuit()
+    {
+        if(frostTexture is null) return;
+        frostTexture.SetFloat(Opacity,-1 ); 
+        _frost = 0;
     }
 
    
