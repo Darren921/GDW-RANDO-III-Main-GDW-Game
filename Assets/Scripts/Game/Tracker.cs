@@ -7,11 +7,13 @@ public class Tracker : MonoBehaviour
 {
    internal int tracker;
    private SpawnManager _spawnManager;
+   private Player _player;
    private void Start()
    {
       if (this != null)
       { 
          _spawnManager = FindObjectOfType<SpawnManager>();
+         _player = FindObjectOfType<Player>();
       }
    }
 
@@ -37,7 +39,6 @@ public class Tracker : MonoBehaviour
             break;
       }
         
-      Destroy(gameObject,0.1f);
    }
 
    void Update()

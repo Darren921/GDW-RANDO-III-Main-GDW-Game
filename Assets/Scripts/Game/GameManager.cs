@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        _curOpacity = -1;
+        _curOpacity = -0.7f;
      
         //use this to toggle off and on freezing in areas, maybe tut area?
          isFreezing = true;
@@ -38,10 +38,10 @@ public class GameManager : MonoBehaviour
          {
              case false:
                  return;
-             case true when _player.returnTorchState():
+             case true when _player.returnTorchState() && !_player.dead:
              {
                  _frost -= Time.deltaTime;
-                 _curOpacity -= 0.01f * Time.deltaTime;
+                 _curOpacity -= 0.015f * Time.deltaTime;
                  frostTexture.SetFloat(Opacity,_curOpacity ); 
                  if (_frost <= 0)
                  {
@@ -50,21 +50,33 @@ public class GameManager : MonoBehaviour
 
                  break;
              }
-             case true when !_player.returnTorchState():
+             case true when !_player.returnTorchState() && (!_player.dead):
              {
-                 _frost += Time.deltaTime;
-                 _curOpacity += 0.01f * Time.deltaTime;
-                 frostTexture.SetFloat(Opacity,_curOpacity ); 
-                 if (_frost >= maxFrost)
                  {
-                     _frost = 0;
-                     frostTexture.SetFloat(Opacity,0 ); 
+                     _frost += Time.deltaTime;
+                     _curOpacity += 0.01f * Time.deltaTime;
 
-                     StartCoroutine(_player.LookatDeath());
+                     frostTexture.SetFloat(Opacity, _curOpacity);
+                     if (_frost >= maxFrost)
+                     {
+                         frostTexture.SetFloat(Opacity, -0.7f);
+                         _player.dead = true;
+                         
+                         if (_player.dead)
+                         {
+                             StartCoroutine(_player.LookatDeath());
+
+                         }
+                     }
+                     
+
+                     break;
                  }
-
-                 break;
              }
+           
+             
+                 
+             
          }
 
         

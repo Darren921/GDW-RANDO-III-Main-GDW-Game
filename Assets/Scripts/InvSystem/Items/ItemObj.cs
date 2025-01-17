@@ -7,22 +7,19 @@ using UnityEngine.Serialization;
     public enum ItemType
     {
         Empty,
-        Stun,
         Traps,
-        Slow,
-        Distraction,
-        CloseRange,
-        LongRange,
         Consumable,
-        Throwable,
+        Equipment,
     }
 
     public enum Attributes
     {
-        Agility,
-        Intellect,
-        Stamina,
-        Strength
+        Stun,
+        Slow,
+        Distraction,
+        Throwable,
+        CloseRange,
+        LongRange,
     }
 
     public abstract class ItemObj : ScriptableObject

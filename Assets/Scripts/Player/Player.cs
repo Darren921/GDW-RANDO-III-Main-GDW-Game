@@ -65,8 +65,8 @@ public class Player : MonoBehaviour
     //Item switching 
     [Header("Item switching ")]
     private int _slotNumber;
-    
-    [SerializeField] GameObject Flashlight,Torch,flashlightSource,torchSource;
+
+    [SerializeField] private EquipmentBase[] _equipmentBases;
     //Torch 
     private bool torchActive,flashlightActive;
     private float fuelLeft;
@@ -93,10 +93,6 @@ public class Player : MonoBehaviour
        _chargeleft = 150;
        _capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
        _enemy = FindObjectOfType<Enemy>();
-       Flashlight.SetActive(false);
-       Torch.SetActive(false);
-       flashlightSource.SetActive(false);
-       torchSource.SetActive(false);
        playerCam = gameObject.GetComponentInChildren<Camera>();
         rb = GetComponent<Rigidbody>();
         InputManager.Init(this);
@@ -126,7 +122,7 @@ public class Player : MonoBehaviour
         //sprinting
         CheckSprint();
         
-        if (_chargeleft > 0 && flashlightActive)
+        /*if (_chargeleft > 0 && flashlightActive)
         {
             _chargeleft -= Time.deltaTime;
         }
@@ -144,69 +140,23 @@ public class Player : MonoBehaviour
             flashlightSource.SetActive(false);
             flashlightActive = false;
 
-        }
+        }*/
         
         
     }
 
   
-    
-   
-
     public void CheckIfActive()
     {
-        if (flashlightSource == null)
-        {
-            flashlightActive = GameObject.Find("Spot Light");
-        }
-       // print("working");
-        if (_equipedTorch )
-        {
-           torchActive = !torchActive;
-           if (fuelLeft > 0)
-           {
-               if (torchActive && !CheckActive)
-               {
-                   CheckActive = true;
-                   torchSource.SetActive(true);
-                   StartCoroutine(CheckCharge("Torch")) ;
-               }
-               else
-               {
-                   torchSource.SetActive(false);
-               }
-           }
-           else
-           {
-               torchSource.SetActive(false);
-           }
-        }
-        if (_equipedFlashlight)
-        {
-            flashlightActive = !flashlightActive;
-            if (_chargeleft > 0)
-            {
-                if (flashlightActive && !CheckActive)
-                {
-                    CheckActive = true;
-                    flashlightSource.SetActive(true);
-                   StartCoroutine(CheckCharge("Flashlight")) ;
-                }
-                else
-                {
-                   
-                    flashlightSource.SetActive(false);
-
-                }
-            }
-            else
-            {
-                flashlightSource.SetActive(false);
-            }
-        }
+       
     }
 
-    private IEnumerator CheckCharge(string item)
+   
+
+    
+ 
+
+    /*private IEnumerator CheckCharge(string item)
     {
         if (item == "Flashlight")
         {
@@ -220,7 +170,7 @@ public class Player : MonoBehaviour
             CheckActive = false;
 
         }
-    }
+    }*/
 
     private void FixedUpdate()
     {
@@ -422,33 +372,31 @@ public class Player : MonoBehaviour
     public void ChangeItem(float slot)
     {
          slotNumber = slot;
-        switch (slotNumber)
+         var convert = (int)slot;
+         for (int i = 0; i < slotNumber; i++)
+         {
+             if (!_equipmentBases[i].equipped)
+             {
+                 _equipmentBases[convert].baseObj.gameObject.SetActive(false);
+                 _equipmentBases[convert].lightObj.enabled = false;
+                 _equipmentBases[convert].checkActive = false;
+                 _equipmentBases[convert].equipped = false;
+             }
+         }
+         _equipmentBases[convert].baseObj.gameObject.SetActive(true);
+         _equipmentBases[convert].lightObj.enabled = false;
+         _equipmentBases[convert].checkActive = true;
+         _equipmentBases[convert].equipped = true;
+         
+    }
+
+    public void checkIfActive()
+    {
+        for (int i = 0; i < _equipmentBases.Length; i++)
         {
-            case 1:
-               // print("equipped flashlight");
-                _equipedFlashlight = true;
-                _equipedTorch = false;
-                torchActive = false;
-                flashlightActive = false;
-                flashlightSource.SetActive(false);
-                Flashlight.gameObject.SetActive(true);
-                torchSource.gameObject.SetActive(false);
-                Torch.gameObject.SetActive(false);
-                break;
-            case 2:
-             //   print("equipped torch");
-                _equipedTorch = true;
-                _equipedFlashlight = false;
-                flashlightActive = false;
-                torchActive = false;
-                torchSource.gameObject.SetActive(false);
-                Torch.gameObject.SetActive(true);
-                flashlightSource.SetActive(false);
-                Flashlight.gameObject.SetActive(false);
-                break;
+            _equipmentBases[i].checkActive = true;
         }
     }
-        
    
     public void stopWalkingSound()
     {

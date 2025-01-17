@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -49,7 +50,7 @@ public class InputManager : MonoBehaviour
         };
         controls.InGame.ItemSwap.performed += _ =>
         {
-            player.ChangeItem(_.ReadValue<float>());
+            player.ChangeItem(_.ReadValue<Single>());
         };
         controls.InGame.OffOn.performed += _ =>
         {
