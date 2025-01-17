@@ -1,6 +1,7 @@
 using System;
 using Cinemachine;
 using System.Collections;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -66,7 +67,7 @@ public class Player : MonoBehaviour
     [Header("Item switching ")]
     private int _slotNumber;
 
-    [SerializeField] private EquipmentBase[] _equipmentBases;
+    [SerializeField] internal List<EquipmentBase>  _equipmentBases;
     //Torch 
     private bool torchActive,flashlightActive;
     private float fuelLeft;
@@ -75,22 +76,18 @@ public class Player : MonoBehaviour
 
     //Flashlight
     private bool _equipedTorch, _equipedFlashlight;
-    private float _chargeleft;
-    private bool CheckActive;
-    private bool IsLooking;
     [SerializeField] Slider FlashlightSlider;
-    [SerializeField]LayerMask CollisionLayer;
-    private float slotNumber;
+    private int CurrentSlot;
 
     void Start()
     {
-        slotNumber = 1;
+        CurrentSlot = -1;
+
         //turn on and off when needed
        // torchActive = true;
        //fuelLeft = 500;
       // fuelLeft = 100;
       fuelLeft = 50;
-       _chargeleft = 150;
        _capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
        _enemy = FindObjectOfType<Enemy>();
        playerCam = gameObject.GetComponentInChildren<Camera>();
@@ -146,10 +143,7 @@ public class Player : MonoBehaviour
     }
 
   
-    public void CheckIfActive()
-    {
-       
-    }
+  
 
    
 
@@ -264,35 +258,20 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        switch (other.tag)
+        var curItem = _equipmentBases[CurrentSlot];
+        if (other.CompareTag("Exit"))
         {
-           
-            case "Batteries":
-                if (_chargeleft < 150)
-                {
-                    _chargeleft += 30;
-                    if (_chargeleft > 150)
-                    {
-                        _chargeleft = 150;
-                    }
-                }
-                break;
-            case "Fuel":
-                if ( fuelLeft < 100)
-                {
-                    fuelLeft += 25;
-                    if (fuelLeft > 100)
-                    {
-                        fuelLeft = 100;
-                    }
-                }
-                break;
-            case "Exit":
-                SceneManager.LoadScene("NewMainMenu");
-                Cursor.lockState = CursorLockMode.None;
-
-                break;
+            SceneManager.LoadScene("NewMainMenu");
+            Cursor.lockState = CursorLockMode.None;
         }
+
+        if (other.CompareTag("Batteries") || other.CompareTag("Fuel"))
+        {
+            _equipmentBases[CurrentSlot].LimitCheck(other.gameObject);
+        }
+               
+              
+        
 
     }
 
@@ -371,30 +350,38 @@ public class Player : MonoBehaviour
     
     public void ChangeItem(float slot)
     {
-         slotNumber = slot;
-         var convert = (int)slot;
-         for (int i = 0; i < slotNumber; i++)
-         {
-             if (!_equipmentBases[i].equipped)
-             {
-                 _equipmentBases[convert].baseObj.gameObject.SetActive(false);
-                 _equipmentBases[convert].lightObj.enabled = false;
-                 _equipmentBases[convert].checkActive = false;
-                 _equipmentBases[convert].equipped = false;
-             }
+        
+         var slotNumber = (int)slot - 1;
+         if(CurrentSlot == slotNumber){
+             return;
          }
-         _equipmentBases[convert].baseObj.gameObject.SetActive(true);
-         _equipmentBases[convert].lightObj.enabled = false;
-         _equipmentBases[convert].checkActive = true;
-         _equipmentBases[convert].equipped = true;
+         if (CurrentSlot != -1)
+         {
+             var curEquipped = _equipmentBases[CurrentSlot];
+             curEquipped.baseObj.gameObject.SetActive(false);
+             curEquipped.lightObj.SetActive(false);
+             curEquipped.equipped = false;
+             curEquipped.active = false;
+             curEquipped.checkActive = false;
+         }
+         var NewEquipped = _equipmentBases[slotNumber];
+         NewEquipped.baseObj.gameObject.SetActive(true);
+         NewEquipped.lightObj.SetActive(false);
+         NewEquipped.equipped = true;
+         NewEquipped.active = false;
          
+        CurrentSlot = slotNumber;
     }
 
     public void checkIfActive()
     {
-        for (int i = 0; i < _equipmentBases.Length; i++)
+        for (int i = 0; i < _equipmentBases.Count; i++)
         {
-            _equipmentBases[i].checkActive = true;
+         
+            if (_equipmentBases[i].equipped )
+            {
+                _equipmentBases[i].CheckIfActive();
+            }
         }
     }
    
@@ -414,11 +401,24 @@ public class Player : MonoBehaviour
             walking.Play();
         }
     }
-
     public bool returnTorchState()
     {
         return torchActive;
     }
+
+    public int returnTorchLocation()
+    {
+        for (int i = 0; i < _equipmentBases.Count; i++)
+        {
+            if (_equipmentBases[i].name.Contains("Torch"))
+            {
+                return i;
+            }
+        }
+        Debug.Log("shut");
+        return -1;
+    }
+   
 }
     
 

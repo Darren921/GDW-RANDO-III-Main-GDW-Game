@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float maxFrost;
     [SerializeField] private Material frostTexture;
     private float _curOpacity;
+    private bool TorchCheck;
     
     
     [Header("References")]
@@ -28,7 +29,7 @@ public class GameManager : MonoBehaviour
         //use this to toggle off and on freezing in areas, maybe tut area?
          isFreezing = true;
         _frost = 0;
-      
+
     }
     private void Update()
     {
@@ -38,8 +39,10 @@ public class GameManager : MonoBehaviour
          {
              case false:
                  return;
-             case true when _player.returnTorchState() && !_player.dead:
+             case true when _player._equipmentBases[_player.returnTorchLocation()].torchActive && !_player.dead:
              {
+                // print(_player._equipmentBases[_player.returnTorchLocation()].torchActive);
+
                  _frost -= Time.deltaTime;
                  _curOpacity -= 0.015f * Time.deltaTime;
                  frostTexture.SetFloat(Opacity,_curOpacity ); 
@@ -50,7 +53,7 @@ public class GameManager : MonoBehaviour
 
                  break;
              }
-             case true when !_player.returnTorchState() && (!_player.dead):
+             case true when !_player._equipmentBases[_player.returnTorchLocation()].torchActive && (!_player.dead):
              {
                  {
                      _frost += Time.deltaTime;

@@ -1828,6 +1828,21 @@ PrefabInstance:
       propertyPath: maxSprintTime
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2663862701929498783, guid: be063c56650e85b4eb735cfd44234ee5,
+        type: 3}
+      propertyPath: _equipmentBases.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2663862701929498783, guid: be063c56650e85b4eb735cfd44234ee5,
+        type: 3}
+      propertyPath: _equipmentBases.Array.data[0]
+      value: 
+      objectReference: {fileID: 1265706531}
+    - target: {fileID: 2663862701929498783, guid: be063c56650e85b4eb735cfd44234ee5,
+        type: 3}
+      propertyPath: _equipmentBases.Array.data[1]
+      value: 
+      objectReference: {fileID: 2036734212}
     - target: {fileID: 2675755900709846574, guid: be063c56650e85b4eb735cfd44234ee5,
         type: 3}
       propertyPath: m_AnchorMax.x

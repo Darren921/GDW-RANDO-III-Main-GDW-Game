@@ -5,22 +5,40 @@ using UnityEngine;
 public class EquipmentBase : MonoBehaviour
 {
     [SerializeField]EquipmentObj equipmentObj;
-    private float Limit;
-    internal GameObject baseObj;
-    internal Light lightObj;
-    private float LimitLeft;
+    public float MaxLimit { get; private set; }
+    private GameObject baseObj;
+    internal GameObject lightObj;
+    private float LimitLeft { get; set; }
     internal bool equipped;
     internal bool active;
-
+    internal bool torchActive;
     internal bool checkActive;
+    private int refillAmount;
+    public EquipmentObj EquipmentObj { get { return equipmentObj; } }
+    TorchSlider.value = fuelLeft;
+    FlashlightSlider.value = _chargeleft;
     // Start is called before the first frame update
     void Start()
     {
+        MaxLimit = equipmentObj.Limit;
         LimitLeft = equipmentObj.Limit;
+        refillAmount = equipmentObj.refuel;
         baseObj = gameObject;
-        lightObj = baseObj.gameObject.GetComponentInChildren<Light>();
+        lightObj = FindChildWithNameContaining(baseObj.transform, "Light");
         baseObj.SetActive(false);
-        lightObj.enabled = false;
+        lightObj.SetActive(false);  
+    }
+    public GameObject FindChildWithNameContaining(Transform parent, string substring)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name.Contains(substring))
+            {
+                return child.gameObject; 
+            }
+        }
+
+        return null; 
     }
 
     // Update is called once per frame
@@ -31,19 +49,22 @@ public class EquipmentBase : MonoBehaviour
             LimitLeft -= Time.deltaTime;
         }
         
-        if(Limit < 0) 
-        { 
+        if(LimitLeft < 0)
+        {
+            LimitLeft = 0;
             active = false;
+            lightObj.SetActive(false);
         }
+        
     }
     
     public void CheckIfActive()
     {
         if (lightObj == null)
         {
-            lightObj = gameObject.GetComponentInChildren<Light>();
+            lightObj = gameObject.transform.Find("Light").gameObject;
         }
-        // print("working");
+         print("working");
         if (equipped )
         {
             active = !active;
@@ -51,27 +72,59 @@ public class EquipmentBase : MonoBehaviour
             {
                 if (active && !checkActive)
                 {
+                    print("Active");
+                    if (gameObject.name.Contains("Torch") )
+                    {
+                        torchActive = true;
+                    }
                     checkActive = true;
-                    lightObj.enabled = true;
                     StartCoroutine(CheckCharge()) ;
+                    lightObj.SetActive(true);
                 }
                 else
                 {
-                    lightObj.enabled = false;
+                    if (gameObject.name.Contains("Torch") )
+                    {
+                        torchActive = false;
+                    }
+                    active = false;
+                    lightObj.SetActive(false);
+                    
                 }
             }
             else
             {
-                lightObj.enabled = false;
+                if (gameObject.name.Contains("Torch") )
+                {
+                    torchActive = false;
+                }
+                active = false;
+                lightObj.SetActive(false);
+
             }
         }
      
     }
     private IEnumerator CheckCharge()
     {
-            yield return new WaitUntil(() => active == false );
+            yield return new WaitUntil(() => active == false || checkActive == false );
             checkActive = false;
     }
-    
-    
+
+
+    public void LimitCheck(GameObject other)
+    {
+        var totalRefillAmount = LimitLeft += refillAmount;
+        if (LimitLeft > MaxLimit)
+        {
+            LimitLeft = MaxLimit;
+            return;
+        }
+
+        if (LimitLeft < MaxLimit)
+        {
+            LimitLeft = totalRefillAmount;
+            Destroy(other.gameObject);
+        }
+    }
 }

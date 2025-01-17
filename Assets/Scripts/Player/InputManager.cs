@@ -55,7 +55,7 @@ public class InputManager : MonoBehaviour
         controls.InGame.OffOn.performed += _ =>
         {
             print(true);
-            player.CheckIfActive();
+            player.checkIfActive();
         };
 
     }
