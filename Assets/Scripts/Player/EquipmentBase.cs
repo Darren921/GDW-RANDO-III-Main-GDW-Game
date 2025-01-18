@@ -26,11 +26,14 @@ public class EquipmentBase : MonoBehaviour
     void Start()
     {
         _spawnManager = FindFirstObjectByType<SpawnManager>();
-        
-        //Values can be changed in equipmentObj in items (inv system)
-        MaxLimit = equipmentObj.Limit;
-        LimitLeft = equipmentObj.Limit;
-        refillAmount = equipmentObj.refuel;
+        if (equipmentObj is not null)
+        {
+            //Values can be changed in equipmentObj in items (inv system)
+            MaxLimit = equipmentObj.Limit;
+            LimitLeft = equipmentObj.Limit;
+            refillAmount = equipmentObj.refuel; 
+        }
+   
         
         baseObj = gameObject;
         lightObj = FindChildWithNameContaining(baseObj.transform, "Light");
@@ -44,6 +47,7 @@ public class EquipmentBase : MonoBehaviour
     void Update()
     {
         slider.value = LimitLeft;
+        slider.maxValue = MaxLimit;
         //if limit is greater than min value, limit left -- 
         if (LimitLeft > 0 && active)
         {
@@ -124,17 +128,12 @@ public class EquipmentBase : MonoBehaviour
     public void LimitCheck(GameObject other)
     {
         //add limit as necessary to cur amount (ground item pickup)
-        var totalRefillAmount = LimitLeft += refillAmount;
-        if (LimitLeft > MaxLimit)
-        {
-            LimitLeft = MaxLimit;
-            return;
-        }
-
+     
         if (LimitLeft < MaxLimit)
         {
             var tracker = other.GetComponent<Tracker>().tracker;
-            LimitLeft = totalRefillAmount;
+            LimitLeft += refillAmount;
+         
             if (_spawnManager.trackedIndexs.Contains((tracker)))
             {
                 _spawnManager.SpawnedList.Remove(tracker);
@@ -142,6 +141,13 @@ public class EquipmentBase : MonoBehaviour
                 Destroy(other.gameObject,0.1f);
             }
         }
+        if (LimitLeft > MaxLimit)
+        {
+            Debug.Log($" entred with {LimitLeft}");
+            LimitLeft = MaxLimit;
+            
+        }
+
         
       
 

@@ -400,10 +400,7 @@ public class Player : MonoBehaviour
             walking.Play();
         }
     }
-    public bool returnTorchState()
-    {
-        return torchActive;
-    }
+   
 
     public int returnTorchLocation()
     {

@@ -86,9 +86,12 @@ public class GameManager : MonoBehaviour
     }
     void OnApplicationQuit()
     {
-        if(frostTexture is null) return;
-        frostTexture.SetFloat(Opacity,-1 ); 
-        _frost = 0;
+        if (frostTexture is not null)
+        {
+            frostTexture.SetFloat(Opacity,-1 ); 
+            _frost = 0;
+        }
+     
     }
 
    

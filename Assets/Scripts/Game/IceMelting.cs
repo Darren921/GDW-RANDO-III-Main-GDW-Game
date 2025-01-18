@@ -39,11 +39,12 @@ public class IceMelting : MonoBehaviour
  
     private void OnTriggerStay(Collider other)
     {
+        print(other.gameObject.tag);
         if (other.CompareTag("Torch"))
         {
             AtMeltingPoint = true;
         }
-        if  (_player.returnTorchState()&& AtMeltingPoint)
+        if  (_player._equipmentBases[_player.returnTorchLocation()].torchActive && AtMeltingPoint)
         {
            // print(other.gameObject.tag);
             isMelting = true;
@@ -52,7 +53,6 @@ public class IceMelting : MonoBehaviour
         {
             isMelting = false;
             AtMeltingPoint = false;
-
         }
     }
 
@@ -63,7 +63,7 @@ public class IceMelting : MonoBehaviour
 
     void Update()
     {
-        print(_player.returnTorchState());
+        print(_player._equipmentBases[_player.returnTorchLocation()].torchActive);
         if (isMelting && !active)
         {
             active = true;

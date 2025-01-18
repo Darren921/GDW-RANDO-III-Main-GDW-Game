@@ -1760,6 +1760,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1357779173458488340, guid: be063c56650e85b4eb735cfd44234ee5,
         type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357779173458488340, guid: be063c56650e85b4eb735cfd44234ee5,
+        type: 3}
       propertyPath: m_TagString
       value: Torch
       objectReference: {fileID: 0}
@@ -1922,7 +1927,7 @@ PrefabInstance:
         type: 3}
       propertyPath: equipmentObj
       value: 
-      objectReference: {fileID: 11400000, guid: 35cf0c86a05a50c41938348f21342c6c,
+      objectReference: {fileID: 11400000, guid: 909a16654c4a4584b8d7bde2b80318f7,
         type: 2}
     - target: {fileID: 5582244712295415240, guid: be063c56650e85b4eb735cfd44234ee5,
         type: 3}
@@ -1973,6 +1978,21 @@ PrefabInstance:
     - target: {fileID: 7042785122089651789, guid: be063c56650e85b4eb735cfd44234ee5,
         type: 3}
       propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8346892361438092749, guid: be063c56650e85b4eb735cfd44234ee5,
+        type: 3}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8346892361438092749, guid: be063c56650e85b4eb735cfd44234ee5,
+        type: 3}
+      propertyPath: m_MaxValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8346892361438092749, guid: be063c56650e85b4eb735cfd44234ee5,
+        type: 3}
+      propertyPath: m_DelayedUpdateVisuals
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -5077,7 +5097,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   opacityLoss: 0.05
   meltingTime: 1
-  timeToMelt: 0
+  timeToMelt: 100
   _DoorHitbox: {fileID: 1285008434170953475}
 --- !u!4 &4431349181136923903
 Transform:

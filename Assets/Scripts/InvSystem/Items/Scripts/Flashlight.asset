@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   uiDisplay: {fileID: 0}
-  itemType: 0
+  itemType: 3
   description: 
   thisGameObject: {fileID: 0}
   itemLimit: 0
   itemRarity: 0
-  Limit: 10
-  refuel: 2
+  Limit: 150
+  refuel: 30
