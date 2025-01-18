@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class EquipmentBase : MonoBehaviour
 {
     [SerializeField]EquipmentObj equipmentObj;
     public float MaxLimit { get; private set; }
-    private GameObject baseObj;
+    internal GameObject baseObj;
     internal GameObject lightObj;
     private float LimitLeft { get; set; }
     internal bool equipped;
@@ -14,9 +16,9 @@ public class EquipmentBase : MonoBehaviour
     internal bool torchActive;
     internal bool checkActive;
     private int refillAmount;
+    private Slider slider;
     public EquipmentObj EquipmentObj { get { return equipmentObj; } }
-    TorchSlider.value = fuelLeft;
-    FlashlightSlider.value = _chargeleft;
+  
     // Start is called before the first frame update
     void Start()
     {
@@ -25,25 +27,16 @@ public class EquipmentBase : MonoBehaviour
         refillAmount = equipmentObj.refuel;
         baseObj = gameObject;
         lightObj = FindChildWithNameContaining(baseObj.transform, "Light");
+        slider = gameObject.GetComponentInChildren<Slider>();
         baseObj.SetActive(false);
         lightObj.SetActive(false);  
     }
-    public GameObject FindChildWithNameContaining(Transform parent, string substring)
-    {
-        foreach (Transform child in parent)
-        {
-            if (child.name.Contains(substring))
-            {
-                return child.gameObject; 
-            }
-        }
-
-        return null; 
-    }
+   
 
     // Update is called once per frame
     void Update()
     {
+        slider.value = LimitLeft;
         if (LimitLeft > 0 && active)
         {
             LimitLeft -= Time.deltaTime;
@@ -126,5 +119,17 @@ public class EquipmentBase : MonoBehaviour
             LimitLeft = totalRefillAmount;
             Destroy(other.gameObject);
         }
+    }
+    public GameObject FindChildWithNameContaining(Transform parent, string substring)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name.Contains(substring))
+            {
+                return child.gameObject; 
+            }
+        }
+
+        return null; 
     }
 }

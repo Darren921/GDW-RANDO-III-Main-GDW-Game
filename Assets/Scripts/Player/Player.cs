@@ -103,8 +103,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         //HeartBeats sounds
-        TorchSlider.value = fuelLeft;
-        FlashlightSlider.value = _chargeleft;
+     
         // distance = Vector3.Distance(transform.position, _enemy.transform.position);
 
         if (distance < 150f)
