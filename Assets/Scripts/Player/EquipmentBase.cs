@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,13 +19,19 @@ public class EquipmentBase : MonoBehaviour
     private int refillAmount;
     private Slider slider;
     public EquipmentObj EquipmentObj { get { return equipmentObj; } }
+    private SpawnManager _spawnManager;
+
   
     // Start is called before the first frame update
     void Start()
     {
+        _spawnManager = FindFirstObjectByType<SpawnManager>();
+        
+        //Values can be changed in equipmentObj in items (inv system)
         MaxLimit = equipmentObj.Limit;
         LimitLeft = equipmentObj.Limit;
         refillAmount = equipmentObj.refuel;
+        
         baseObj = gameObject;
         lightObj = FindChildWithNameContaining(baseObj.transform, "Light");
         slider = gameObject.GetComponentInChildren<Slider>();
@@ -37,6 +44,7 @@ public class EquipmentBase : MonoBehaviour
     void Update()
     {
         slider.value = LimitLeft;
+        //if limit is greater than min value, limit left -- 
         if (LimitLeft > 0 && active)
         {
             LimitLeft -= Time.deltaTime;
@@ -63,6 +71,7 @@ public class EquipmentBase : MonoBehaviour
             active = !active;
             if (LimitLeft > 0)
             {
+                //if item is active, activate relevant systems 
                 if (active && !checkActive)
                 {
                     print("Active");
@@ -98,8 +107,15 @@ public class EquipmentBase : MonoBehaviour
         }
      
     }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        throw new NotImplementedException();
+    }
+
     private IEnumerator CheckCharge()
     {
+            //
             yield return new WaitUntil(() => active == false || checkActive == false );
             checkActive = false;
     }
@@ -107,6 +123,7 @@ public class EquipmentBase : MonoBehaviour
 
     public void LimitCheck(GameObject other)
     {
+        //add limit as necessary to cur amount (ground item pickup)
         var totalRefillAmount = LimitLeft += refillAmount;
         if (LimitLeft > MaxLimit)
         {
@@ -116,10 +133,21 @@ public class EquipmentBase : MonoBehaviour
 
         if (LimitLeft < MaxLimit)
         {
+            var tracker = other.GetComponent<Tracker>().tracker;
             LimitLeft = totalRefillAmount;
-            Destroy(other.gameObject);
+            if (_spawnManager.trackedIndexs.Contains((tracker)))
+            {
+                _spawnManager.SpawnedList.Remove(tracker);
+                _spawnManager.trackedIndexs.Remove(tracker);
+                Destroy(other.gameObject,0.1f);
+            }
         }
+        
+      
+
     }
+    
+    //Helper class to find Child game objects using name (move to more global class?)
     public GameObject FindChildWithNameContaining(Transform parent, string substring)
     {
         foreach (Transform child in parent)

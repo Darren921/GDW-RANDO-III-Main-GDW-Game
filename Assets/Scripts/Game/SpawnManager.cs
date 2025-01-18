@@ -72,6 +72,7 @@ public class SpawnManager : MonoBehaviour
 
                             pickup.GetComponent<Tracker>().tracker = spawn;
                             SpawnedList.Add(spawn);
+                            trackedIndexs.Add(spawn);
                             spawnCount++;
                             curItemCount = GameObject.FindGameObjectsWithTag(tag).Length;
                         }
@@ -115,6 +116,7 @@ public class SpawnManager : MonoBehaviour
 
                         pickup.GetComponent<Tracker>().tracker = spawn;
                         SpawnedList.Add(spawn);
+                        trackedIndexs.Add(spawn);
                         spawnCount++;
                         curItemCount = GameObject.FindGameObjectsWithTag(tag).Length;
 

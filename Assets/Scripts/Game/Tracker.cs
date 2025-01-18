@@ -19,26 +19,7 @@ public class Tracker : MonoBehaviour
 
    private void OnTriggerEnter(Collider other)
    {
-      if (!other.CompareTag("Player")) return;
-      switch (tag)
-      {
-         case "Fuel":
-            if (_spawnManager.trackedIndexs.Contains(tracker))
-            {
-               _spawnManager.SpawnedList.Remove(tracker);
-               _spawnManager.trackedIndexs.Remove(tracker);
-            }
-            break;
-            
-         case "Batteries":
-            if (_spawnManager.trackedIndexs.Contains(tracker))
-            {
-               _spawnManager.SpawnedList.Remove(tracker);
-               _spawnManager.trackedIndexs.Remove(tracker);
-            }
-            break;
-      }
-        
+    
    }
 
    void Update()
