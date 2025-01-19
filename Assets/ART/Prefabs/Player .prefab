@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 4297478912122770344}
   m_Layer: 2
   m_Name: Cam location
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,7 +100,7 @@ Transform:
   m_GameObject: {fileID: 1749208868975736824}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.603, z: 0.49}
+  m_LocalPosition: {x: 0, y: 0.603, z: 0.406}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1148,6 +1148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprintTime: 5
+  sprintSpeed: 0
   maxSprintTime: 5
   moveSpeed: 14
   sound: {fileID: 7267976752193919277}
@@ -1164,18 +1165,9 @@ MonoBehaviour:
   heartbeatM: {fileID: 0}
   heartbeatF: {fileID: 0}
   walking: {fileID: 2524608059438630113}
-  canusePanel: 0
-  f: 0
-  codePanelInfo: {fileID: 0}
-  Flashlight: {fileID: 2363965859955700111}
-  Torch: {fileID: 1357779173458488340}
-  flashlightSource: {fileID: 6280988047549879971}
-  torchSource: {fileID: 41115401578967362}
+  _equipmentBases: []
   TorchSlider: {fileID: 8346892361438092749}
   FlashlightSlider: {fileID: 8157450902656407006}
-  CollisionLayer:
-    serializedVersion: 2
-    m_Bits: 136
 --- !u!54 &4957512606085120852
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1938,12 +1930,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &1357779173458488340 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 803125658582061874, guid: 14ec93b1d37b54447956cacec647e505,
-    type: 3}
-  m_PrefabInstance: {fileID: 1869709072851517222}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4725404001850542693 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6369932214995612995, guid: 14ec93b1d37b54447956cacec647e505,
@@ -2078,12 +2064,6 @@ PrefabInstance:
       addedObject: {fileID: 5464985516424517994}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83b18ff302f22bf45b0a27ca34d2b190, type: 3}
---- !u!1 &2363965859955700111 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6434571087379855294, guid: 83b18ff302f22bf45b0a27ca34d2b190,
-    type: 3}
-  m_PrefabInstance: {fileID: 8755646539244308017}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6280988047549879971 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3362152053574357138, guid: 83b18ff302f22bf45b0a27ca34d2b190,
