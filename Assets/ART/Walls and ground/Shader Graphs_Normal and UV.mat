@@ -65,5 +65,5 @@ Material:
     - _strength: 8
     m_Colors:
     - _offset: {r: 5.2, g: 1, b: 0, a: 0}
-    - _tiling: {r: 5, g: 5, b: 0, a: 0}
+    - _tiling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
