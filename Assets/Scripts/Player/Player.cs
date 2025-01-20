@@ -264,7 +264,6 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        var curItem = _equipmentBases[CurrentSlot];
         if (other.CompareTag("Exit"))
         {
             SceneManager.LoadScene("DeathScreen");

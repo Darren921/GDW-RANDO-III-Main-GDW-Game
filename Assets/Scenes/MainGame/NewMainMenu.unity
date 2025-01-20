@@ -10533,6 +10533,7 @@ MonoBehaviour:
   opacityLoss: 0.005
   meltingTime: 1
   timeToMelt: 0
+  exitCollider: {fileID: 0}
   _DoorHitbox: {fileID: 0}
 --- !u!208 &694722838
 NavMeshObstacle:
@@ -30749,6 +30750,7 @@ MonoBehaviour:
   opacityLoss: 0.005
   meltingTime: 1
   timeToMelt: 0
+  exitCollider: {fileID: 0}
   _DoorHitbox: {fileID: 0}
 --- !u!82 &3551336516407290336
 AudioSource:

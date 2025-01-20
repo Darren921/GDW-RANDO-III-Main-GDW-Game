@@ -31,7 +31,7 @@ public class Transition : MonoBehaviour
 
     public void restartGame()
     {
-        SceneManager.LoadScene("MainScene");
+        SceneManager.LoadScene("newMap");
     }
 
     public void GoToLastCheckpoint()

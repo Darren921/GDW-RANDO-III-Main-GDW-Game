@@ -125,7 +125,7 @@ public class SpawnManager : MonoBehaviour
             }
         }
         Debug.Log($"Spawning complete. Total items spawned: {spawnCount}/{amount}.");
-        yield return new WaitForSeconds(15);
+        yield return new WaitForSecondsRealtime(15);
         active = false;
         firstSpawn = false;
     }
