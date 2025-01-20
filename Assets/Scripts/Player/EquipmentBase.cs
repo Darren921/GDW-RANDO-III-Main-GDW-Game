@@ -89,10 +89,9 @@ public class EquipmentBase : MonoBehaviour
                 }
                 else
                 {
-                    if (gameObject.name.Contains("Torch") )
-                    {
+                 
                         torchActive = false;
-                    }
+                  
                     active = false;
                     lightObj.SetActive(false);
                     
@@ -100,10 +99,8 @@ public class EquipmentBase : MonoBehaviour
             }
             else
             {
-                if (gameObject.name.Contains("Torch") )
-                {
-                    torchActive = false;
-                }
+               
+                torchActive = false;
                 active = false;
                 lightObj.SetActive(false);
 
@@ -122,6 +119,7 @@ public class EquipmentBase : MonoBehaviour
             //
             yield return new WaitUntil(() => active == false || checkActive == false );
             checkActive = false;
+            torchActive = false;
     }
 
 

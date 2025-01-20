@@ -10532,7 +10532,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   opacityLoss: 0.005
   meltingTime: 1
-  meltingProgress: 200
+  timeToMelt: 0
+  _DoorHitbox: {fileID: 0}
 --- !u!208 &694722838
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -11766,7 +11767,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 801791161}
-  - component: {fileID: 801791160}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -11774,20 +11774,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &801791160
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 801791159}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7176baf43cc7d4041bcdbd394e998597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Battery: {fileID: 5002360986888236374, guid: c7834891679ef4247bea190951332a31, type: 3}
-  Fuel: {fileID: 8266241314038867389, guid: fce6ce3c65a480949bd51ec38c3236c6, type: 3}
 --- !u!4 &801791161
 Transform:
   m_ObjectHideFlags: 0
@@ -30762,7 +30748,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   opacityLoss: 0.005
   meltingTime: 1
-  meltingProgress: 200
+  timeToMelt: 0
+  _DoorHitbox: {fileID: 0}
 --- !u!82 &3551336516407290336
 AudioSource:
   m_ObjectHideFlags: 0
@@ -31094,6 +31081,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprintTime: 5
+  sprintSpeed: 0
   maxSprintTime: 5
   moveSpeed: 14
   sound: {fileID: 8735459150348462493}
@@ -31110,16 +31098,9 @@ MonoBehaviour:
   heartbeatM: {fileID: 0}
   heartbeatF: {fileID: 0}
   walking: {fileID: 3551336516407290336}
-  canusePanel: 0
-  f: 0
-  codePanelInfo: {fileID: 0}
-  Flashlight: {fileID: 8517653671518819396}
-  Torch: {fileID: 6239836508013105899}
-  flashlightSource: {fileID: 3665914825220907406}
-  torchSource: {fileID: 8451632354058418472}
-  CollisionLayer:
-    serializedVersion: 2
-    m_Bits: 136
+  _equipmentBases: []
+  TorchSlider: {fileID: 0}
+  FlashlightSlider: {fileID: 0}
 --- !u!1 &6115194347205031709
 GameObject:
   m_ObjectHideFlags: 0
@@ -31141,12 +31122,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &6239836508013105899 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 803125658582061874, guid: 14ec93b1d37b54447956cacec647e505,
-    type: 3}
-  m_PrefabInstance: {fileID: 8369142730170403850}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &6326127092649041722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31325,6 +31300,17 @@ PrefabInstance:
       propertyPath: m_Shadows.m_NearPlane
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 4543148117172234515, guid: 83b18ff302f22bf45b0a27ca34d2b190,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4543148117172234515, guid: 83b18ff302f22bf45b0a27ca34d2b190,
+        type: 3}
+      propertyPath: equipmentObj
+      value: 
+      objectReference: {fileID: 11400000, guid: 909a16654c4a4584b8d7bde2b80318f7,
+        type: 2}
     - target: {fileID: 6434571087379855294, guid: 83b18ff302f22bf45b0a27ca34d2b190,
         type: 3}
       propertyPath: m_Name
@@ -31485,6 +31471,17 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 7.507
       objectReference: {fileID: 0}
+    - target: {fileID: 4960371418667053436, guid: 14ec93b1d37b54447956cacec647e505,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4960371418667053436, guid: 14ec93b1d37b54447956cacec647e505,
+        type: 3}
+      propertyPath: equipmentObj
+      value: 
+      objectReference: {fileID: 11400000, guid: 35cf0c86a05a50c41938348f21342c6c,
+        type: 2}
     - target: {fileID: 6369932214995612995, guid: 14ec93b1d37b54447956cacec647e505,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -31661,12 +31658,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &8517653671518819396 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6434571087379855294, guid: 83b18ff302f22bf45b0a27ca34d2b190,
-    type: 3}
-  m_PrefabInstance: {fileID: 6847614749656906483}
-  m_PrefabAsset: {fileID: 0}
 --- !u!82 &8735459150348462493
 AudioSource:
   m_ObjectHideFlags: 0

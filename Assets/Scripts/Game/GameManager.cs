@@ -71,17 +71,10 @@ public class GameManager : MonoBehaviour
 
                          }
                      }
-                     
-
                      break;
                  }
              }
-           
-             
-                 
-             
          }
-
         
     }
     void OnApplicationQuit()

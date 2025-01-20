@@ -78,9 +78,14 @@ public class Player : MonoBehaviour
     private bool _equipedTorch, _equipedFlashlight;
     [SerializeField] Slider FlashlightSlider;
     private int CurrentSlot;
+    
+    public static bool isDead;
 
+    private Transition _transition; 
     void Start()
     {
+        isDead = false;
+        _transition = FindFirstObjectByType<Transition>();
         CurrentSlot = -1;
 
         //turn on and off when needed
@@ -97,6 +102,8 @@ public class Player : MonoBehaviour
         CamTransform = Camera.main.transform;
         Cursor.lockState = CursorLockMode.Locked;
         sprintTime = maxSprintTime;
+        
+        
     }
 
 
@@ -260,8 +267,9 @@ public class Player : MonoBehaviour
         var curItem = _equipmentBases[CurrentSlot];
         if (other.CompareTag("Exit"))
         {
-            SceneManager.LoadScene("NewMainMenu");
+            SceneManager.LoadScene("DeathScreen");
             Cursor.lockState = CursorLockMode.None;
+            isDead = false;
         }
 
         if (other.CompareTag("Batteries") || other.CompareTag("Fuel"))
@@ -308,7 +316,8 @@ public class Player : MonoBehaviour
         InputManager.DisableInGame();
         yield return null;
         Cursor.lockState = CursorLockMode.None;
-        SceneManager.LoadScene("NewMainMenu");
+        isDead = true;
+        SceneManager.LoadScene("DeathScreen");
     }
 
     internal void Hide()
