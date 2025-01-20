@@ -22223,6 +22223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ba67310e819d4a4186b16dd900d5e54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Scene: newMap
 --- !u!1 &1619016430
 GameObject:
   m_ObjectHideFlags: 0
