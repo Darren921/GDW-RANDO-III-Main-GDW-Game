@@ -6,14 +6,15 @@ using UnityEngine;
 public class ItemDatabaseObject : ScriptableObject, ISerializationCallbackReceiver
 {
     public ItemObj[] Items;
-    public Dictionary<int, ItemObj> GetItem = new Dictionary<int, ItemObj>();
+    public Dictionary<int, ItemObj > GetItem = new Dictionary<int, ItemObj>();
 
     public void OnAfterDeserialize()
     {
         for (int i = 0; i < Items.Length; i++)
         {
             Items[i].id = i;
-            GetItem.Add(i, Items[i]);
+            GetItem.Add(i,Items[i]);
+
         }
     }
 

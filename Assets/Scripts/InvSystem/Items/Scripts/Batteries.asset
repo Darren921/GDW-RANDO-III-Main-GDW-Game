@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   uiDisplay: {fileID: 0}
-  itemType: 7
+  itemType: 2
   description: 
-  thisGameObject: {fileID: 5002360986888236374, guid: c7834891679ef4247bea190951332a31,
-    type: 3}
+  prefab: {fileID: 5002360986888236374, guid: c7834891679ef4247bea190951332a31, type: 3}
   itemLimit: 5
   itemRarity: 0.5
+  categories: []

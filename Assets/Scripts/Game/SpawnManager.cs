@@ -35,7 +35,7 @@ public class SpawnManager : MonoBehaviour
 
         for (int i = 0; i < item.Length && SpawnedList.Count < MaxItems; i++)
         {
-            var tag = item[i].thisGameObject.tag;
+            var tag = item[i].prefab.tag;
             var curItemCount = GameObject.FindGameObjectsWithTag(tag).Length;
             var cap = item[i].itemLimit;
 
@@ -59,7 +59,7 @@ public class SpawnManager : MonoBehaviour
                         if (Physics.Raycast(ItemSpawnPoints[spawn].transform.position, Vector3.down, out RaycastHit hit, Mathf.Infinity))
                         {
                             var pickup = Instantiate(
-                                item[i].thisGameObject,
+                                item[i].prefab,
                                 ItemSpawnPoints[spawn].transform.position,
                                 ItemSpawnPoints[spawn].transform.rotation
                             );
@@ -70,7 +70,7 @@ public class SpawnManager : MonoBehaviour
                                 pickup.transform.position = hit.point + Vector3.up * objHeight;
                             }
 
-                            pickup.GetComponent<Tracker>().tracker = spawn;
+                            pickup.GetComponent<GroundObj>().tracker = spawn;
                             SpawnedList.Add(spawn);
                             trackedIndexs.Add(spawn);
                             spawnCount++;
@@ -103,7 +103,7 @@ public class SpawnManager : MonoBehaviour
                             Mathf.Infinity))
                     {
                         var pickup = Instantiate(
-                            item[i].thisGameObject,
+                            item[i].prefab,
                             ItemSpawnPoints[spawn].transform.position,
                             ItemSpawnPoints[spawn].transform.rotation
                         );
@@ -114,7 +114,7 @@ public class SpawnManager : MonoBehaviour
                             pickup.transform.position = hit.point + Vector3.up * objHeight;
                         }
 
-                        pickup.GetComponent<Tracker>().tracker = spawn;
+                        pickup.GetComponent<GroundObj>().tracker = spawn;
                         SpawnedList.Add(spawn);
                         trackedIndexs.Add(spawn);
                         spawnCount++;

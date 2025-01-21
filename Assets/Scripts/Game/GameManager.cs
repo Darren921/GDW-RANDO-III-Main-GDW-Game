@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
          {
              case false:
                  return;
-             case true when _player._equipmentBases[_player.returnTorchLocation()].torchActive && !_player.dead:
+             case true when _player._equipmentBases[_player.returnTorchLocation()] && !_player.dead:
              {
                 // print(_player._equipmentBases[_player.returnTorchLocation()].torchActive);
 

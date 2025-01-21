@@ -54,8 +54,11 @@ public class InputManager : MonoBehaviour
         };
         controls.InGame.OffOn.performed += _ =>
         {
-            print(true);
             player.checkIfActive();
+        };
+        controls.InGame.OpenAndCloseInv.performed += _ =>
+        {
+            player.OpenOrCloseInv();
         };
 
     }

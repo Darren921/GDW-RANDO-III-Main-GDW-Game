@@ -28,9 +28,10 @@ using UnityEngine.Serialization;
         public Sprite uiDisplay;
         public ItemType itemType;
         [TextArea(15, 20)] public string description;
-        public GameObject thisGameObject;
+        public GameObject prefab;
         public int itemLimit;
         public float itemRarity;
+        public Classification[] categories;
         public Item CreateItem()
         {
             Item newItem = new Item(this);
@@ -43,20 +44,42 @@ using UnityEngine.Serialization;
     {
         public string Name;
         public int Id;
-        public Sprite icon;
+        [TextArea(15, 20)] public string Description;
+        public Sprite UiDisplay;
         public ItemType ItemType;
-        public GameObject ThisGameobject;
+        public GameObject Prefab;
         public int ItemLimit;
         public float ItemRarity;
+        public Classification[] Categories;
         public Item(ItemObj item)
         {
             Name = item.name;
             Id = item.id;
-            icon = item.uiDisplay;
+            UiDisplay = item.uiDisplay;
             ItemType = item.itemType;
-            ThisGameobject = item.thisGameObject;
+            Prefab = item.prefab;
             ItemLimit = item.itemLimit;
             ItemRarity = item.itemRarity;
+            Categories = new Classification[item.categories.Length];
+            for (int i = 0; i < item.categories.Length; i++)
+            {
+                Categories[i] = new Classification(item.categories[i].Attribute)
+                {
+                    Attribute = item.categories[i].Attribute
+                };
+            }
+            Description = item.description;
+        }
+    }
+
+    [System.Serializable]
+    public class Classification 
+    {
+        public Attributes Attribute;
+
+        public Classification(Attributes attribute)
+        {
+            Attribute = attribute;
         }
     }
 

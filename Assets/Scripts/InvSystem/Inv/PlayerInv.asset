@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db2fa6083be9cb04f879a93cae99073e, type: 3}
+  m_Name: PlayerInv
+  m_EditorClassIdentifier: 
+  savePath: /inventory.Save
+  database: {fileID: 11400000, guid: 6eacb03a804c59b49abbca8a4c3a5f97, type: 2}
+  Container:
+    Items:
+    - ID: -1
+      item:
+        Name: 
+        Id: 0
+        Description: 
+        UiDisplay: {fileID: 0}
+        ItemType: 0
+        Prefab: {fileID: 0}
+        ItemLimit: 0
+        ItemRarity: 0
+        Categories: []
+      amount: 0
+    - ID: -1
+      item:
+        Name: 
+        Id: 0
+        Description: 
+        UiDisplay: {fileID: 0}
+        ItemType: 0
+        Prefab: {fileID: 0}
+        ItemLimit: 0
+        ItemRarity: 0
+        Categories: []
+      amount: 0
+    - ID: -1
+      item:
+        Name: 
+        Id: 0
+        Description: 
+        UiDisplay: {fileID: 0}
+        ItemType: 0
+        Prefab: {fileID: 0}
+        ItemLimit: 0
+        ItemRarity: 0
+        Categories: []
+      amount: 0
+    - ID: -1
+      item:
+        Name: 
+        Id: 0
+        Description: 
+        UiDisplay: {fileID: 0}
+        ItemType: 0
+        Prefab: {fileID: 0}
+        ItemLimit: 0
+        ItemRarity: 0
+        Categories: []
+      amount: 0

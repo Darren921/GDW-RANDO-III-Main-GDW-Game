@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -23,7 +24,7 @@ public class Player : MonoBehaviour
 
     //Camera location
     private Transform CamTransform;
-    
+    [SerializeField] CinemachineInputProvider inputProvider;
     [Header("Movement")]
     //standard movement
     [SerializeField] float moveSpeed;
@@ -65,11 +66,20 @@ public class Player : MonoBehaviour
 
     //Item switching 
     [Header("Item switching ")]
-    private int _slotNumber;
-
+    [SerializeField] private InventoryObj Inventory;
+    [SerializeField] private ItemObj Torch, Flashlight;
     [SerializeField] internal List<EquipmentBase>  _equipmentBases;
     //Torch 
     private bool torchActive,flashlightActive;
+    public class MouseItem
+    {
+        public GameObject obj;
+        public InventoryObj.InventorySlot item;
+        public InventoryObj.InventorySlot hoverItem;
+        public GameObject hoverObj;
+    }
+    public MouseItem mouseItem = new MouseItem();
+    [SerializeField] GameObject InventoryDisplay;
     private float fuelLeft;
     [SerializeField] Slider TorchSlider;
     private bool AtMeltingPoint;
@@ -80,6 +90,7 @@ public class Player : MonoBehaviour
     private int CurrentSlot;
     
     public static bool isDead;
+    
 
     private Transition _transition; 
     void Start()
@@ -88,11 +99,11 @@ public class Player : MonoBehaviour
         _transition = FindFirstObjectByType<Transition>();
         CurrentSlot = -1;
 
+         Inventory.AddItem(new Item(Torch), 1);
         //turn on and off when needed
        // torchActive = true;
        //fuelLeft = 500;
       // fuelLeft = 100;
-      fuelLeft = 50;
        _capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
        _enemy = FindObjectOfType<Enemy>();
        playerCam = gameObject.GetComponentInChildren<Camera>();
@@ -145,8 +156,30 @@ public class Player : MonoBehaviour
 
         }*/
         
-        
-    }
+      
+            if (Input.GetMouseButtonDown(0)) // Left-click
+            {
+                PointerEventData pointerData = new PointerEventData(EventSystem.current)
+                {
+                    position = Input.mousePosition
+                };
+
+                // Raycast results
+                var results = new List<RaycastResult>();
+                EventSystem.current.RaycastAll(pointerData, results);
+
+                foreach (var result in results)
+                {
+                    Debug.Log($"Hit UI Element: {result.gameObject.name}");
+                }
+
+                if (results.Count == 0)
+                {
+                    Debug.Log("No UI Element hit.");
+                }
+            }
+        }
+    
 
   
   
@@ -177,9 +210,21 @@ public class Player : MonoBehaviour
         if (!dead)
         {
             //smoothed movement
-            smoothedMoveDir = Vector3.SmoothDamp(smoothedMoveDir, moveDir, ref smoothedMoveVelo, 0.1f);
-            smoothedMoveDir = CamTransform.forward * moveDir.z + CamTransform.right * moveDir.x;
-            rb.velocity = isSprinting && !onCoolDownFull && !onCoolDownNormal ? new Vector3(smoothedMoveDir.x * (moveSpeed * sprintSpeed) , -3, smoothedMoveDir.z * (moveSpeed * sprintSpeed)) : new Vector3(smoothedMoveDir.x * moveSpeed, -3, smoothedMoveDir.z * moveSpeed);
+           
+            if (isOpen)
+            {
+                inputProvider.enabled = false;
+                rb.velocity = Vector3.zero;
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                inputProvider.enabled = true;
+                smoothedMoveDir = Vector3.SmoothDamp(smoothedMoveDir, moveDir, ref smoothedMoveVelo, 0.1f);
+                smoothedMoveDir = CamTransform.forward * moveDir.z + CamTransform.right * moveDir.x;
+                rb.velocity = isSprinting && !onCoolDownFull && !onCoolDownNormal ? new Vector3(smoothedMoveDir.x * (moveSpeed * sprintSpeed) , -3, smoothedMoveDir.z * (moveSpeed * sprintSpeed)) : new Vector3(smoothedMoveDir.x * moveSpeed, -3, smoothedMoveDir.z * moveSpeed);
+            }
         }
 
 
@@ -270,15 +315,33 @@ public class Player : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             isDead = false;
         }
-
+        
         if (other.CompareTag("Batteries") || other.CompareTag("Fuel"))
         {
-            _equipmentBases[CurrentSlot].LimitCheck(other.gameObject);
+            _equipmentBases[CurrentSlot].LimitCheck(other.gameObject,other.tag);
+            return;
+        }
+
+        if (other.GetComponent<GroundObj>() != null)
+        {
+            var item = other.GetComponent<GroundObj>();
+            if (item)
+            {
+               
+                Inventory.AddItem(new Item(item.item), 1);
+                Destroy(other.gameObject);
+
+            }
         }
                
               
         
 
+    }
+
+    private void OnApplicationQuit()
+    {
+        Inventory.Container.Items = new InventoryObj.InventorySlot[4];
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -402,11 +465,9 @@ public class Player : MonoBehaviour
 
     public void walkingSound()
     {
-        if (walking != null && !walking.isPlaying)
-        {
-            walking.enabled = true;
-            walking.Play();
-        }
+        if (walking is null || walking.isPlaying) return;
+        walking.enabled = true;
+        walking.Play();
     }
    
 
@@ -422,7 +483,27 @@ public class Player : MonoBehaviour
         Debug.Log("shut");
         return -1;
     }
-   
+
+    public void OpenOrCloseInv()
+    {
+        if (!isOpen)
+        {
+            isOpen = true;
+            InventoryDisplay.SetActive(true);
+
+        }
+        else
+        {
+            isOpen = false;
+            InventoryDisplay.SetActive(false);
+
+        }
+
+
+
+    }
+
+    public bool isOpen { get; set; }
 }
     
 

@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 8789977543437565703}
   - component: {fileID: 5644028018655408290}
   - component: {fileID: 7617674794428679272}
-  - component: {fileID: -7674378769609483141}
   - component: {fileID: 2162978544430040563}
+  - component: {fileID: -1396027701263859025}
   m_Layer: 0
   m_Name: Gas canister obj
   m_TagString: Fuel
@@ -85,18 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &-7674378769609483141
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8266241314038867389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b14316e60d03f8e4d93fa34eb5161821, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &2162978544430040563
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -118,3 +106,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 7.435669, y: 2.0099518, z: 9.642975}
   m_Center: {x: 0.31048584, y: 0.004975915, z: 0.5419769}
+--- !u!114 &-1396027701263859025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8266241314038867389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b14316e60d03f8e4d93fa34eb5161821, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 94df7c2a7f9463d49bfa753c30326bce, type: 2}

@@ -107,6 +107,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""OpenAndCloseInv"",
+                    ""type"": ""Button"",
+                    ""id"": ""5a7b1ae5-ce36-4911-9894-5897ee776bfb"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -285,6 +294,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""OffOn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""35b7bb0c-a3a3-4d54-ad51-b2488582e9c5"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenAndCloseInv"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -302,6 +322,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_InGame_ItemSwap = m_InGame.FindAction("ItemSwap", throwIfNotFound: true);
         m_InGame_OffOn = m_InGame.FindAction("OffOn", throwIfNotFound: true);
         m_InGame_Talk = m_InGame.FindAction("Talk", throwIfNotFound: true);
+        m_InGame_OpenAndCloseInv = m_InGame.FindAction("OpenAndCloseInv", throwIfNotFound: true);
     }
 
     ~@Controls()
@@ -377,6 +398,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_InGame_ItemSwap;
     private readonly InputAction m_InGame_OffOn;
     private readonly InputAction m_InGame_Talk;
+    private readonly InputAction m_InGame_OpenAndCloseInv;
     public struct InGameActions
     {
         private @Controls m_Wrapper;
@@ -390,6 +412,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @ItemSwap => m_Wrapper.m_InGame_ItemSwap;
         public InputAction @OffOn => m_Wrapper.m_InGame_OffOn;
         public InputAction @Talk => m_Wrapper.m_InGame_Talk;
+        public InputAction @OpenAndCloseInv => m_Wrapper.m_InGame_OpenAndCloseInv;
         public InputActionMap Get() { return m_Wrapper.m_InGame; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -426,6 +449,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Talk.started += instance.OnTalk;
             @Talk.performed += instance.OnTalk;
             @Talk.canceled += instance.OnTalk;
+            @OpenAndCloseInv.started += instance.OnOpenAndCloseInv;
+            @OpenAndCloseInv.performed += instance.OnOpenAndCloseInv;
+            @OpenAndCloseInv.canceled += instance.OnOpenAndCloseInv;
         }
 
         private void UnregisterCallbacks(IInGameActions instance)
@@ -457,6 +483,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Talk.started -= instance.OnTalk;
             @Talk.performed -= instance.OnTalk;
             @Talk.canceled -= instance.OnTalk;
+            @OpenAndCloseInv.started -= instance.OnOpenAndCloseInv;
+            @OpenAndCloseInv.performed -= instance.OnOpenAndCloseInv;
+            @OpenAndCloseInv.canceled -= instance.OnOpenAndCloseInv;
         }
 
         public void RemoveCallbacks(IInGameActions instance)
@@ -485,5 +514,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnItemSwap(InputAction.CallbackContext context);
         void OnOffOn(InputAction.CallbackContext context);
         void OnTalk(InputAction.CallbackContext context);
+        void OnOpenAndCloseInv(InputAction.CallbackContext context);
     }
 }

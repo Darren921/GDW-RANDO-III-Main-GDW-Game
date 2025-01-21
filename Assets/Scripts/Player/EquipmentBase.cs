@@ -5,21 +5,21 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class EquipmentBase : MonoBehaviour
+public abstract class EquipmentBase : MonoBehaviour
 {
     [SerializeField]EquipmentObj equipmentObj;
     public float MaxLimit { get; private set; }
     internal GameObject baseObj;
     internal GameObject lightObj;
-    private float LimitLeft { get; set; }
+    protected float LimitLeft { get; set; }
     internal bool equipped;
     internal bool active;
     internal bool torchActive;
     internal bool checkActive;
     private int refillAmount;
     private Slider slider;
-    public EquipmentObj EquipmentObj { get { return equipmentObj; } }
     private SpawnManager _spawnManager;
+    
 
   
     // Start is called before the first frame update
@@ -41,8 +41,7 @@ public class EquipmentBase : MonoBehaviour
         baseObj.SetActive(false);
         lightObj.SetActive(false);  
     }
-   
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -63,58 +62,9 @@ public class EquipmentBase : MonoBehaviour
         
     }
     
-    public void CheckIfActive()
-    {
-        if (lightObj == null)
-        {
-            lightObj = gameObject.transform.Find("Light").gameObject;
-        }
-         print("working");
-        if (equipped )
-        {
-            active = !active;
-            if (LimitLeft > 0)
-            {
-                //if item is active, activate relevant systems 
-                if (active && !checkActive)
-                {
-                    print("Active");
-                    if (gameObject.name.Contains("Torch") )
-                    {
-                        torchActive = true;
-                    }
-                    checkActive = true;
-                    StartCoroutine(CheckCharge()) ;
-                    lightObj.SetActive(true);
-                }
-                else
-                {
-                 
-                        torchActive = false;
-                  
-                    active = false;
-                    lightObj.SetActive(false);
-                    
-                }
-            }
-            else
-            {
-               
-                torchActive = false;
-                active = false;
-                lightObj.SetActive(false);
-
-            }
-        }
-     
-    }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        throw new NotImplementedException();
-    }
-
-    private IEnumerator CheckCharge()
+    protected internal  abstract void  CheckIfActive();
+    
+    protected IEnumerator CheckCharge()
     {
             //
             yield return new WaitUntil(() => active == false || checkActive == false );
@@ -123,13 +73,13 @@ public class EquipmentBase : MonoBehaviour
     }
 
 
-    public void LimitCheck(GameObject other)
+    public void LimitCheck(GameObject other, string correctTag)
     {
         //add limit as necessary to cur amount (ground item pickup)
      
-        if (LimitLeft < MaxLimit)
+        if (LimitLeft < MaxLimit && other.CompareTag(correctTag))
         {
-            var tracker = other.GetComponent<Tracker>().tracker;
+            var tracker = other.GetComponent<GroundObj>().tracker;
             LimitLeft += refillAmount;
          
             if (_spawnManager.trackedIndexs.Contains((tracker)))
