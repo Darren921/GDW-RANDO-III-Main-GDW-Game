@@ -78,7 +78,7 @@ public abstract class UserInterface : MonoBehaviour
         var mouseObject = new GameObject();
         var rt = mouseObject.AddComponent<RectTransform>();
         rt.sizeDelta = new Vector2(50, 50);
-        mouseObject.transform.SetParent(transform.parent);
+        mouseObject.transform.SetParent(transform.parent.parent);
         if (itemsDisplayed[obj].ID >= 0)
         {
             var img = mouseObject.AddComponent<Image>();

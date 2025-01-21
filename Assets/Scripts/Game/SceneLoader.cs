@@ -2,21 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SceneLoader : MonoBehaviour
 {
     [SerializeField] string Scene;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] Image _image ;
+    [SerializeField] Sprite deadScreen,escapedScreen;
+    [SerializeField] Button restart,lastCheckpoint, mainMenu;
+        private void Awake()
+        {
+            if (SceneManager.GetActiveScene().name == "DeathScreen")
+            {
+                _image.sprite = Player.isDead ? deadScreen : escapedScreen;
+                lastCheckpoint.gameObject.SetActive(Player.isDead);
+            }
+          
+        }
+    
+        private void Start()
+        {
+       
+        }
+    
+        public void  goToMainMenu()
+        {
+            Scene = "MainMenu";
+            SceneManager.LoadScene(Scene);
+        }
+    
+        public void restartGame()
+        {
+            Scene = "NewMap";
+            SceneManager.LoadScene(Scene);
+        }
+    
+        public void GoToLastCheckpoint()
+        {
+           // SceneManager.LoadScene("MainScene");
+        }
     public void mainScene()
     {
         SceneManager.LoadScene(Scene);

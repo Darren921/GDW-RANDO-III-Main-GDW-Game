@@ -435,6 +435,7 @@ public class Player : MonoBehaviour
              curEquipped.checkActive = false;
          }
          var NewEquipped = _equipmentBases[slotNumber];
+         print(NewEquipped);
          NewEquipped.baseObj.gameObject.SetActive(true);
          NewEquipped.lightObj.SetActive(false);
          NewEquipped.equipped = true;

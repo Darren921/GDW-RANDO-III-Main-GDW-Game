@@ -38,11 +38,10 @@ public class GameManager : MonoBehaviour
          switch (isFreezing)
          {
              case false:
+                 print("not freezing");
                  return;
-             case true when _player._equipmentBases[_player.returnTorchLocation()] && !_player.dead:
+             case true when _player._equipmentBases[_player.returnTorchLocation()].torchActive && !_player.dead:
              {
-                // print(_player._equipmentBases[_player.returnTorchLocation()].torchActive);
-
                  _frost -= Time.deltaTime;
                  _curOpacity -= 0.015f * Time.deltaTime;
                  frostTexture.SetFloat(Opacity,_curOpacity ); 
@@ -56,6 +55,7 @@ public class GameManager : MonoBehaviour
              case true when !_player._equipmentBases[_player.returnTorchLocation()].torchActive && (!_player.dead):
              {
                  {
+                     print(_player._equipmentBases[_player.returnTorchLocation()].torchActive);
                      _frost += Time.deltaTime;
                      _curOpacity += 0.01f * Time.deltaTime;
 
