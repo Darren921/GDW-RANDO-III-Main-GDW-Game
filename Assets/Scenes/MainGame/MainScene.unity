@@ -1861,6 +1861,17 @@ PrefabInstance:
       propertyPath: m_TargetTexture
       value: 
       objectReference: {fileID: 8400000, guid: b7476a1921b884342b45b29bf5746acf, type: 2}
+    - target: {fileID: 4819660532285355834, guid: be063c56650e85b4eb735cfd44234ee5,
+        type: 3}
+      propertyPath: correctTag
+      value: Batteries
+      objectReference: {fileID: 0}
+    - target: {fileID: 4819660532285355834, guid: be063c56650e85b4eb735cfd44234ee5,
+        type: 3}
+      propertyPath: matchingItem
+      value: 
+      objectReference: {fileID: 11400000, guid: be4b5b00e147cc340a4739e88b713cd1,
+        type: 2}
     - target: {fileID: 5084228658327990050, guid: be063c56650e85b4eb735cfd44234ee5,
         type: 3}
       propertyPath: equipmentObj
@@ -1933,6 +1944,17 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7520030883729783441, guid: be063c56650e85b4eb735cfd44234ee5,
+        type: 3}
+      propertyPath: correctTag
+      value: Fuel
+      objectReference: {fileID: 0}
+    - target: {fileID: 7520030883729783441, guid: be063c56650e85b4eb735cfd44234ee5,
+        type: 3}
+      propertyPath: matchingItem
+      value: 
+      objectReference: {fileID: 11400000, guid: 94df7c2a7f9463d49bfa753c30326bce,
+        type: 2}
     - target: {fileID: 7922373232215650157, guid: be063c56650e85b4eb735cfd44234ee5,
         type: 3}
       propertyPath: m_LocalScale.x

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FlashLight : EquipmentBase
 {
-    
+    [SerializeField] private ItemObj matchingItem;
     protected internal override void CheckIfActive()
     {
         if (lightObj == null)
@@ -39,5 +39,34 @@ public class FlashLight : EquipmentBase
             }
         }
     }
+
+    public override void LimitCheck(GameObject other)
+    {
+    
+        //add limit as necessary to cur amount (ground item pickup)
+     
+        if (LimitLeft < MaxLimit && other.CompareTag(matchingItem.name))
+        {
+            var tracker = other.GetComponent<GroundObj>().tracker;
+            LimitLeft += refillAmount;
+         
+            if (_spawnManager.trackedIndexs.Contains((tracker)))
+            {
+                _spawnManager.SpawnedList.Remove(tracker);
+                _spawnManager.trackedIndexs.Remove(tracker);
+                Destroy(other.gameObject,0.1f);
+            }
+        }
+        if (LimitLeft > MaxLimit)
+        {
+            Debug.Log($" entred with {LimitLeft}");
+            LimitLeft = MaxLimit;
+            
+        }
+
+
+
+    }
+    
 }
 

@@ -22224,6 +22224,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Scene: newMap
+  _image: {fileID: 0}
+  deadScreen: {fileID: 0}
+  escapedScreen: {fileID: 0}
+  restart: {fileID: 0}
+  lastCheckpoint: {fileID: 0}
+  mainMenu: {fileID: 0}
 --- !u!1 &1619016430
 GameObject:
   m_ObjectHideFlags: 0
@@ -31086,6 +31092,7 @@ MonoBehaviour:
   sprintTime: 5
   sprintSpeed: 0
   maxSprintTime: 5
+  inputProvider: {fileID: 0}
   moveSpeed: 14
   sound: {fileID: 8735459150348462493}
   cineCam: {fileID: 6326127092649041722}
@@ -31101,7 +31108,11 @@ MonoBehaviour:
   heartbeatM: {fileID: 0}
   heartbeatF: {fileID: 0}
   walking: {fileID: 3551336516407290336}
+  Inventory: {fileID: 0}
+  Torch: {fileID: 0}
+  Flashlight: {fileID: 0}
   _equipmentBases: []
+  InventoryDisplay: {fileID: 0}
   TorchSlider: {fileID: 0}
   FlashlightSlider: {fileID: 0}
 --- !u!1 &6115194347205031709
@@ -31330,7 +31341,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -6478536213147159724, guid: 370c800d70fde2c4b8c843091e404c46,
         type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4278579713969991947, guid: 83b18ff302f22bf45b0a27ca34d2b190, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -31550,7 +31562,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 86.609
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8191500440610637239, guid: 14ec93b1d37b54447956cacec647e505, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:

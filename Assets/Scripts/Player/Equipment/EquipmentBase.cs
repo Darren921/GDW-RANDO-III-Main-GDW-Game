@@ -16,10 +16,9 @@ public abstract class EquipmentBase : MonoBehaviour
     internal bool active;
     internal bool torchActive;
     internal bool checkActive;
-    private int refillAmount;
+    protected int refillAmount;
     private Slider slider;
-    private SpawnManager _spawnManager;
-    
+    protected SpawnManager _spawnManager;
 
   
     // Start is called before the first frame update
@@ -67,39 +66,14 @@ public abstract class EquipmentBase : MonoBehaviour
     protected IEnumerator CheckCharge()
     {
             //
-            yield return new WaitUntil(() => active == false || checkActive == false );
+            yield return new WaitUntil(() => active == false );
             checkActive = false;
             torchActive = false;
     }
 
 
-    public void LimitCheck(GameObject other, string correctTag)
-    {
-        //add limit as necessary to cur amount (ground item pickup)
-     
-        if (LimitLeft < MaxLimit && other.CompareTag(correctTag))
-        {
-            var tracker = other.GetComponent<GroundObj>().tracker;
-            LimitLeft += refillAmount;
-         
-            if (_spawnManager.trackedIndexs.Contains((tracker)))
-            {
-                _spawnManager.SpawnedList.Remove(tracker);
-                _spawnManager.trackedIndexs.Remove(tracker);
-                Destroy(other.gameObject,0.1f);
-            }
-        }
-        if (LimitLeft > MaxLimit)
-        {
-            Debug.Log($" entred with {LimitLeft}");
-            LimitLeft = MaxLimit;
-            
-        }
-
-        
-      
-
-    }
+    public abstract void LimitCheck(GameObject other);
+    
     
     //Helper class to find Child game objects using name (move to more global class?)
     public GameObject FindChildWithNameContaining(Transform parent, string substring)

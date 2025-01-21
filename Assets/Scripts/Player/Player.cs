@@ -318,7 +318,7 @@ public class Player : MonoBehaviour
         
         if (other.CompareTag("Batteries") || other.CompareTag("Fuel"))
         {
-            _equipmentBases[CurrentSlot].LimitCheck(other.gameObject,other.tag);
+            _equipmentBases[CurrentSlot].LimitCheck(other.gameObject);
             return;
         }
 
