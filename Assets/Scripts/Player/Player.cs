@@ -73,6 +73,7 @@ public class Player : MonoBehaviour
     private bool torchActive,flashlightActive;
     public class MouseItem
     {
+        public UserInterface uI;
         public GameObject obj;
         public InventoryObj.InventorySlot item;
         public InventoryObj.InventorySlot hoverItem;

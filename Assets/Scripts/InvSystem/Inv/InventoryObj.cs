@@ -74,19 +74,28 @@ public class InventoryObj : ScriptableObject
     [ContextMenu("Clear")]
     public void Clear()
     {
-       Container = new Inventory();
+       Container.Clear();
     }
 
     [System.Serializable]
     public class Inventory
     {
         public InventorySlot[] Items = new InventorySlot[4];
+
+        public void Clear()
+        {
+            for (int i = 0; i < Items.Length; i++)
+            {
+                Items[i].UpdateSlot(-1,new Item(), 0);
+            }
+        }
     }
 
 
     [System.Serializable]
     public class InventorySlot
     {
+        public UserInterface parent;
         public int ID = -1;
         public Item item;
         public int amount;

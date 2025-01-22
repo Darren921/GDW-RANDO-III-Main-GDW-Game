@@ -1399,6 +1399,7 @@ GameObject:
   - component: {fileID: 296317369}
   - component: {fileID: 296317368}
   - component: {fileID: 296317371}
+  - component: {fileID: 296317372}
   m_Layer: 5
   m_Name: Hotbar
   m_TagString: Untagged
@@ -1503,14 +1504,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 136e24cc61032494c9923edcd7ad9b86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentTransform: {fileID: 296317366}
+  parentTransform: {fileID: 1047731472}
   Player: {fileID: 1271478420}
-  inventory: {fileID: 11400000, guid: c66b2b50ab58b824aa601449e3b7ed47, type: 2}
+  inventory: {fileID: 11400000, guid: 0bb6e0985f88e094d9174a2a708e6018, type: 2}
   slots:
   - {fileID: 243205778}
   - {fileID: 595036119}
   - {fileID: 2087998503}
   - {fileID: 1047731471}
+--- !u!114 &296317372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296317365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &303673252
 GameObject:
   m_ObjectHideFlags: 0
@@ -7354,6 +7368,7 @@ GameObject:
   - component: {fileID: 1508469358}
   - component: {fileID: 1508469357}
   - component: {fileID: 1508469356}
+  - component: {fileID: 1508469360}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -7459,6 +7474,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1508469354}
   m_CullTransparentMesh: 1
+--- !u!114 &1508469360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1508469354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &1517105381 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4142793075520427922, guid: 8bb9ee29296d1dd46b61455061290547,
@@ -8637,8 +8665,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1828158689}
-  - {fileID: 1614014776}
   - {fileID: 296317366}
+  - {fileID: 1614014776}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

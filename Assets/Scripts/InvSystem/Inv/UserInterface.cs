@@ -16,6 +16,10 @@ public abstract class UserInterface : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        for (int i = 0; i < inventory.Container.Items.Length; i++)
+        {
+            inventory.Container.Items[i].parent = this;
+        }
         CreateSlots();
     }
 
@@ -78,7 +82,7 @@ public abstract class UserInterface : MonoBehaviour
         var mouseObject = new GameObject();
         var rt = mouseObject.AddComponent<RectTransform>();
         rt.sizeDelta = new Vector2(50, 50);
-        mouseObject.transform.SetParent(transform.parent.parent);
+        mouseObject.transform.SetParent(transform.parent);
         if (itemsDisplayed[obj].ID >= 0)
         {
             var img = mouseObject.AddComponent<Image>();
@@ -91,16 +95,21 @@ public abstract class UserInterface : MonoBehaviour
     }
     public void OnDragEnd( GameObject obj )
     {
-        if (Player.mouseItem.hoverObj)
+        var itemOnMouse = Player.mouseItem;
+        var mouseHoverItem = itemOnMouse.hoverItem;
+        var mouseHoverObj = itemOnMouse.hoverObj;
+        var GetItemObject = inventory.database.GetItem;
+        
+        if (mouseHoverObj)
         {
-            inventory.MoveItem(itemsDisplayed[obj],itemsDisplayed[Player.mouseItem.hoverObj]);
+            inventory.MoveItem(itemsDisplayed[obj],mouseHoverItem.parent.itemsDisplayed[itemOnMouse.hoverObj]);
         }
         else
         {
             
         }
-        Destroy(Player.mouseItem.obj);
-        Player.mouseItem.item = null;
+        Destroy(itemOnMouse.obj);
+        itemOnMouse.item = null;
     }
     public void OnDrag( GameObject obj )
     {

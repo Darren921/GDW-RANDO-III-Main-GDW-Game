@@ -15,4 +15,57 @@ MonoBehaviour:
   savePath: /hotbar.Save
   database: {fileID: 11400000, guid: 6eacb03a804c59b49abbca8a4c3a5f97, type: 2}
   Container:
-    Items: []
+    Items:
+    - parent: {fileID: 0}
+      ID: 2
+      item:
+        Name: Torch
+        Id: 2
+        Description: 
+        UiDisplay: {fileID: 21300000, guid: a78adfdb28784c4468469ce6e74ad97c, type: 3}
+        ItemType: 3
+        Prefab: {fileID: 803125658582061874, guid: 14ec93b1d37b54447956cacec647e505,
+          type: 3}
+        ItemLimit: 0
+        ItemRarity: 0
+        Categories: []
+      amount: 1
+    - parent: {fileID: 0}
+      ID: -1
+      item:
+        Name: 
+        Id: -1
+        Description: 
+        UiDisplay: {fileID: 0}
+        ItemType: 0
+        Prefab: {fileID: 0}
+        ItemLimit: 0
+        ItemRarity: 0
+        Categories: []
+      amount: 0
+    - parent: {fileID: 0}
+      ID: -1
+      item:
+        Name: 
+        Id: -1
+        Description: 
+        UiDisplay: {fileID: 0}
+        ItemType: 0
+        Prefab: {fileID: 0}
+        ItemLimit: 0
+        ItemRarity: 0
+        Categories: []
+      amount: 0
+    - parent: {fileID: 0}
+      ID: -1
+      item:
+        Name: 
+        Id: -1
+        Description: 
+        UiDisplay: {fileID: 0}
+        ItemType: 0
+        Prefab: {fileID: 0}
+        ItemLimit: 0
+        ItemRarity: 0
+        Categories: []
+      amount: 0

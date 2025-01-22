@@ -16,10 +16,11 @@ MonoBehaviour:
   database: {fileID: 11400000, guid: 6eacb03a804c59b49abbca8a4c3a5f97, type: 2}
   Container:
     Items:
-    - ID: -1
+    - parent: {fileID: 0}
+      ID: -1
       item:
         Name: 
-        Id: 0
+        Id: -1
         Description: 
         UiDisplay: {fileID: 0}
         ItemType: 0
@@ -28,10 +29,11 @@ MonoBehaviour:
         ItemRarity: 0
         Categories: []
       amount: 0
-    - ID: -1
+    - parent: {fileID: 0}
+      ID: -1
       item:
         Name: 
-        Id: 0
+        Id: -1
         Description: 
         UiDisplay: {fileID: 0}
         ItemType: 0
@@ -40,10 +42,11 @@ MonoBehaviour:
         ItemRarity: 0
         Categories: []
       amount: 0
-    - ID: -1
+    - parent: {fileID: 0}
+      ID: -1
       item:
         Name: 
-        Id: 0
+        Id: -1
         Description: 
         UiDisplay: {fileID: 0}
         ItemType: 0
@@ -52,10 +55,11 @@ MonoBehaviour:
         ItemRarity: 0
         Categories: []
       amount: 0
-    - ID: -1
+    - parent: {fileID: 0}
+      ID: -1
       item:
         Name: 
-        Id: 0
+        Id: -1
         Description: 
         UiDisplay: {fileID: 0}
         ItemType: 0

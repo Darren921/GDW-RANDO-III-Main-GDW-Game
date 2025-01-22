@@ -51,6 +51,12 @@ using UnityEngine.Serialization;
         public int ItemLimit;
         public float ItemRarity;
         public Classification[] Categories;
+
+        public Item()
+        {
+            Name = "";
+            Id = -1;
+        }
         public Item(ItemObj item)
         {
             Name = item.name;
