@@ -24,14 +24,14 @@ using UnityEngine.Serialization;
 
     public abstract class ItemObj : ScriptableObject
     {
-        public int id;
         public Sprite uiDisplay;
         public ItemType itemType;
         [TextArea(15, 20)] public string description;
         public GameObject prefab;
         public int itemLimit;
         public float itemRarity;
-        public Classification[] categories;
+
+        public Item data = new Item();
         public Item CreateItem()
         {
             Item newItem = new Item(this);
@@ -43,7 +43,7 @@ using UnityEngine.Serialization;
     public class Item
     {
         public string Name;
-        public int Id;
+        public int Id = -1;
         [TextArea(15, 20)] public string Description;
         public Sprite UiDisplay;
         public ItemType ItemType;
@@ -60,18 +60,18 @@ using UnityEngine.Serialization;
         public Item(ItemObj item)
         {
             Name = item.name;
-            Id = item.id;
             UiDisplay = item.uiDisplay;
             ItemType = item.itemType;
             Prefab = item.prefab;
             ItemLimit = item.itemLimit;
             ItemRarity = item.itemRarity;
-            Categories = new Classification[item.categories.Length];
-            for (int i = 0; i < item.categories.Length; i++)
+            Id = item.data.Id;
+            Categories = new Classification[item.data.Categories.Length];
+            for (int i = 0; i < item.data.Categories.Length; i++)
             {
-                Categories[i] = new Classification(item.categories[i].Attribute)
+                Categories[i] = new Classification(item.data.Categories[i].Attribute)
                 {
-                    Attribute = item.categories[i].Attribute
+                    Attribute = item.data.Categories[i].Attribute
                 };
             }
             Description = item.description;

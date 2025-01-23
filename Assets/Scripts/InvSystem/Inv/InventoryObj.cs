@@ -22,7 +22,7 @@ public class InventoryObj : ScriptableObject
         }
         for (int i = 0; i < Container.Items.Length; i++)
         {
-            if (Container.Items[i].ID == _item.Id)
+            if (Container.Items[i].item.Id == _item.Id)
             {
                 Container.Items[i].addAmount(_amount);
              return;
@@ -35,9 +35,9 @@ public class InventoryObj : ScriptableObject
     {
         for (int i = 0; i < Container.Items.Length; i++)
         {
-            if (Container.Items[i].ID <= -1)
+            if (Container.Items[i].item.Id <= -1)
             {
-                Container.Items[i].UpdateSlot(_item.Id, _item ,_amount);
+                Container.Items[i].UpdateSlot( _item ,_amount);
                 return Container.Items[i];
             }
         }
@@ -45,11 +45,11 @@ public class InventoryObj : ScriptableObject
         return null;
     }
 
-    public void MoveItem(InventorySlot item1, InventorySlot item2)
+    public void SwapItems(InventorySlot item1, InventorySlot item2)
     {
-        InventorySlot temp = new InventorySlot(item2.ID, item2.item, item2.amount);
-        item2.UpdateSlot(item1.ID, item1.item, item1.amount);
-        item1.UpdateSlot(temp.ID, temp.item, temp.amount);
+        InventorySlot temp = new InventorySlot( item2.item, item2.amount);
+        item2.UpdateSlot( item1.item, item1.amount);
+         item1.UpdateSlot( temp.item, temp.amount);
     }
     [ContextMenu("Save")]
     public void Save()
@@ -86,7 +86,7 @@ public class InventoryObj : ScriptableObject
         {
             for (int i = 0; i < Items.Length; i++)
             {
-                Items[i].UpdateSlot(-1,new Item(), 0);
+                Items[i].UpdateSlot(new Item(), 0);
             }
         }
     }
@@ -96,25 +96,35 @@ public class InventoryObj : ScriptableObject
     public class InventorySlot
     {
         public UserInterface parent;
-        public int ID = -1;
         public Item item;
         public int amount;
+
+        public ItemObj ItemObj
+        {
+            get
+            {
+                if (item.Id >= 0)
+                {
+                    return parent.inventory.database.GetItem[item.Id];
+                }
+
+                return null;
+                
+            }
+        }
         public InventorySlot()
         {
-            ID = -1;
             item = null;
             amount = 0;
         }
 
-        public InventorySlot(int _id, Item _item, int _amount )
+        public InventorySlot(Item _item, int _amount )
         {
-            ID = _id;
             item = _item;
             amount = _amount;
         }
-        public void UpdateSlot(int _id, Item _item, int _amount )
+        public void UpdateSlot( Item _item, int _amount )
         {
-            ID = _id;
             item = _item;
             amount = _amount;
         }

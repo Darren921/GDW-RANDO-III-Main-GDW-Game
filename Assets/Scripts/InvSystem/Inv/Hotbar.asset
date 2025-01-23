@@ -17,7 +17,6 @@ MonoBehaviour:
   Container:
     Items:
     - parent: {fileID: 0}
-      ID: 2
       item:
         Name: Torch
         Id: 2
@@ -29,9 +28,20 @@ MonoBehaviour:
         ItemLimit: 0
         ItemRarity: 0
         Categories: []
-      amount: 1
+      amount: 3
     - parent: {fileID: 0}
-      ID: -1
+      item:
+        Name: 
+        Id: -1
+        Description: 
+        UiDisplay: {fileID: 0}
+        ItemType: 0
+        Prefab: {fileID: 0}
+        ItemLimit: 0
+        ItemRarity: 0
+        Categories: []
+      amount: 2
+    - parent: {fileID: 0}
       item:
         Name: 
         Id: -1
@@ -44,20 +54,6 @@ MonoBehaviour:
         Categories: []
       amount: 0
     - parent: {fileID: 0}
-      ID: -1
-      item:
-        Name: 
-        Id: -1
-        Description: 
-        UiDisplay: {fileID: 0}
-        ItemType: 0
-        Prefab: {fileID: 0}
-        ItemLimit: 0
-        ItemRarity: 0
-        Categories: []
-      amount: 0
-    - parent: {fileID: 0}
-      ID: -1
       item:
         Name: 
         Id: -1

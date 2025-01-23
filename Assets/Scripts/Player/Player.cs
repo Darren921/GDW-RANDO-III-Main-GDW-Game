@@ -2,6 +2,7 @@ using System;
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -67,19 +68,11 @@ public class Player : MonoBehaviour
     //Item switching 
     [Header("Item switching ")]
     [SerializeField] private InventoryObj Inventory;
+    [SerializeField] private InventoryObj Hotbar;
     [SerializeField] private ItemObj Torch, Flashlight;
     [SerializeField] internal List<EquipmentBase>  _equipmentBases;
     //Torch 
     private bool torchActive,flashlightActive;
-    public class MouseItem
-    {
-        public UserInterface uI;
-        public GameObject obj;
-        public InventoryObj.InventorySlot item;
-        public InventoryObj.InventorySlot hoverItem;
-        public GameObject hoverObj;
-    }
-    public MouseItem mouseItem = new MouseItem();
     [SerializeField] GameObject InventoryDisplay;
     private float fuelLeft;
     [SerializeField] Slider TorchSlider;
@@ -97,10 +90,13 @@ public class Player : MonoBehaviour
     void Start()
     {
         isDead = false;
-        _transition = FindFirstObjectByType<Transition>();
         CurrentSlot = -1;
-
-         Inventory.AddItem(new Item(Torch), 1);
+        
+    
+            Hotbar.AddItem(new Item(Flashlight), 1);
+            Hotbar.AddItem(new Item(Torch), 1);
+        
+   
         //turn on and off when needed
        // torchActive = true;
        //fuelLeft = 500;
@@ -118,7 +114,9 @@ public class Player : MonoBehaviour
         
     }
 
-
+ 
+     
+      
     void Update()
     {
         //HeartBeats sounds
