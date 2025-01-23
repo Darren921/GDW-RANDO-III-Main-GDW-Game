@@ -12,11 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bf50485aa4f2a84eaffaa2f77e309b3, type: 3}
   m_Name: Empty
   m_EditorClassIdentifier: 
-  id: 0
   uiDisplay: {fileID: 21300000, guid: e24bcee0e94d2544092d298b977c60a5, type: 3}
+  stackable: 0
   itemType: 0
   description: 
-  prefab: {fileID: 3112408051273147652, guid: 13a2aa595b4344142b88f261acc42e01, type: 3}
+  prefab: {fileID: 0}
   itemLimit: 0
   itemRarity: 0
-  categories: []
+  data:
+    Name: 
+    Id: 0
+    Description: 
+    UiDisplay: {fileID: 0}
+    ItemType: 0
+    Prefab: {fileID: 0}
+    ItemLimit: 0
+    ItemRarity: 0
+    Categories: []

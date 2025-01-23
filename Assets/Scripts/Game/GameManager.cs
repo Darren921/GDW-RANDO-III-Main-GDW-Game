@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Material frostTexture;
     private float _curOpacity;
     private bool TorchCheck;
-    
+    public static bool firstLoad; 
     
     [Header("References")]
     [SerializeField] private Player _player;
@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
              case true when !_player._equipmentBases[_player.returnTorchLocation()].torchActive && (!_player.dead):
              {
                  {
-                     print(_player._equipmentBases[_player.returnTorchLocation()].torchActive);
+//                     print(_player._equipmentBases[_player.returnTorchLocation()].torchActive);
                      _frost += Time.deltaTime;
                      _curOpacity += 0.01f * Time.deltaTime;
 

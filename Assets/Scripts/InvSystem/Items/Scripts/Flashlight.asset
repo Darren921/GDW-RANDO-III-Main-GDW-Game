@@ -12,13 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a5e89d2357581d4ab176f68047b4770, type: 3}
   m_Name: Flashlight
   m_EditorClassIdentifier: 
-  id: 1
   uiDisplay: {fileID: 21300000, guid: 4665a831499bb7044b208180006e5f8c, type: 3}
+  stackable: 0
   itemType: 3
   description: 
   prefab: {fileID: 6434571087379855294, guid: 83b18ff302f22bf45b0a27ca34d2b190, type: 3}
   itemLimit: 0
   itemRarity: 0
-  categories: []
+  data:
+    Name: 
+    Id: 1
+    Description: 
+    UiDisplay: {fileID: 0}
+    ItemType: 0
+    Prefab: {fileID: 0}
+    ItemLimit: 0
+    ItemRarity: 0
+    Categories: []
   Limit: 150
   refuel: 30

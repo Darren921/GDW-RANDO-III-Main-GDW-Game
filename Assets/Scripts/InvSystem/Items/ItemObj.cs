@@ -25,6 +25,8 @@ using UnityEngine.Serialization;
     public abstract class ItemObj : ScriptableObject
     {
         public Sprite uiDisplay;
+
+        public bool stackable;
         public ItemType itemType;
         [TextArea(15, 20)] public string description;
         public GameObject prefab;

@@ -12,7 +12,6 @@ public class EquipmentObj : ItemObj
     // Start is called before the first frame update
     void Start()
     {
-        itemType = ItemType.Equipment;
     }
 
     // Update is called once per frame

@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
     [SerializeField] internal List<EquipmentBase>  _equipmentBases;
     //Torch 
     private bool torchActive,flashlightActive;
-    [SerializeField] GameObject InventoryDisplay;
+    [SerializeField] GameObject[] InventoryDisplay;
     private float fuelLeft;
     [SerializeField] Slider TorchSlider;
     private bool AtMeltingPoint;
@@ -91,10 +91,14 @@ public class Player : MonoBehaviour
     {
         isDead = false;
         CurrentSlot = -1;
-        
-    
-            Hotbar.AddItem(new Item(Flashlight), 1);
-            Hotbar.AddItem(new Item(Torch), 1);
+        if (!GameManager.firstLoad)
+        {
+            GameManager.firstLoad  = true;
+            Hotbar.AddItem(new Item(Torch) , 1);
+            Hotbar.AddItem(new Item(Flashlight) , 1);
+
+        }
+ 
         
    
         //turn on and off when needed
@@ -326,10 +330,11 @@ public class Player : MonoBehaviour
             var item = other.GetComponent<GroundObj>();
             if (item)
             {
-               
-                Inventory.AddItem(new Item(item.item), 1);
-                Destroy(other.gameObject);
-
+                Item _item = new Item(item.item);
+                if (Inventory.AddItem(_item, 1))
+                {
+                    Destroy(other.gameObject);
+                }
             }
         }
                
@@ -340,7 +345,8 @@ public class Player : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        Inventory.Container.Items = new InventoryObj.InventorySlot[4];
+        Inventory.Container.Clear();
+        Hotbar.Container.Clear();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -489,13 +495,19 @@ public class Player : MonoBehaviour
         if (!isOpen)
         {
             isOpen = true;
-            InventoryDisplay.SetActive(true);
+            foreach (var Display in InventoryDisplay)
+            {
+                Display.SetActive(true);
+            }
 
         }
         else
         {
             isOpen = false;
-            InventoryDisplay.SetActive(false);
+            foreach (var Display in InventoryDisplay)
+            {
+                Display.SetActive(false);
+            }
 
         }
 

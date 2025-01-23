@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,28 +10,45 @@ using UnityEngine.UI;
 public abstract class UserInterface : MonoBehaviour
 {
     [SerializeField] protected Transform parentTransform ;
-    [SerializeField]private Player Player;
     public InventoryObj inventory;
     public Dictionary<GameObject, InventoryObj.InventorySlot > slotsOnInterface = new Dictionary<GameObject, InventoryObj.InventorySlot>();
-    
+
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < inventory.Container.Items.Length; i++)
+        for (int i = 0; i < inventory.GetSlots.Length; i++)
         {
-            inventory.Container.Items[i].parent = this;
+            inventory.GetSlots[i].parent = this;
+                //  inventory.GetSlots[i].OnBeforeUpdate+= OnSlotUpdate;
+
+           inventory.GetSlots[i].OnAfterUpdate += OnSlotUpdate;
         }
         CreateSlots();
         AddEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(gameObject); });
         AddEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(gameObject); });
     }
 
+    
+    private void  OnSlotUpdate(InventoryObj.InventorySlot _slot)
+    {
+        if (_slot.item.Id >= 0)
+        {
+            _slot.slotDisplay.transform.GetChild(0).GetComponentInChildren<Image>().sprite = _slot.ItemObj.uiDisplay;
+            _slot.slotDisplay.GetComponentInChildren<TextMeshProUGUI>().text = _slot.amount == 1 ? ""  : _slot.amount.ToString("n0");
+        }
+        else
+        {
+            _slot.slotDisplay.transform.GetChild(0).GetComponentInChildren<Image>().sprite = null;
+            _slot.slotDisplay.GetComponentInChildren<TextMeshProUGUI>().text = "" ;
+
+        }
+    }
 
 
     // Update is called once per frame
     void Update()
     {
-        UpdateSlots();
+     
     }
 
 
@@ -78,19 +96,26 @@ public abstract class UserInterface : MonoBehaviour
     }
     public void OnDragStart( GameObject obj )
     {
-        print("active");
-        var mouseObject = new GameObject();
-        var rt = mouseObject.AddComponent<RectTransform>();
-        rt.sizeDelta = new Vector2(50, 50);
-        mouseObject.transform.SetParent(transform.parent);
+        MouseData.tempItemBeingDragged = CreateTempItem(obj);
+    }
+
+    public GameObject CreateTempItem(GameObject obj)
+    {
+        GameObject tempItem = null;
         if (slotsOnInterface[obj].item.Id >= 0)
         {
-            var img = mouseObject.AddComponent<Image>();
-            img.sprite = slotsOnInterface[obj].ItemObj.uiDisplay;
-            img.raycastTarget = false;
+            tempItem = new GameObject();
+            var rt = tempItem.AddComponent<RectTransform>();
+            rt.sizeDelta = new Vector2(50, 50);
+            tempItem.transform.SetParent(transform.parent);
+            if (slotsOnInterface[obj].item.Id >= 0)
+            {
+                var img = tempItem.AddComponent<Image>();
+                img.sprite = slotsOnInterface[obj].ItemObj.uiDisplay;
+                img.raycastTarget = false;
+            }
         }
-
-        MouseData.tempItemBeingDragged = mouseObject;
+       return tempItem;
     }
 
     public void OnEnterInterface(GameObject obj)

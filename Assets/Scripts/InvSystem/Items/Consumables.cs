@@ -6,7 +6,6 @@ public class Consumables : ItemObj
 {
     private void Awake()
     {
-        itemType = ItemType.Consumable;
     }
 
 }

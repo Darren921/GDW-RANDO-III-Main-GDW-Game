@@ -17,7 +17,6 @@ MonoBehaviour:
   Container:
     Items:
     - parent: {fileID: 0}
-      ID: -1
       item:
         Name: 
         Id: -1
@@ -30,7 +29,6 @@ MonoBehaviour:
         Categories: []
       amount: 0
     - parent: {fileID: 0}
-      ID: -1
       item:
         Name: 
         Id: -1
@@ -43,7 +41,6 @@ MonoBehaviour:
         Categories: []
       amount: 0
     - parent: {fileID: 0}
-      ID: -1
       item:
         Name: 
         Id: -1
@@ -56,7 +53,6 @@ MonoBehaviour:
         Categories: []
       amount: 0
     - parent: {fileID: 0}
-      ID: -1
       item:
         Name: 
         Id: -1

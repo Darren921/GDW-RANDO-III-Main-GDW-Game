@@ -10,6 +10,5 @@ public class TestItem : ItemObj
 {
     private void Awake()
     {
-        itemType = ItemType.Empty;
     }
 }
