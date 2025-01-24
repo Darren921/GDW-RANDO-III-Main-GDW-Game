@@ -62,7 +62,7 @@ public class IceMelting : MonoBehaviour
 
     void Update()
     {
-        print(_player._equipmentBases[_player.returnTorchLocation()].torchActive);
+//        print(_player._equipmentBases[_player.returnTorchLocation()].torchActive);
         if (isMelting && !active)
         {
             active = true;

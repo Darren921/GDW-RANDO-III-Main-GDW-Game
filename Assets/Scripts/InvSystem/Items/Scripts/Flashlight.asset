@@ -21,9 +21,9 @@ MonoBehaviour:
   itemRarity: 0
   data:
     Name: 
-    Id: 1
+    Id: 0
     Description: 
-    UiDisplay: {fileID: 0}
+    UiDisplay: {fileID: 21300000, guid: a78adfdb28784c4468469ce6e74ad97c, type: 3}
     ItemType: 0
     Prefab: {fileID: 0}
     ItemLimit: 0

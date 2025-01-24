@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -19,11 +20,12 @@ public abstract class EquipmentBase : MonoBehaviour
     protected int refillAmount;
     private Slider slider;
     protected SpawnManager _spawnManager;
-
+    internal int ID;
   
     // Start is called before the first frame update
     void Start()
     {
+        ID =  equipmentObj.data.Id ;
         _spawnManager = FindFirstObjectByType<SpawnManager>();
         if (equipmentObj is not null)
         {

@@ -4887,9 +4887,26 @@ PrefabInstance:
       objectReference: {fileID: 1508469354}
     - target: {fileID: 2663862701929498783, guid: be063c56650e85b4eb735cfd44234ee5,
         type: 3}
+      propertyPath: EquipmentObjs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2663862701929498783, guid: be063c56650e85b4eb735cfd44234ee5,
+        type: 3}
       propertyPath: _equipmentBases.Array.size
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2663862701929498783, guid: be063c56650e85b4eb735cfd44234ee5,
+        type: 3}
+      propertyPath: EquipmentObjs.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 909a16654c4a4584b8d7bde2b80318f7,
+        type: 2}
+    - target: {fileID: 2663862701929498783, guid: be063c56650e85b4eb735cfd44234ee5,
+        type: 3}
+      propertyPath: EquipmentObjs.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 35cf0c86a05a50c41938348f21342c6c,
+        type: 2}
     - target: {fileID: 2663862701929498783, guid: be063c56650e85b4eb735cfd44234ee5,
         type: 3}
       propertyPath: InventoryDisplay.Array.size
@@ -4905,6 +4922,11 @@ PrefabInstance:
       propertyPath: _equipmentBases.Array.data[1]
       value: 
       objectReference: {fileID: 2036734216}
+    - target: {fileID: 2663862701929498783, guid: be063c56650e85b4eb735cfd44234ee5,
+        type: 3}
+      propertyPath: _equipmentBases.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2663862701929498783, guid: be063c56650e85b4eb735cfd44234ee5,
         type: 3}
       propertyPath: InventoryDisplay.Array.data[0]

@@ -6,8 +6,8 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(fileName = "New Item Database", menuName = "Inventory System/Items/Inv/Database")]
 public class ItemDatabaseObject : ScriptableObject, ISerializationCallbackReceiver
 {
-    [FormerlySerializedAs("Items")] public ItemObj[] ItemObjects;
-
+     public ItemObj[] ItemObjects;
+    
     public void OnAfterDeserialize()
     {
         for (int i = 0; i < ItemObjects.Length; i++)

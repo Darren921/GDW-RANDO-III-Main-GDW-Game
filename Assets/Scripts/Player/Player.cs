@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
     [Header("Item switching ")]
     [SerializeField] private InventoryObj Inventory;
     [SerializeField] private InventoryObj Hotbar;
-    [SerializeField] private ItemObj Torch, Flashlight;
+    [SerializeField] private ItemObj[] EquipmentObjs;
     [SerializeField] internal List<EquipmentBase>  _equipmentBases;
     //Torch 
     private bool torchActive,flashlightActive;
@@ -81,7 +81,7 @@ public class Player : MonoBehaviour
     //Flashlight
     private bool _equipedTorch, _equipedFlashlight;
     [SerializeField] Slider FlashlightSlider;
-    private int CurrentSlot;
+    private int CurrentItem;
     
     public static bool isDead;
     
@@ -90,13 +90,12 @@ public class Player : MonoBehaviour
     void Start()
     {
         isDead = false;
-        CurrentSlot = -1;
+        CurrentItem = -1;
         if (!GameManager.firstLoad)
         {
             GameManager.firstLoad  = true;
-            Hotbar.AddItem(new Item(Torch) , 1);
-            Hotbar.AddItem(new Item(Flashlight) , 1);
-
+            Hotbar.AddItem(new Item(EquipmentObjs[0]) , 1);
+            Hotbar.AddItem(new Item(EquipmentObjs[1]) , 1);
         }
  
         
@@ -160,7 +159,7 @@ public class Player : MonoBehaviour
         }*/
         
       
-            if (Input.GetMouseButtonDown(0)) // Left-click
+            /*if (Input.GetMouseButtonDown(0)) // Left-click
             {
                 PointerEventData pointerData = new PointerEventData(EventSystem.current)
                 {
@@ -180,33 +179,11 @@ public class Player : MonoBehaviour
                 {
                     Debug.Log("No UI Element hit.");
                 }
-            }
+            }*/
         }
     
 
-  
-  
-
-   
-
     
- 
-
-    /*private IEnumerator CheckCharge(string item)
-    {
-        if (item == "Flashlight")
-        {
-            yield return new WaitUntil(() => flashlightActive == false );
-            CheckActive = false;
-
-        }
-        else if (item == "Torch")
-        {
-            yield return new WaitUntil(() => torchActive == false );
-            CheckActive = false;
-
-        }
-    }*/
 
     private void FixedUpdate()
     {
@@ -321,7 +298,7 @@ public class Player : MonoBehaviour
         
         if (other.CompareTag("Batteries") || other.CompareTag("Fuel"))
         {
-            _equipmentBases[CurrentSlot].LimitCheck(other.gameObject);
+            _equipmentBases[CurrentItem].LimitCheck(other.gameObject);
             return;
         }
 
@@ -331,10 +308,24 @@ public class Player : MonoBehaviour
             if (item)
             {
                 Item _item = new Item(item.item);
-                if (Inventory.AddItem(_item, 1))
+                if (Hotbar.EmptySlotCount > 0)
                 {
-                    Destroy(other.gameObject);
+                    if (Hotbar.AddItem(_item, 1))
+                    {
+                        Destroy(other.gameObject);
+                    }
                 }
+                else
+                {
+                    if (Inventory.EmptySlotCount > 0)
+                    {
+                        if (Inventory.AddItem(_item, 1))
+                        {
+                            Destroy(other.gameObject);
+                        }
+                    }
+                }
+               
             }
         }
                
@@ -425,28 +416,22 @@ public class Player : MonoBehaviour
     
     public void ChangeItem(float slot)
     {
-        
-         var slotNumber = (int)slot - 1;
-         if(CurrentSlot == slotNumber){
-             return;
-         }
-         if (CurrentSlot != -1)
-         {
-             var curEquipped = _equipmentBases[CurrentSlot];
-             curEquipped.baseObj.gameObject.SetActive(false);
-             curEquipped.lightObj.SetActive(false);
-             curEquipped.equipped = false;
-             curEquipped.active = false;
-             curEquipped.checkActive = false;
-         }
-         var NewEquipped = _equipmentBases[slotNumber];
-         print(NewEquipped);
-         NewEquipped.baseObj.gameObject.SetActive(true);
-         NewEquipped.lightObj.SetActive(false);
-         NewEquipped.equipped = true;
-         NewEquipped.active = false;
-         
-        CurrentSlot = slotNumber;
+        int inputtedSlot = (int)slot - 1;
+        var targetSlot = Hotbar.Container.Slots[inputtedSlot]; //This grabs inputted slot from the inventory
+        var targetId = targetSlot.ItemObj.data.Id; // this grabs the id of the slot
+
+        for (int i = 0; i < _equipmentBases.Count; i++)
+        {
+            var item = _equipmentBases[i];
+            item.gameObject.SetActive(item.ID == targetId); 
+            if (item.ID == targetId)
+            {
+                CurrentItem = targetId;
+            }
+            item.lightObj.gameObject.SetActive(false);
+            item.equipped = (item.ID == targetId);
+            item.active = false;
+        }
     }
 
     public void checkIfActive()

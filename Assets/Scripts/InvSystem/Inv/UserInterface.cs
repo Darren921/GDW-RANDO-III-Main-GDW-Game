@@ -19,8 +19,6 @@ public abstract class UserInterface : MonoBehaviour
         for (int i = 0; i < inventory.GetSlots.Length; i++)
         {
             inventory.GetSlots[i].parent = this;
-                //  inventory.GetSlots[i].OnBeforeUpdate+= OnSlotUpdate;
-
            inventory.GetSlots[i].OnAfterUpdate += OnSlotUpdate;
         }
         CreateSlots();
@@ -54,24 +52,6 @@ public abstract class UserInterface : MonoBehaviour
 
     protected abstract void CreateSlots();
     
-
-    private void UpdateSlots()
-    {
-        foreach (var _slot in slotsOnInterface)
-        {
-            if (_slot.Value.item.Id >= 0)
-            {
-                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = _slot.Value.ItemObj.uiDisplay;
-                _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = _slot.Value.amount == 1 ? ""  : _slot.Value.amount.ToString("n0");
-            }
-            else
-            {
-                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = null;
-                _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = "" ;
-
-            }
-        }
-    }
 
     protected void AddEvent(GameObject obj, EventTriggerType type, UnityAction<BaseEventData> action)
     {
