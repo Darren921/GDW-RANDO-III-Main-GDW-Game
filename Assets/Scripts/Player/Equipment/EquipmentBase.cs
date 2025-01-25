@@ -8,8 +8,9 @@ using UnityEngine.UI;
 
 public abstract class EquipmentBase : MonoBehaviour
 {
-    [SerializeField]EquipmentObj equipmentObj;
-    public float MaxLimit { get; private set; }
+    [SerializeField] protected EquipmentObj equipmentObj;
+
+    public float MaxLimit { get; protected set; }
     internal GameObject baseObj;
     internal GameObject lightObj;
     protected float LimitLeft { get; set; }
@@ -18,7 +19,7 @@ public abstract class EquipmentBase : MonoBehaviour
     internal bool torchActive;
     internal bool checkActive;
     protected int refillAmount;
-    private Slider slider;
+    protected Slider slider;
     protected SpawnManager _spawnManager;
     internal int ID;
   
@@ -34,8 +35,8 @@ public abstract class EquipmentBase : MonoBehaviour
             LimitLeft = equipmentObj.Limit;
             refillAmount = equipmentObj.refuel; 
         }
-   
-        
+
+       
         baseObj = gameObject;
         lightObj = FindChildWithNameContaining(baseObj.transform, "Light");
         slider = gameObject.GetComponentInChildren<Slider>();

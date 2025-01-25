@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7617674794428679272}
   - component: {fileID: 2162978544430040563}
   - component: {fileID: -1396027701263859025}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Gas canister obj
   m_TagString: Fuel
   m_Icon: {fileID: 0}

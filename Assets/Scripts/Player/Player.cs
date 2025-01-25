@@ -419,18 +419,35 @@ public class Player : MonoBehaviour
         int inputtedSlot = (int)slot - 1;
         var targetSlot = Hotbar.Container.Slots[inputtedSlot]; //This grabs inputted slot from the inventory
         var targetId = targetSlot.ItemObj.data.Id; // this grabs the id of the slot
-
+        foreach (var slots in Hotbar.Container.Slots)
+        {
+            var outline = slots.slotDisplay.transform.GetChild(0).gameObject.GetComponentInChildren<Outline>();
+            if (outline != null)
+            {
+                outline.enabled = false;
+            }
+        }
         for (int i = 0; i < _equipmentBases.Count; i++)
         {
             var item = _equipmentBases[i];
-            item.gameObject.SetActive(item.ID == targetId); 
-            if (item.ID == targetId)
+            bool isActive = (item.ID == targetId);
+            item.gameObject.SetActive(isActive); 
+
+            
+            
+            item.lightObj.gameObject.SetActive(false);
+            item.equipped = (isActive);
+            item.active = false;
+            if (isActive)
             {
                 CurrentItem = targetId;
+                var outline = targetSlot.slotDisplay.transform.GetChild(0).gameObject.GetComponentInChildren<Outline>();
+                if (outline != null)
+                {
+                    outline.enabled = true;
+                }
             }
-            item.lightObj.gameObject.SetActive(false);
-            item.equipped = (item.ID == targetId);
-            item.active = false;
+            
         }
     }
 

@@ -3025,6 +3025,12 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6800249751854360846, guid: 8bb9ee29296d1dd46b61455061290547, type: 3}
+--- !u!65 &743719667 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 2355678246811039590, guid: be063c56650e85b4eb735cfd44234ee5,
+    type: 3}
+  m_PrefabInstance: {fileID: 857094183}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &752844881 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4399094148515867064, guid: 8bb9ee29296d1dd46b61455061290547,
@@ -5057,6 +5063,12 @@ PrefabInstance:
       propertyPath: m_BackGroundColor.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4819660532285355834, guid: be063c56650e85b4eb735cfd44234ee5,
+        type: 3}
+      propertyPath: matchingItem
+      value: 
+      objectReference: {fileID: 11400000, guid: be4b5b00e147cc340a4739e88b713cd1,
+        type: 2}
     - target: {fileID: 5084228658327990050, guid: be063c56650e85b4eb735cfd44234ee5,
         type: 3}
       propertyPath: equipmentObj
@@ -5067,6 +5079,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 'Player '
+      objectReference: {fileID: 0}
+    - target: {fileID: 5674763604458059872, guid: be063c56650e85b4eb735cfd44234ee5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5719823628402094930, guid: be063c56650e85b4eb735cfd44234ee5,
         type: 3}
@@ -5139,6 +5156,11 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7520030883729783441, guid: be063c56650e85b4eb735cfd44234ee5,
+        type: 3}
+      propertyPath: collider
+      value: 
+      objectReference: {fileID: 743719667}
     - target: {fileID: 8346892361438092749, guid: be063c56650e85b4eb735cfd44234ee5,
         type: 3}
       propertyPath: m_Value

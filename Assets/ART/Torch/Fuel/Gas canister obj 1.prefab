@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7617674794428679272}
   - component: {fileID: -7674378769609483141}
   - component: {fileID: 2162978544430040563}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Gas canister obj 1
   m_TagString: Batteries
   m_Icon: {fileID: 0}
@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b14316e60d03f8e4d93fa34eb5161821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  item: {fileID: 0}
 --- !u!65 &2162978544430040563
 BoxCollider:
   m_ObjectHideFlags: 0

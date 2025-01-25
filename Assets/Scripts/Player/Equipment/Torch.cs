@@ -1,11 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Torch : EquipmentBase
 {
     private EquipmentBase _equipmentBaseImplementation;
     [SerializeField] private ItemObj matchingItem;
+    
+    
+    
+    
+    void Start()
+    {
+        ID =  equipmentObj.data.Id ;
+        _spawnManager = FindFirstObjectByType<SpawnManager>();
+        if (equipmentObj is not null)
+        {
+            //Values can be changed in equipmentObj in items (inv system)
+            MaxLimit = equipmentObj.Limit;
+            LimitLeft = equipmentObj.Limit;
+            refillAmount = equipmentObj.refuel; 
+        }
+
+        if (GetComponent<Collider>() is not null)
+        {
+            GetComponent<Collider>().enabled = false;
+        }
+        baseObj = gameObject;
+        lightObj = FindChildWithNameContaining(baseObj.transform, "Light");
+        slider = gameObject.GetComponentInChildren<Slider>();
+        baseObj.SetActive(false);
+        lightObj.SetActive(false);  
+    }
     protected internal override void CheckIfActive()
     {
         if (lightObj == null)
@@ -26,6 +53,7 @@ public class Torch : EquipmentBase
                     active = true;
                     StartCoroutine(CheckCharge()) ;
                     lightObj.SetActive(true);
+                    GetComponent<Collider>().enabled = true;
                 }
                 else
                 {
@@ -33,6 +61,7 @@ public class Torch : EquipmentBase
                     torchActive = false;
                     active = false;
                     lightObj.SetActive(false);
+                    GetComponent<Collider>().enabled = false;
                     
                 }
             }
@@ -42,6 +71,7 @@ public class Torch : EquipmentBase
                 torchActive = false;
                 active = false;
                 lightObj.SetActive(false);
+                GetComponent<Collider>().enabled = false;
 
             }
         }
