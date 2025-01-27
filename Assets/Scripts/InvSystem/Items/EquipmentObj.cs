@@ -6,6 +6,14 @@ using UnityEngine;
 
 public class EquipmentObj : ItemObj
 {
+    internal bool hasLight;
+
+    public enum EquipmentType
+    {
+        drainOverTime,
+        OnePerUse,
+        
+    }
     public int Limit;
     public int refuel;
     // Start is called before the first frame update

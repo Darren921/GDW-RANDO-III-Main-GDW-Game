@@ -24,7 +24,6 @@ using UnityEngine.Serialization;
 
     public abstract class ItemObj : ScriptableObject
     {
-        public Sprite uiDisplay;
 
         public bool stackable;
         public ItemType itemType;
@@ -62,7 +61,7 @@ using UnityEngine.Serialization;
         public Item(ItemObj item)
         {
             Name = item.name;
-            UiDisplay = item.uiDisplay;
+            UiDisplay = item.data.UiDisplay;
             ItemType = item.itemType;
             Prefab = item.prefab;
             ItemLimit = item.itemLimit;

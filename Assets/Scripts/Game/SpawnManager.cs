@@ -95,7 +95,7 @@ public class SpawnManager : MonoBehaviour
 
                 foreach (var spawn in availableSpawns)
                 {
-                    Debug.Log("Fallback activated, filling in leftover items");
+                //    Debug.Log("Fallback activated, filling in leftover items");
                     if (curItemCount >= cap || spawnCount >= amount || SpawnedList.Count >= MaxItems) break;
 
 
@@ -124,7 +124,7 @@ public class SpawnManager : MonoBehaviour
                 }
             }
         }
-        Debug.Log($"Spawning complete. Total items spawned: {spawnCount}/{amount}.");
+//        Debug.Log($"Spawning complete. Total items spawned: {spawnCount}/{amount}.");
         yield return new WaitForSecondsRealtime(15);
         active = false;
         firstSpawn = false;

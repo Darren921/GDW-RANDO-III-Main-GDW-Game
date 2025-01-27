@@ -37,8 +37,8 @@ public class IceMelting : MonoBehaviour
  
     private void OnTriggerStay(Collider other)
     {
-        print(isMelting);
-        print(other.gameObject.tag);
+//        print(isMelting);
+  //      print(other.gameObject.tag);
         if (other.CompareTag("Torch"))
         {
             AtMeltingPoint = true;

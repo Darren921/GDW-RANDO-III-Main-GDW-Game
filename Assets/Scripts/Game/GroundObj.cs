@@ -9,14 +9,10 @@ public class GroundObj : MonoBehaviour
    private SpawnManager _spawnManager;
    private Player _player;
    public ItemObj item;
+   public EquipmentBase equipment;
    private void Start()
    {
-      if (this != null)
-      { 
-         _spawnManager = FindObjectOfType<SpawnManager>();
-         _player = FindObjectOfType<Player>();
-         
-      }
+      
    }
 
    private void OnTriggerEnter(Collider other)

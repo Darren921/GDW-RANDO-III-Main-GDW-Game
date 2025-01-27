@@ -86,9 +86,9 @@ public class Enemy : MonoBehaviour
         NavMesh.SamplePosition(BasicDestination, out hit,40 , NavMesh.AllAreas);
         Vector3 Endpoint = hit.position;
         _Agent.SetDestination(Endpoint);
-        Debug.Log(_Agent.destination);
+//        Debug.Log(_Agent.destination);
         yield return new WaitForSeconds(8);
         _IsActive = true;
-        Debug.Log("new location");
+  //      Debug.Log("new location");
     }
 }

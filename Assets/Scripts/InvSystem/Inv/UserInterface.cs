@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,24 +15,34 @@ public abstract class UserInterface : MonoBehaviour
     public Dictionary<GameObject, InventoryObj.InventorySlot > slotsOnInterface = new Dictionary<GameObject, InventoryObj.InventorySlot>();
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         for (int i = 0; i < inventory.GetSlots.Length; i++)
         {
             inventory.GetSlots[i].parent = this;
            inventory.GetSlots[i].OnAfterUpdate += OnSlotUpdate;
         }
+        
         CreateSlots();
         AddEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(gameObject); });
         AddEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(gameObject); });
+
     }
 
-    
+    private void Start()
+    {
+        for (int i = 0; i < inventory.GetSlots.Length; i++)
+        {
+            OnSlotUpdate(inventory.GetSlots[i]);
+        }
+    }
+
+
     private void  OnSlotUpdate(InventoryObj.InventorySlot _slot)
     {
         if (_slot.item.Id >= 0)
         {
-            _slot.slotDisplay.transform.GetChild(0).GetComponentInChildren<Image>().sprite = _slot.ItemObj.uiDisplay;
+            _slot.slotDisplay.transform.GetChild(0).GetComponentInChildren<Image>().sprite = _slot.ItemObj.data.UiDisplay;
             _slot.slotDisplay.GetComponentInChildren<TextMeshProUGUI>().text = _slot.amount == 1 ? ""  : _slot.amount.ToString("n0");
         }
         else
@@ -91,7 +102,7 @@ public abstract class UserInterface : MonoBehaviour
             if (slotsOnInterface[obj].item.Id >= 0)
             {
                 var img = tempItem.AddComponent<Image>();
-                img.sprite = slotsOnInterface[obj].ItemObj.uiDisplay;
+                img.sprite = slotsOnInterface[obj].ItemObj.data.UiDisplay;
                 img.raycastTarget = false;
             }
         }

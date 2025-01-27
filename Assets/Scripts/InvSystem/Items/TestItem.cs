@@ -6,7 +6,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Test Item ", menuName = "Inventory System/Items/TestItem")]
 
-public class TestItem : ItemObj
+public class TestItem : EquipmentObj
 {
     private void Awake()
     {

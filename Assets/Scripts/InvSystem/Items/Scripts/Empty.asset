@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bf50485aa4f2a84eaffaa2f77e309b3, type: 3}
   m_Name: Empty
   m_EditorClassIdentifier: 
-  uiDisplay: {fileID: 21300000, guid: e24bcee0e94d2544092d298b977c60a5, type: 3}
   stackable: 0
   itemType: 0
   description: 
@@ -29,3 +28,5 @@ MonoBehaviour:
     ItemLimit: 0
     ItemRarity: 0
     Categories: []
+  Limit: 0
+  refuel: 0

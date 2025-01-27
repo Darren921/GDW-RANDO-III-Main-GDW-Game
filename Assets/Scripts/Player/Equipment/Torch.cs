@@ -5,12 +5,7 @@ using UnityEngine.UI;
 
 public class Torch : EquipmentBase
 {
-    private EquipmentBase _equipmentBaseImplementation;
     [SerializeField] private ItemObj matchingItem;
-    
-    
-    
-    
     void Start()
     {
         ID =  equipmentObj.data.Id ;
@@ -23,10 +18,10 @@ public class Torch : EquipmentBase
             refillAmount = equipmentObj.refuel; 
         }
 
-        if (GetComponent<Collider>() is not null)
+        if (GetComponentInChildren<Collider>() is not null)
         {
-            GetComponent<Collider>().enabled = false;
-        }
+            GetComponentInChildren<Collider>().enabled = false;
+        }   
         baseObj = gameObject;
         lightObj = FindChildWithNameContaining(baseObj.transform, "Light");
         slider = gameObject.GetComponentInChildren<Slider>();
@@ -53,7 +48,7 @@ public class Torch : EquipmentBase
                     active = true;
                     StartCoroutine(CheckCharge()) ;
                     lightObj.SetActive(true);
-                    GetComponent<Collider>().enabled = true;
+                    GetComponentInChildren<Collider>().enabled = true;
                 }
                 else
                 {
@@ -61,7 +56,7 @@ public class Torch : EquipmentBase
                     torchActive = false;
                     active = false;
                     lightObj.SetActive(false);
-                    GetComponent<Collider>().enabled = false;
+                    GetComponentInChildren<Collider>().enabled = false;
                     
                 }
             }
@@ -71,12 +66,13 @@ public class Torch : EquipmentBase
                 torchActive = false;
                 active = false;
                 lightObj.SetActive(false);
-                GetComponent<Collider>().enabled = false;
+                GetComponentInChildren<Collider>().enabled = false;
 
             }
         }
     }
 
+   
     public override void LimitCheck(GameObject other)
     {
         //add limit as necessary to cur amount (ground item pickup)
