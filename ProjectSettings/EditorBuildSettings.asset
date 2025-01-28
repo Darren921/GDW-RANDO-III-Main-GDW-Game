@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/GoodEnding.unity
     guid: ce8a32f65f812a5408631b771e025d77
   - enabled: 1
-    path: Assets/Scenes/MainGame/MainScene.unity
+    path: Assets/Scenes/MainGame/MainScene/MainScene.unity
     guid: 593842428adbb1c4b9a7ec3b5d46efde
   - enabled: 1
     path: Assets/Scenes/MainGame/DeathScreen.unity
