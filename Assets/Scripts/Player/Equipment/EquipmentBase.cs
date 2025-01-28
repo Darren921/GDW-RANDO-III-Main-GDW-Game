@@ -9,77 +9,35 @@ using UnityEngine.UI;
 public abstract class EquipmentBase : MonoBehaviour
 {
     [SerializeField] protected EquipmentObj equipmentObj;
-
-    public float MaxLimit { get; protected set; }
-    internal GameObject baseObj;
-    internal GameObject lightObj;
-    protected float LimitLeft { get; set; }
+    [SerializeField] protected ItemObj matchingItem;
+    protected internal int ID;
     internal bool equipped;
-    internal bool active;
-    internal bool torchActive;
-    internal bool checkActive;
-    protected int refillAmount;
-    protected Slider slider;
+    protected float  MaxUses;
+    protected float  CurrentUses;
+    protected int RefillAmount;
     protected SpawnManager _spawnManager;
-    internal int ID;
-  
-    // Start is called before the first frame update
-    void Start()
+    protected GameObject baseObject;
+    protected internal abstract void CheckIfActive();
+    
+    protected internal abstract IEnumerator CheckCharge();
+
+    public abstract void LimitCheck(GameObject other);
+
+    public virtual void Start()
     {
         ID =  equipmentObj.data.Id ;
         _spawnManager = FindFirstObjectByType<SpawnManager>();
+        baseObject = gameObject;
         if (equipmentObj is not null)
         {
             //Values can be changed in equipmentObj in items (inv system)
-            MaxLimit = equipmentObj.Limit;
-            LimitLeft = equipmentObj.Limit;
-            refillAmount = equipmentObj.refuel; 
+            MaxUses = equipmentObj.Limit;
+            CurrentUses = equipmentObj.Limit;
+            RefillAmount = equipmentObj.refuel; 
         }
-
-       
-        baseObj = gameObject;
-        lightObj = FindChildWithNameContaining(baseObj.transform, "Light");
-        slider = gameObject.GetComponentInChildren<Slider>();
-        baseObj.SetActive(false);
-        lightObj.SetActive(false);  
-    }
-    
-    // Update is called once per frame
-    void Update()
-    {
-        slider.value = LimitLeft;
-        slider.maxValue = MaxLimit;
-        //if limit is greater than min value, limit left -- 
-        if (LimitLeft > 0 && active)
-        {
-            LimitLeft -= Time.deltaTime;
-        }
-        
-        if(LimitLeft < 0)
-        {
-            LimitLeft = 0;
-            active = false;
-            lightObj.SetActive(false);
-        }
-        
-    }
-    
-    protected internal  abstract void  CheckIfActive();
-    
-    protected IEnumerator CheckCharge()
-    {
-            //
-            yield return new WaitUntil(() => active == false );
-            checkActive = false;
-            torchActive = false;
     }
 
-
-    public abstract void LimitCheck(GameObject other);
-    
-    
-    //Helper class to find Child game objects using name (move to more global class?)
-    public GameObject FindChildWithNameContaining(Transform parent, string substring)
+    protected GameObject FindChildWithNameContaining(Transform parent, string substring)
     {
         foreach (Transform child in parent)
         {
@@ -91,4 +49,7 @@ public abstract class EquipmentBase : MonoBehaviour
 
         return null; 
     }
+
+    
 }
+

@@ -33,14 +33,15 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-       
+        TorchCheck = _player._equipmentBases[_player.returnTorchLocation()].GetComponent<Torch>().torchActive;
          if(_player is null) return;
+         
          switch (isFreezing)
          {
              case false:
                  print("not freezing");
                  return;
-             case true when _player._equipmentBases[_player.returnTorchLocation()].torchActive && !_player.dead:
+             case true when TorchCheck && !_player.dead:
              {
                  _frost -= Time.deltaTime;
                  _curOpacity -= 0.015f * Time.deltaTime;
@@ -52,7 +53,7 @@ public class GameManager : MonoBehaviour
 
                  break;
              }
-             case true when !_player._equipmentBases[_player.returnTorchLocation()].torchActive && (!_player.dead):
+             case true when ! TorchCheck  && (!_player.dead):
              {
                  {
 //                     print(_player._equipmentBases[_player.returnTorchLocation()].torchActive);

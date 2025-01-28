@@ -72,7 +72,8 @@ public class Player : MonoBehaviour
     [SerializeField] private ItemObj[] EquipmentObjs;
     [SerializeField] internal List<EquipmentBase>  _equipmentBases;
     //Torch 
-    private bool torchActive,flashlightActive;
+    internal bool torchActive;
+    private bool flashlightActive;
     [SerializeField] GameObject[] InventoryDisplay;
     private float fuelLeft;
     [SerializeField] Slider TorchSlider;
@@ -305,6 +306,7 @@ public class Player : MonoBehaviour
         if (other.GetComponent<GroundObj>() != null)
         {
             var item = other.GetComponent<GroundObj>();
+            var equipment = item.equipment;
             if (item)
             {
                 Item _item = new Item(item.item);
@@ -313,6 +315,7 @@ public class Player : MonoBehaviour
                     if (Hotbar.AddItem(_item, 1))
                     {
                         Destroy(other.gameObject);
+                        _equipmentBases.Add(equipment);
                     }
                 }
                 else
@@ -322,6 +325,7 @@ public class Player : MonoBehaviour
                         if (Inventory.AddItem(_item, 1))
                         {
                             Destroy(other.gameObject);
+                            _equipmentBases.Add(equipment);
                         }
                     }
                 }
@@ -417,8 +421,10 @@ public class Player : MonoBehaviour
     public void ChangeItem(float slot)
     {
         int inputtedSlot = (int)slot - 1;
-        var targetSlot = Hotbar.Container.Slots[inputtedSlot]; //This grabs inputted slot from the inventory
-        var targetId = targetSlot.ItemObj.data.Id; // this grabs the id of the slot
+        var targetSlot = Hotbar.Container.Slots[inputtedSlot]; // Get selected slot
+        var targetId = targetSlot.ItemObj.data.Id; // Get item ID
+
+        // Disable outlines for all slots
         foreach (var slots in Hotbar.Container.Slots)
         {
             var outline = slots.slotDisplay.transform.GetChild(0).gameObject.GetComponentInChildren<Outline>();
@@ -427,29 +433,37 @@ public class Player : MonoBehaviour
                 outline.enabled = false;
             }
         }
+
+        // Activate/deactivate equipment based on selected item ID
         for (int i = 0; i < _equipmentBases.Count; i++)
         {
             var item = _equipmentBases[i];
             bool isActive = (item.ID == targetId);
-            item.gameObject.SetActive(isActive); 
-
-            
-            
-            item.lightObj.gameObject.SetActive(false);
-            item.equipped = (isActive);
-            item.active = false;
+            item.gameObject.SetActive(isActive);
+        
+            if (item.GetComponent<LightEquipment>() != null)
+            {
+                var lightEquipment = item.GetComponent<LightEquipment>();
+                lightEquipment.lightObj.gameObject.SetActive(false);
+                lightEquipment.active = false;
+            }
+        
+            item.equipped = isActive;
+        
             if (isActive)
             {
                 CurrentItem = targetId;
-                var outline = targetSlot.slotDisplay.transform.GetChild(0).gameObject.GetComponentInChildren<Outline>();
-                if (outline != null)
-                {
-                    outline.enabled = true;
-                }
             }
-            
+        }
+
+        // Enable outline only on the selected slot
+        var selectedOutline = targetSlot.slotDisplay.transform.GetChild(0).gameObject.GetComponentInChildren<Outline>();
+        if (selectedOutline != null)
+        {
+            selectedOutline.enabled = true;
         }
     }
+
 
     public void checkIfActive()
     {
