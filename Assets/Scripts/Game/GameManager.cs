@@ -17,13 +17,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Material frostTexture;
     private float _curOpacity;
     private bool TorchCheck;
-    public static bool firstLoad; 
+    public static bool firstLoad;
+
     
     [Header("References")]
     [SerializeField] private Player _player;
+    PlayerHotbar _playerHotbar;
 
     private void Start()
     {
+        _playerHotbar = _player.GetComponent<PlayerHotbar>();
         _curOpacity = -0.7f;
      
         //use this to toggle off and on freezing in areas, maybe tut area?
@@ -33,7 +36,7 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        TorchCheck = _player._equipmentBases[_player.returnTorchLocation()].GetComponent<Torch>().torchActive;
+        TorchCheck = _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().torchActive;
          if(_player is null) return;
          
          switch (isFreezing)
@@ -90,6 +93,7 @@ public class GameManager : MonoBehaviour
     public interface IInteractable
     {
         public void Interact();
+        public void HeldInteract();
     }
    
 }

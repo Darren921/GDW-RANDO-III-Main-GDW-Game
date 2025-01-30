@@ -46,4 +46,9 @@ public class backGroundInteractable : MonoBehaviour ,GameManager.IInteractable
         }
 
     }
+
+    public void HeldInteract()
+    {
+        
+    }
 }

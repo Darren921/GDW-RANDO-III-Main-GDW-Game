@@ -1,66 +1,41 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Torch : LightEquipment
 {
-    public bool torchActive { get; private set; }
+    internal bool torchActive;
+    [SerializeField] private TextMeshProUGUI interactText;
+
     public new virtual void Update()
     {
         slider.value = CurrentUses;
         slider.maxValue = MaxUses;
-        //if limit is greater than min value, limit left -- 
-        if (CurrentUses > 0 && active)
-        {
-            CurrentUses -= 1;
-        }
-        
-        if(CurrentUses < 0)
+
+        if (CurrentUses < 0)
         {
             CurrentUses = 0;
             active = false;
             lightObj.SetActive(false);
         }
 
-    }
+        if (torchActive)
+        {
+            lightObj.SetActive(true);
+
+        }
+        else
+        {
+            lightObj.SetActive(false);
+        }
+
+}
     protected internal override void CheckIfActive()
     {
-        if (lightObj == null)
-        {
-            lightObj = gameObject.transform.Find("Light")?.gameObject;
-        }
-        print("working");
-        if (equipped)
-        {
-            active = !active;
-            if (CurrentUses > 0)
-            {
-                //if item is active, activate relevant systems 
-                if (active && !checkActive)
-                {
-                    checkActive = true;
-                    StartCoroutine(CheckCharge());
-                    lightObj.SetActive(true);
-                    torchActive = true;
-                }
-                else
-                {
-                    active = false;
-                    lightObj.SetActive(false);
-                    torchActive = false;
-
-                }
-            }
-            else
-            {
-                active = false;
-                lightObj.SetActive(false);
-                torchActive = false;
-
-            }
-        }
+       
     }
     protected internal override IEnumerator CheckCharge()
     {
@@ -74,7 +49,14 @@ public class Torch : LightEquipment
     private void OnDisable()
     {
         active = false;
+        equipped = false;
         torchActive = false;
         checkActive = false;
+        interactText.text = "";
+    }
+
+    public void reduceCount()
+    {
+        CurrentUses -= CurrentUses;
     }
 }

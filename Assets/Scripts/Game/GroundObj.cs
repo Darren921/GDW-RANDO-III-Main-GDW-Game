@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GroundObj : MonoBehaviour,GameManager.IInteractable 
@@ -9,12 +8,14 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
    internal int tracker;
    private SpawnManager _spawnManager;
    private Player _player;
+   private PlayerHotbar _playerHotbar;
    public ItemObj item;
    public EquipmentBase equipment;
 
    private void Start()
    {
        _player = FindFirstObjectByType<Player>();
+       _playerHotbar = _player.GetComponent<PlayerHotbar>();
    }
 
 
@@ -34,16 +35,16 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
            if (item)
            {
                Item _item = new Item(item.item);
-               if (_player.Hotbar.EmptySlotCount > 0)
+               if (_playerHotbar.Hotbar.EmptySlotCount > 0)
                {
-                   if (_player.Hotbar.AddItem(_item, 1))
+                   if (_playerHotbar.Hotbar.AddItem(_item, 1))
                    {
                        _player.GetComponent<PlayerInteraction>().InteractText.text = "";
 
                        Destroy(gameObject);
                        if (equipment != null)
                        {
-                           _player._equipmentBases.Add(equipment);
+                           _playerHotbar._equipmentBases.Add(equipment);
                        }
                    }
                }
@@ -66,6 +67,11 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
            }
 
        }
+   }
+
+   public void HeldInteract()
+   {
+       
    }
 }
 

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4343068733808795350}
   - component: {fileID: 3503313681599391659}
   - component: {fileID: 8744848130931499289}
+  - component: {fileID: 3155528657560419586}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -83,6 +84,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3155528657560419586
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3023063830458891662}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.7836756, y: 1.7836757, z: 11.805369}
+  m_Center: {x: -0.00000014901161, y: -3.1688155e-15, z: 0.8919419}
 --- !u!1 &3362152053574357138
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,3 +354,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipmentObj: {fileID: 11400000, guid: 909a16654c4a4584b8d7bde2b80318f7, type: 2}
+  matchingItem: {fileID: 11400000, guid: 94df7c2a7f9463d49bfa753c30326bce, type: 2}

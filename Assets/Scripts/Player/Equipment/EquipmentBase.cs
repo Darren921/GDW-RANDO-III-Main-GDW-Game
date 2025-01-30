@@ -13,7 +13,7 @@ public abstract class EquipmentBase : MonoBehaviour
     protected internal int ID;
     internal bool equipped;
     protected float  MaxUses;
-    protected float  CurrentUses;
+    internal float  CurrentUses;
     protected int RefillAmount;
     protected SpawnManager _spawnManager;
     protected GameObject baseObject;

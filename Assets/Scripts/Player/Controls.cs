@@ -49,7 +49,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""name"": ""Sprint"",
                     ""type"": ""Button"",
                     ""id"": ""e8ed4d7e-e199-45d5-9683-4b7c3d4b2589"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Hold"",
                     ""initialStateCheck"": true
@@ -68,15 +68,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""type"": ""Button"",
                     ""id"": ""adf60f75-31ca-475c-bfc5-efdad7221c25"",
                     ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""LeftClick"",
-                    ""type"": ""Button"",
-                    ""id"": ""18efa476-2647-4845-8f00-d423d63266d4"",
-                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -106,6 +97,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""HeldInteract"",
+                    ""type"": ""Button"",
+                    ""id"": ""6a62a3fb-5632-4762-b7c7-395db6f161d7"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Hold"",
                     ""initialStateCheck"": true
                 },
                 {
@@ -242,23 +242,23 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""e665a9bf-c159-4f78-aa9f-8551532c2a96"",
-                    ""path"": ""<Keyboard>/f"",
+                    ""id"": ""5089a965-8a00-45a7-88c2-26c62b61e6e8"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""LeftClick"",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""5089a965-8a00-45a7-88c2-26c62b61e6e8"",
-                    ""path"": ""<Keyboard>/f"",
+                    ""id"": ""71b1c2a3-dc02-4376-8c79-7fda1882839f"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Interact"",
+                    ""action"": ""HeldInteract"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -289,7 +289,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""id"": ""29a62568-22a8-4273-afbe-fb9eed8e0794"",
                     ""path"": ""<Keyboard>/3"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""Scale(factor=3)"",
                     ""groups"": """",
                     ""action"": ""ItemSwap"",
                     ""isComposite"": false,
@@ -300,7 +300,18 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""id"": ""67118350-7d4d-43a3-b485-fb22580802bc"",
                     ""path"": ""<Keyboard>/4"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""Scale(factor=4)"",
+                    ""groups"": """",
+                    ""action"": ""ItemSwap"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eb5a0262-77b9-4b26-b8fd-8dcff1afe06e"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=5)"",
                     ""groups"": """",
                     ""action"": ""ItemSwap"",
                     ""isComposite"": false,
@@ -309,7 +320,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""1359a0c1-15c2-4d54-af19-3a18a2af7dc6"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -320,7 +331,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""35b7bb0c-a3a3-4d54-ad51-b2488582e9c5"",
-                    ""path"": ""<Keyboard>/i"",
+                    ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -340,10 +351,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_InGame_Sprint = m_InGame.FindAction("Sprint", throwIfNotFound: true);
         m_InGame_MousePos = m_InGame.FindAction("MousePos", throwIfNotFound: true);
         m_InGame_Hide = m_InGame.FindAction("Hide", throwIfNotFound: true);
-        m_InGame_LeftClick = m_InGame.FindAction("LeftClick", throwIfNotFound: true);
         m_InGame_ItemSwap = m_InGame.FindAction("ItemSwap", throwIfNotFound: true);
         m_InGame_OffOn = m_InGame.FindAction("OffOn", throwIfNotFound: true);
         m_InGame_Interact = m_InGame.FindAction("Interact", throwIfNotFound: true);
+        m_InGame_HeldInteract = m_InGame.FindAction("HeldInteract", throwIfNotFound: true);
         m_InGame_OpenAndCloseInv = m_InGame.FindAction("OpenAndCloseInv", throwIfNotFound: true);
     }
 
@@ -416,10 +427,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_InGame_Sprint;
     private readonly InputAction m_InGame_MousePos;
     private readonly InputAction m_InGame_Hide;
-    private readonly InputAction m_InGame_LeftClick;
     private readonly InputAction m_InGame_ItemSwap;
     private readonly InputAction m_InGame_OffOn;
     private readonly InputAction m_InGame_Interact;
+    private readonly InputAction m_InGame_HeldInteract;
     private readonly InputAction m_InGame_OpenAndCloseInv;
     public struct InGameActions
     {
@@ -430,10 +441,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Sprint => m_Wrapper.m_InGame_Sprint;
         public InputAction @MousePos => m_Wrapper.m_InGame_MousePos;
         public InputAction @Hide => m_Wrapper.m_InGame_Hide;
-        public InputAction @LeftClick => m_Wrapper.m_InGame_LeftClick;
         public InputAction @ItemSwap => m_Wrapper.m_InGame_ItemSwap;
         public InputAction @OffOn => m_Wrapper.m_InGame_OffOn;
         public InputAction @Interact => m_Wrapper.m_InGame_Interact;
+        public InputAction @HeldInteract => m_Wrapper.m_InGame_HeldInteract;
         public InputAction @OpenAndCloseInv => m_Wrapper.m_InGame_OpenAndCloseInv;
         public InputActionMap Get() { return m_Wrapper.m_InGame; }
         public void Enable() { Get().Enable(); }
@@ -459,9 +470,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Hide.started += instance.OnHide;
             @Hide.performed += instance.OnHide;
             @Hide.canceled += instance.OnHide;
-            @LeftClick.started += instance.OnLeftClick;
-            @LeftClick.performed += instance.OnLeftClick;
-            @LeftClick.canceled += instance.OnLeftClick;
             @ItemSwap.started += instance.OnItemSwap;
             @ItemSwap.performed += instance.OnItemSwap;
             @ItemSwap.canceled += instance.OnItemSwap;
@@ -471,6 +479,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @HeldInteract.started += instance.OnHeldInteract;
+            @HeldInteract.performed += instance.OnHeldInteract;
+            @HeldInteract.canceled += instance.OnHeldInteract;
             @OpenAndCloseInv.started += instance.OnOpenAndCloseInv;
             @OpenAndCloseInv.performed += instance.OnOpenAndCloseInv;
             @OpenAndCloseInv.canceled += instance.OnOpenAndCloseInv;
@@ -493,9 +504,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Hide.started -= instance.OnHide;
             @Hide.performed -= instance.OnHide;
             @Hide.canceled -= instance.OnHide;
-            @LeftClick.started -= instance.OnLeftClick;
-            @LeftClick.performed -= instance.OnLeftClick;
-            @LeftClick.canceled -= instance.OnLeftClick;
             @ItemSwap.started -= instance.OnItemSwap;
             @ItemSwap.performed -= instance.OnItemSwap;
             @ItemSwap.canceled -= instance.OnItemSwap;
@@ -505,6 +513,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @HeldInteract.started -= instance.OnHeldInteract;
+            @HeldInteract.performed -= instance.OnHeldInteract;
+            @HeldInteract.canceled -= instance.OnHeldInteract;
             @OpenAndCloseInv.started -= instance.OnOpenAndCloseInv;
             @OpenAndCloseInv.performed -= instance.OnOpenAndCloseInv;
             @OpenAndCloseInv.canceled -= instance.OnOpenAndCloseInv;
@@ -532,10 +543,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnMousePos(InputAction.CallbackContext context);
         void OnHide(InputAction.CallbackContext context);
-        void OnLeftClick(InputAction.CallbackContext context);
         void OnItemSwap(InputAction.CallbackContext context);
         void OnOffOn(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnHeldInteract(InputAction.CallbackContext context);
         void OnOpenAndCloseInv(InputAction.CallbackContext context);
     }
 }

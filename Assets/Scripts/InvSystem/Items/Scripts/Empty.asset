@@ -13,16 +13,15 @@ MonoBehaviour:
   m_Name: Empty
   m_EditorClassIdentifier: 
   stackable: 0
-  itemType: 0
   description: 
   prefab: {fileID: 0}
   itemLimit: 0
   itemRarity: 0
   data:
-    Name: 
+    Name: empty
     Id: 0
     Description: 
-    UiDisplay: {fileID: 0}
+    UiDisplay: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
     ItemType: 0
     Prefab: {fileID: 0}
     ItemLimit: 0

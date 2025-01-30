@@ -64,38 +64,25 @@ public class Player : MonoBehaviour
     
     [SerializeField] AudioSource walking;
     private CapsuleCollider _capsuleCollider;
+  
+    internal int batteryCount;
+    internal int FuelCount;
+   
 
     //Item switching 
     [Header("Item switching ")]
-    [SerializeField] internal InventoryObj Inventory;
-    [SerializeField] internal InventoryObj Hotbar;
-    [SerializeField] private ItemObj[] EquipmentObjs;
-    [SerializeField] internal List<EquipmentBase>  _equipmentBases;
-    //Torch 
-    internal bool torchActive;
-    private bool flashlightActive;
-    [SerializeField] GameObject[] InventoryDisplay;
-    private float fuelLeft;
-    [SerializeField] Slider TorchSlider;
-    private bool AtMeltingPoint;
 
-    //Flashlight
-    private bool _equipedTorch, _equipedFlashlight;
-    [SerializeField] Slider FlashlightSlider;
     private int CurrentItem;
-    bool inInteractingRange;
-    public static bool isDead;
     
+    public static bool isDead;
+    private PlayerHotbar _playerHotbar;
+    private Torch _torch;
+
     void Start()
     {
+        _playerHotbar = GetComponent<PlayerHotbar>();
+        _torch = _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>();
         isDead = false;
-        CurrentItem = -1;
-        if (!GameManager.firstLoad)
-        {
-            GameManager.firstLoad  = true;
-            Hotbar.AddItem(new Item(EquipmentObjs[0]) , 1);
-            Hotbar.AddItem(new Item(EquipmentObjs[1]) , 1);
-        }
         //turn on and off when needed
        // torchActive = true;
        //fuelLeft = 500;
@@ -131,28 +118,6 @@ public class Player : MonoBehaviour
         
         //sprinting
         CheckSprint();
-        
-        /*if (_chargeleft > 0 && flashlightActive)
-        {
-            _chargeleft -= Time.deltaTime;
-        }
-        if (fuelLeft > 0 && torchActive)
-        {
-            fuelLeft -= Time.deltaTime;
-        }
-        if(fuelLeft < 0)
-        {
-            torchSource.SetActive(false);
-            torchActive = false;
-        }
-        if(_chargeleft < 0) 
-        { 
-            flashlightSource.SetActive(false);
-            flashlightActive = false;
-
-        }*/
-        
-      
             /*if (Input.GetMouseButtonDown(0)) // Left-click
             {
                 PointerEventData pointerData = new PointerEventData(EventSystem.current)
@@ -240,7 +205,7 @@ public class Player : MonoBehaviour
 
     private void CheckSprint()
     {
-        if (isSprinting && !onCoolDownFull && !onCoolDownNormal && !torchActive)
+        if (isSprinting && !onCoolDownFull && !onCoolDownNormal && !_torch.torchActive)
         {
             sprintTime -= Time.deltaTime;
             if (sprintTime <= 0)
@@ -289,23 +254,8 @@ public class Player : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             isDead = false;
         }
-        
-        // if (other.CompareTag("Batteries") || other.CompareTag("Fuel"))
-        // {
-        //     _equipmentBases[CurrentItem].LimitCheck(other.gameObject);
-        //     return;
-        // }
-
-              
-        
-
     }
 
-    private void OnApplicationQuit()
-    {
-        Inventory.Container.Clear();
-        Hotbar.Container.Clear();
-    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -321,15 +271,7 @@ public class Player : MonoBehaviour
         if (!other.CompareTag("hidingSpot")) return;
         inhidingRange = true;
         HidingCam = other.gameObject.GetComponent<CinemachineVirtualCamera>();
-        
     }
-    
-   
-   
-
-
-
-   
 
     private void OnTriggerExit(Collider other)
     {
@@ -388,65 +330,6 @@ public class Player : MonoBehaviour
             hitbox.SetActive(true);
         }
     }
-    
-    public void ChangeItem(float slot)
-    {
-        int inputtedSlot = (int)slot - 1;
-        var targetSlot = Hotbar.Container.Slots[inputtedSlot]; // Get selected slot
-        var targetId = targetSlot.ItemObj.data.Id; // Get item ID
-
-        // Disable outlines for all slots
-        foreach (var slots in Hotbar.Container.Slots)
-        {
-            var outline = slots.slotDisplay.transform.GetChild(0).gameObject.GetComponentInChildren<Outline>();
-            if (outline != null)
-            {
-                outline.enabled = false;
-            }
-        }
-
-        // Activate/deactivate equipment based on selected item ID
-        for (int i = 0; i < _equipmentBases.Count; i++)
-        {
-            var item = _equipmentBases[i];
-            bool isActive = (item.ID == targetId);
-            item.gameObject.SetActive(isActive);
-        
-            if (item.GetComponent<LightEquipment>() != null)
-            {
-                var lightEquipment = item.GetComponent<LightEquipment>();
-                lightEquipment.lightObj.gameObject.SetActive(false);
-                lightEquipment.active = false;
-            }
-        
-            item.equipped = isActive;
-        
-            if (isActive)
-            {
-                CurrentItem = targetId;
-            }
-        }
-
-        var selectedOutline = targetSlot.slotDisplay.transform.GetChild(0).gameObject.GetComponentInChildren<Outline>();
-        if (selectedOutline != null)
-        {
-            selectedOutline.enabled = true;
-        }
-    }
-
-
-    public void checkIfActive()
-    {
-        for (int i = 0; i < _equipmentBases.Count; i++)
-        {
-         
-            if (_equipmentBases[i].equipped )
-            {
-                _equipmentBases[i].CheckIfActive();
-            }
-        }
-    }
-   
     public void stopWalkingSound()
     {
         if (walking != null)
@@ -461,38 +344,19 @@ public class Player : MonoBehaviour
         walking.enabled = true;
         walking.Play();
     }
-   
-
-    public int returnTorchLocation()
-    {
-        for (int i = 0; i < _equipmentBases.Count; i++)
-        {
-            if (_equipmentBases[i].name.Contains("Torch"))
-            {
-                return i;
-            }
-        }
-        return -1;
-    }
 
     public void ManageHotbar ()
     {
         if (!isOpen)
         {
             isOpen = true;
-            // foreach (var Display in InventoryDisplay)
-            // {
-            //     Display.SetActive(true);
-            // }
+           
 
         }
         else
         {
             isOpen = false;
-            // foreach (var Display in InventoryDisplay)
-            // {
-            //     Display.SetActive(false);
-            // }
+          
 
         }
 

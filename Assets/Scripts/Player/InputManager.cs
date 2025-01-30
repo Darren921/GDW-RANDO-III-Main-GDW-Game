@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
@@ -51,11 +52,11 @@ public class InputManager : MonoBehaviour
         };
         controls.InGame.ItemSwap.performed += _ =>
         {
-            player.ChangeItem(_.ReadValue<Single>());
+            player.GetComponent<PlayerHotbar>().ChangeItem(_.ReadValue<Single>());
         };
         controls.InGame.OffOn.performed += _ =>
         {
-            player.checkIfActive();
+            player.GetComponent<PlayerHotbar>()?.checkIfActive();
         };
          controls.InGame.OpenAndCloseInv.performed += _ =>
          {
@@ -64,6 +65,14 @@ public class InputManager : MonoBehaviour
         controls.InGame.Interact.performed += _ =>
         {
             player.GetComponent<PlayerInteraction>()?.TryInteract();
+        };
+        controls.InGame.HeldInteract.ApplyBindingOverride(new InputBinding
+        {
+            overrideInteractions = "Hold(duration= 10,pressPoint=0.2)"
+        });
+        controls.InGame.HeldInteract.performed += _ =>
+        {
+            player.GetComponent<PlayerInteraction>()?.TryHeldInteract();
         };
 
     }

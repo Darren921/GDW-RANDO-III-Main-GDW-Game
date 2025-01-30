@@ -19,7 +19,7 @@ MonoBehaviour:
   itemRarity: 0
   data:
     Name: 
-    Id: 0
+    Id: 1
     Description: 
     UiDisplay: {fileID: 21300000, guid: ea0ba6edce4cb9d48ab552d3e193f16d, type: 3}
     ItemType: 3
