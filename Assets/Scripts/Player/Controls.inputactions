@@ -78,7 +78,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Talk",
+                    "name": "Interact",
                     "type": "Button",
                     "id": "e1fed016-48d5-4059-a047-944fde4c2ad1",
                     "expectedControlType": "",
@@ -232,11 +232,11 @@
                 {
                     "name": "",
                     "id": "5089a965-8a00-45a7-88c2-26c62b61e6e8",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Talk",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

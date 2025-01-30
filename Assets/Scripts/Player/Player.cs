@@ -67,8 +67,8 @@ public class Player : MonoBehaviour
 
     //Item switching 
     [Header("Item switching ")]
-    [SerializeField] private InventoryObj Inventory;
-    [SerializeField] private InventoryObj Hotbar;
+    [SerializeField] internal InventoryObj Inventory;
+    [SerializeField] internal InventoryObj Hotbar;
     [SerializeField] private ItemObj[] EquipmentObjs;
     [SerializeField] internal List<EquipmentBase>  _equipmentBases;
     //Torch 
@@ -83,11 +83,9 @@ public class Player : MonoBehaviour
     private bool _equipedTorch, _equipedFlashlight;
     [SerializeField] Slider FlashlightSlider;
     private int CurrentItem;
-    
+    bool inInteractingRange;
     public static bool isDead;
     
-
-    private Transition _transition; 
     void Start()
     {
         isDead = false;
@@ -98,9 +96,6 @@ public class Player : MonoBehaviour
             Hotbar.AddItem(new Item(EquipmentObjs[0]) , 1);
             Hotbar.AddItem(new Item(EquipmentObjs[1]) , 1);
         }
- 
-        
-   
         //turn on and off when needed
        // torchActive = true;
        //fuelLeft = 500;
@@ -114,8 +109,6 @@ public class Player : MonoBehaviour
         CamTransform = Camera.main.transform;
         Cursor.lockState = CursorLockMode.Locked;
         sprintTime = maxSprintTime;
-        
-        
     }
 
  
@@ -297,42 +290,12 @@ public class Player : MonoBehaviour
             isDead = false;
         }
         
-        if (other.CompareTag("Batteries") || other.CompareTag("Fuel"))
-        {
-            _equipmentBases[CurrentItem].LimitCheck(other.gameObject);
-            return;
-        }
+        // if (other.CompareTag("Batteries") || other.CompareTag("Fuel"))
+        // {
+        //     _equipmentBases[CurrentItem].LimitCheck(other.gameObject);
+        //     return;
+        // }
 
-        if (other.GetComponent<GroundObj>() != null)
-        {
-            var item = other.GetComponent<GroundObj>();
-            var equipment = item.equipment;
-            if (item)
-            {
-                Item _item = new Item(item.item);
-                if (Hotbar.EmptySlotCount > 0)
-                {
-                    if (Hotbar.AddItem(_item, 1))
-                    {
-                        Destroy(other.gameObject);
-                        _equipmentBases.Add(equipment);
-                    }
-                }
-                else
-                {
-                    if (Inventory.EmptySlotCount > 0)
-                    {
-                        if (Inventory.AddItem(_item, 1))
-                        {
-                            Destroy(other.gameObject);
-                            _equipmentBases.Add(equipment);
-                        }
-                    }
-                }
-               
-            }
-        }
-               
               
         
 
@@ -358,7 +321,15 @@ public class Player : MonoBehaviour
         if (!other.CompareTag("hidingSpot")) return;
         inhidingRange = true;
         HidingCam = other.gameObject.GetComponent<CinemachineVirtualCamera>();
+        
     }
+    
+   
+   
+
+
+
+   
 
     private void OnTriggerExit(Collider other)
     {
@@ -456,7 +427,6 @@ public class Player : MonoBehaviour
             }
         }
 
-        // Enable outline only on the selected slot
         var selectedOutline = targetSlot.slotDisplay.transform.GetChild(0).gameObject.GetComponentInChildren<Outline>();
         if (selectedOutline != null)
         {
@@ -502,28 +472,27 @@ public class Player : MonoBehaviour
                 return i;
             }
         }
-        Debug.Log("shut");
         return -1;
     }
 
-    public void OpenOrCloseInv()
+    public void ManageHotbar ()
     {
         if (!isOpen)
         {
             isOpen = true;
-            foreach (var Display in InventoryDisplay)
-            {
-                Display.SetActive(true);
-            }
+            // foreach (var Display in InventoryDisplay)
+            // {
+            //     Display.SetActive(true);
+            // }
 
         }
         else
         {
             isOpen = false;
-            foreach (var Display in InventoryDisplay)
-            {
-                Display.SetActive(false);
-            }
+            // foreach (var Display in InventoryDisplay)
+            // {
+            //     Display.SetActive(false);
+            // }
 
         }
 

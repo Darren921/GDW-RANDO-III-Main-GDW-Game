@@ -19,6 +19,7 @@ public class InputManager : MonoBehaviour
     {
         controls = new Controls();
 
+         
         controls.InGame.Movement.performed += _ =>
         {
             player.SetMoveDirection(_.ReadValue<Vector3>());
@@ -56,9 +57,13 @@ public class InputManager : MonoBehaviour
         {
             player.checkIfActive();
         };
-        controls.InGame.OpenAndCloseInv.performed += _ =>
+         controls.InGame.OpenAndCloseInv.performed += _ =>
+         {
+            player.ManageHotbar();
+         };
+        controls.InGame.Interact.performed += _ =>
         {
-            player.OpenOrCloseInv();
+            player.GetComponent<PlayerInteraction>()?.TryInteract();
         };
 
     }

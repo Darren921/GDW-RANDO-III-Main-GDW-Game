@@ -9,7 +9,7 @@ public class LightEquipment : EquipmentBase
     internal GameObject lightObj;
     internal bool active;
     internal bool checkActive;
-    Slider slider;
+    protected Slider slider;
 
 
     public override void Start()

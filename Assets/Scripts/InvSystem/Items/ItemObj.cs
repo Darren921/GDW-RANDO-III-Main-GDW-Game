@@ -26,7 +26,6 @@ using UnityEngine.Serialization;
     {
 
         public bool stackable;
-        public ItemType itemType;
         [TextArea(15, 20)] public string description;
         public GameObject prefab;
         public int itemLimit;
@@ -62,7 +61,6 @@ using UnityEngine.Serialization;
         {
             Name = item.name;
             UiDisplay = item.data.UiDisplay;
-            ItemType = item.itemType;
             Prefab = item.prefab;
             ItemLimit = item.itemLimit;
             ItemRarity = item.itemRarity;

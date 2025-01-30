@@ -12,10 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e8ba416a5486624c913c9424fb1ec7d, type: 3}
   m_Name: Fuel
   m_EditorClassIdentifier: 
-  id: 0
-  uiDisplay: {fileID: 0}
-  itemType: 2
+  stackable: 0
   description: 
   prefab: {fileID: 8266241314038867389, guid: fce6ce3c65a480949bd51ec38c3236c6, type: 3}
   itemLimit: 5
   itemRarity: 0.5
+  data:
+    Name: Fuel
+    Id: 3
+    Description: 
+    UiDisplay: {fileID: 21300000, guid: f59ad82925182644dbcaddeabcbde943, type: 3}
+    ItemType: 2
+    Prefab: {fileID: 0}
+    ItemLimit: 0
+    ItemRarity: 0
+    Categories: []

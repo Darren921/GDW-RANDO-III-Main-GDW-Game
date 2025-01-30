@@ -87,6 +87,9 @@ public class GameManager : MonoBehaviour
         }
      
     }
-
+    public interface IInteractable
+    {
+        public void Interact();
+    }
    
 }

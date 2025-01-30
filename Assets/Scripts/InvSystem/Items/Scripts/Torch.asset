@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Torch
   m_EditorClassIdentifier: 
   stackable: 0
-  itemType: 3
   description: 
   prefab: {fileID: 0}
   itemLimit: 0
@@ -23,7 +22,7 @@ MonoBehaviour:
     Id: 1
     Description: 
     UiDisplay: {fileID: 21300000, guid: d5ffd6496a0b96842944d2722fdfcb5d, type: 3}
-    ItemType: 0
+    ItemType: 3
     Prefab: {fileID: 0}
     ItemLimit: 0
     ItemRarity: 0

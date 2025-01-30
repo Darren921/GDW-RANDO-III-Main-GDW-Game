@@ -7,7 +7,24 @@ using UnityEngine.UI;
 public class Torch : LightEquipment
 {
     public bool torchActive { get; private set; }
+    public new virtual void Update()
+    {
+        slider.value = CurrentUses;
+        slider.maxValue = MaxUses;
+        //if limit is greater than min value, limit left -- 
+        if (CurrentUses > 0 && active)
+        {
+            CurrentUses -= 1;
+        }
+        
+        if(CurrentUses < 0)
+        {
+            CurrentUses = 0;
+            active = false;
+            lightObj.SetActive(false);
+        }
 
+    }
     protected internal override void CheckIfActive()
     {
         if (lightObj == null)

@@ -12,11 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e8ba416a5486624c913c9424fb1ec7d, type: 3}
   m_Name: Batteries
   m_EditorClassIdentifier: 
-  id: 0
-  uiDisplay: {fileID: 0}
-  itemType: 2
+  stackable: 0
   description: 
   prefab: {fileID: 5002360986888236374, guid: c7834891679ef4247bea190951332a31, type: 3}
   itemLimit: 5
   itemRarity: 0.5
-  categories: []
+  data:
+    Name: Battery
+    Id: 2
+    Description: 
+    UiDisplay: {fileID: 21300000, guid: 317462bbe242b18408f484cd8d28fe24, type: 3}
+    ItemType: 2
+    Prefab: {fileID: 0}
+    ItemLimit: 0
+    ItemRarity: 0
+    Categories: []

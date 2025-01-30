@@ -1036,6 +1036,7 @@ GameObject:
   - component: {fileID: 2663862701929498783}
   - component: {fileID: 4957512606085120852}
   - component: {fileID: 7267976752193919277}
+  - component: {fileID: 1752897243467765750}
   m_Layer: 6
   m_Name: 'Player '
   m_TagString: Player
@@ -1174,6 +1175,7 @@ MonoBehaviour:
   InventoryDisplay: []
   TorchSlider: {fileID: 0}
   FlashlightSlider: {fileID: 0}
+  interactionCollider: {fileID: 0}
 --- !u!54 &4957512606085120852
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1297,6 +1299,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1752897243467765750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5582244712295415240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe887d7dadc8db74cba1ae80d9b6a548, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6764332920652611041
 GameObject:
   m_ObjectHideFlags: 0

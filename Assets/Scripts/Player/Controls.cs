@@ -100,7 +100,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Talk"",
+                    ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""e1fed016-48d5-4059-a047-944fde4c2ad1"",
                     ""expectedControlType"": """",
@@ -254,11 +254,11 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""5089a965-8a00-45a7-88c2-26c62b61e6e8"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Talk"",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -343,7 +343,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_InGame_LeftClick = m_InGame.FindAction("LeftClick", throwIfNotFound: true);
         m_InGame_ItemSwap = m_InGame.FindAction("ItemSwap", throwIfNotFound: true);
         m_InGame_OffOn = m_InGame.FindAction("OffOn", throwIfNotFound: true);
-        m_InGame_Talk = m_InGame.FindAction("Talk", throwIfNotFound: true);
+        m_InGame_Interact = m_InGame.FindAction("Interact", throwIfNotFound: true);
         m_InGame_OpenAndCloseInv = m_InGame.FindAction("OpenAndCloseInv", throwIfNotFound: true);
     }
 
@@ -419,7 +419,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_InGame_LeftClick;
     private readonly InputAction m_InGame_ItemSwap;
     private readonly InputAction m_InGame_OffOn;
-    private readonly InputAction m_InGame_Talk;
+    private readonly InputAction m_InGame_Interact;
     private readonly InputAction m_InGame_OpenAndCloseInv;
     public struct InGameActions
     {
@@ -433,7 +433,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @LeftClick => m_Wrapper.m_InGame_LeftClick;
         public InputAction @ItemSwap => m_Wrapper.m_InGame_ItemSwap;
         public InputAction @OffOn => m_Wrapper.m_InGame_OffOn;
-        public InputAction @Talk => m_Wrapper.m_InGame_Talk;
+        public InputAction @Interact => m_Wrapper.m_InGame_Interact;
         public InputAction @OpenAndCloseInv => m_Wrapper.m_InGame_OpenAndCloseInv;
         public InputActionMap Get() { return m_Wrapper.m_InGame; }
         public void Enable() { Get().Enable(); }
@@ -468,9 +468,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @OffOn.started += instance.OnOffOn;
             @OffOn.performed += instance.OnOffOn;
             @OffOn.canceled += instance.OnOffOn;
-            @Talk.started += instance.OnTalk;
-            @Talk.performed += instance.OnTalk;
-            @Talk.canceled += instance.OnTalk;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
             @OpenAndCloseInv.started += instance.OnOpenAndCloseInv;
             @OpenAndCloseInv.performed += instance.OnOpenAndCloseInv;
             @OpenAndCloseInv.canceled += instance.OnOpenAndCloseInv;
@@ -502,9 +502,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @OffOn.started -= instance.OnOffOn;
             @OffOn.performed -= instance.OnOffOn;
             @OffOn.canceled -= instance.OnOffOn;
-            @Talk.started -= instance.OnTalk;
-            @Talk.performed -= instance.OnTalk;
-            @Talk.canceled -= instance.OnTalk;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
             @OpenAndCloseInv.started -= instance.OnOpenAndCloseInv;
             @OpenAndCloseInv.performed -= instance.OnOpenAndCloseInv;
             @OpenAndCloseInv.canceled -= instance.OnOpenAndCloseInv;
@@ -535,7 +535,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnLeftClick(InputAction.CallbackContext context);
         void OnItemSwap(InputAction.CallbackContext context);
         void OnOffOn(InputAction.CallbackContext context);
-        void OnTalk(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
         void OnOpenAndCloseInv(InputAction.CallbackContext context);
     }
 }
