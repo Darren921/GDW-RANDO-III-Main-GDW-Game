@@ -18,6 +18,7 @@ public class LightEquipment : EquipmentBase
         lightObj = FindChildWithNameContaining(baseObject.transform, "Light");
         lightObj.SetActive(false);
         slider = baseObject.GetComponentInChildren<Slider>();
+        _playerHotbar = FindFirstObjectByType<PlayerHotbar>();
     }
 
     public virtual void Update()
@@ -29,9 +30,9 @@ public class LightEquipment : EquipmentBase
         {
             CurrentUses -= Time.deltaTime;
         }
-        
-        if(CurrentUses < 0)
+        else if(CurrentUses <= 0 && active)
         {
+            print(matchingItem.data.Name);
             switch (matchingItem.data.Name)
             {
                 case "Fuel":
@@ -40,6 +41,12 @@ public class LightEquipment : EquipmentBase
                         _playerHotbar.FuelCount--;
                         CurrentUses = RefillAmount;
                     }
+                    else
+                    {
+                        CurrentUses = 0;
+                        active = false;
+                        lightObj.SetActive(false);
+                    }
                     break;
                 case "Battery":
                     if (_playerHotbar.batteryCount > 0)
@@ -47,15 +54,21 @@ public class LightEquipment : EquipmentBase
                         _playerHotbar.batteryCount--;
                         CurrentUses = RefillAmount;
                     }
+                    else
+                    {
+                        CurrentUses = 0;
+                        active = false;
+                        lightObj.SetActive(false);
+                    }
                     break;
-                default:
-                    CurrentUses = 0;
-                    active = false;
-                    lightObj.SetActive(false);
-                    break;
+               
+                 
             }
-           
+          
+            
         }
+
+     
 
     }
 

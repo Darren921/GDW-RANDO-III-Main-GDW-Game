@@ -57,6 +57,7 @@ public class Torch : LightEquipment
 
     public void reduceCount()
     {
-        CurrentUses -= CurrentUses;
+        CurrentUses -= 1;
+        _playerHotbar.FuelCount--;
     }
 }

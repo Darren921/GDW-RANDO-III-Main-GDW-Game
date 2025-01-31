@@ -58,10 +58,9 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
                if (item.CompareTag("Batteries") && _playerHotbar.batteryCount < item.item.data.Limit )
                {
                    if (!_spawnManager.trackedIndexs.Contains((tracker))) return;
-                   if (_playerHotbar.batteryCount <= 0)
+                   if (_playerHotbar.batteryCount <= 0 &&  _playerHotbar._equipmentBases[1].CurrentUses <= 0)
                    {
-                       _playerHotbar._equipmentBases[1].CurrentUses =
-                           _playerHotbar._equipmentBases[1].MaxUses;
+                       _playerHotbar._equipmentBases[1].CurrentUses = _playerHotbar._equipmentBases[1].MaxUses;
                        _spawnManager.SpawnedList.Remove(tracker);
                        _spawnManager.trackedIndexs.Remove(tracker);
                        Destroy(gameObject,0.1f);

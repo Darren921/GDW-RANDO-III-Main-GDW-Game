@@ -49,7 +49,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
 
      }
   torchActive = _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].gameObject.GetComponent<Torch>().torchActive;
-     print(torchActive);
+//     print(torchActive);
         if  (torchActive && AtMeltingPoint && _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().equipped)
         {
            // print(other.gameObject.tag);
@@ -148,7 +148,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
 
     public void HeldInteract()
     {
-        if (_playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].CurrentUses > 0)
+        if (_playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].CurrentUses > 0 &&  _playerHotbar.gameObject.GetComponent<PlayerInteraction>().holdDuration <= 10.1f )
         {
             print("in 1 ");
             if (isMelting && _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].equipped  )
@@ -158,13 +158,16 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
                 {
                     print("Held Interact");
                     _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().reduceCount();
-                    _playerHotbar.gameObject.GetComponent<PlayerInteraction>().GetComponent<PlayerInteraction>().Reset();
+                    MeltingStage--;
+                    _playerHotbar.gameObject.GetComponent<PlayerInteraction>().Reset();
+                    _playerHotbar.GetComponent<PlayerInteraction>().HeldInteractionAction.action.Reset();
                 }
-                else
+                else if(_playerHotbar.gameObject.GetComponent<PlayerInteraction>().holdDuration <= 9.9)
                 {
                     print("in oh no ");
                     print(_playerHotbar.gameObject.GetComponent<PlayerInteraction>().holdDuration);
-                    _playerHotbar.gameObject.GetComponent<PlayerInteraction>().GetComponent<PlayerInteraction>().Reset();
+                    _playerHotbar.gameObject.GetComponent<PlayerInteraction>().Reset();
+                    _playerHotbar.GetComponent<PlayerInteraction>().HeldInteractionAction.action.Reset();
 
                 }
             }

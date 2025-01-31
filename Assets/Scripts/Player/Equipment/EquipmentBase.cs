@@ -33,7 +33,8 @@ public abstract class EquipmentBase : MonoBehaviour
             //Values can be changed in equipmentObj in items (inv system)
             MaxUses = equipmentObj.data.Limit;
             //change this after 
-            CurrentUses =  0;
+          //  CurrentUses =  0;
+          CurrentUses = 3;
             RefillAmount = equipmentObj.refuel;
         }
     }
