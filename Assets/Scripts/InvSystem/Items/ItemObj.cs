@@ -28,9 +28,7 @@ using UnityEngine.Serialization;
         public bool stackable;
         [TextArea(15, 20)] public string description;
         public GameObject prefab;
-        public int itemLimit;
-        public float itemRarity;
-
+        
         public Item data = new Item();
         public Item CreateItem()
         {
@@ -48,7 +46,8 @@ using UnityEngine.Serialization;
         public Sprite UiDisplay;
         public ItemType ItemType;
         public GameObject Prefab;
-        public int ItemLimit;
+        public int ItemSpawnLimit;
+        public int Limit;
         public float ItemRarity;
         public Classification[] Categories;
 
@@ -62,8 +61,9 @@ using UnityEngine.Serialization;
             Name = item.name;
             UiDisplay = item.data.UiDisplay;
             Prefab = item.prefab;
-            ItemLimit = item.itemLimit;
-            ItemRarity = item.itemRarity;
+            ItemSpawnLimit = item.data.ItemSpawnLimit;
+            ItemRarity = item.data.ItemRarity;
+            Limit = item.data.Limit;
             Id = item.data.Id;
             Categories = new Classification[item.data.Categories.Length];
             for (int i = 0; i < item.data.Categories.Length; i++)

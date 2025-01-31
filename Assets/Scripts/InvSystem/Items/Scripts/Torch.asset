@@ -15,17 +15,15 @@ MonoBehaviour:
   stackable: 0
   description: 
   prefab: {fileID: 0}
-  itemLimit: 0
-  itemRarity: 0
   data:
-    Name: 
+    Name: Torch
     Id: 2
     Description: 
     UiDisplay: {fileID: 21300000, guid: d5ffd6496a0b96842944d2722fdfcb5d, type: 3}
     ItemType: 3
     Prefab: {fileID: 0}
-    ItemLimit: 0
+    ItemSpawnLimit: 0
+    Limit: 3
     ItemRarity: 0
     Categories: []
-  Limit: 100
-  refuel: 25
+  refuel: 1

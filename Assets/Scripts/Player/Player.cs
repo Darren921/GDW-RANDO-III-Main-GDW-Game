@@ -65,9 +65,7 @@ public class Player : MonoBehaviour
     [SerializeField] AudioSource walking;
     private CapsuleCollider _capsuleCollider;
   
-    internal int batteryCount;
-    internal int FuelCount;
-   
+  
 
     //Item switching 
     [Header("Item switching ")]
@@ -254,6 +252,8 @@ public class Player : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             isDead = false;
         }
+      
+        
     }
 
 

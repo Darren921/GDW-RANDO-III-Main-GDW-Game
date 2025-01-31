@@ -8,11 +8,11 @@ using UnityEngine.UI;
 
 public abstract class EquipmentBase : MonoBehaviour
 {
-    [SerializeField] protected EquipmentObj equipmentObj;
+    [SerializeField] internal EquipmentObj equipmentObj;
     [SerializeField] protected ItemObj matchingItem;
     protected internal int ID;
     internal bool equipped;
-    protected float  MaxUses;
+    internal float  MaxUses;
     internal float  CurrentUses;
     protected int RefillAmount;
     protected SpawnManager _spawnManager;
@@ -31,9 +31,10 @@ public abstract class EquipmentBase : MonoBehaviour
         if (equipmentObj is not null)
         {
             //Values can be changed in equipmentObj in items (inv system)
-            MaxUses = equipmentObj.Limit;
-            CurrentUses = equipmentObj.Limit;
-            RefillAmount = equipmentObj.refuel; 
+            MaxUses = equipmentObj.data.Limit;
+            //change this after 
+            CurrentUses =  0;
+            RefillAmount = equipmentObj.refuel;
         }
     }
 

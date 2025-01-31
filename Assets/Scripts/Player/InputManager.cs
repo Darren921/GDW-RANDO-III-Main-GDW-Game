@@ -69,6 +69,7 @@ public class InputManager : MonoBehaviour
         controls.InGame.HeldInteract.ApplyBindingOverride(new InputBinding
         {
             overrideInteractions = "Hold(duration= 10,pressPoint=0.2)"
+            
         });
         controls.InGame.HeldInteract.performed += _ =>
         {

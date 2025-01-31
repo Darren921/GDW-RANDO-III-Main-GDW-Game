@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class EquipmentObj : ItemObj
 {
-    internal bool hasLight;
 
     public enum EquipmentType
     {
@@ -14,8 +13,7 @@ public class EquipmentObj : ItemObj
         OnePerUse,
         
     }
-    public int Limit;
-    public int refuel;
+ public int refuel;
     // Start is called before the first frame update
     void Start()
     {

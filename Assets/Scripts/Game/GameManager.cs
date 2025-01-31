@@ -92,6 +92,7 @@ public class GameManager : MonoBehaviour
     }
     public interface IInteractable
     {
+        public bool isHeld{get;set;}
         public void Interact();
         public void HeldInteract();
     }

@@ -9,10 +9,15 @@ public class PlayerHotbar : MonoBehaviour
     [SerializeField] internal InventoryObj Hotbar;
     [SerializeField] internal List<EquipmentBase>  _equipmentBases;
     [SerializeField] private ItemObj[] EquipmentObjs;
+    internal int batteryCount;
+    internal int FuelCount;
     private int CurrentItem;
 
     private void Start()
     {
+       
+            
+       
         CurrentItem = -1;
 
         if (!GameManager.firstLoad)
@@ -48,7 +53,7 @@ public class PlayerHotbar : MonoBehaviour
                 outline.enabled = false;
             }
         }
-
+            
         // Activate/deactivate equipment based on selected item ID
         for (int i = 0; i < _equipmentBases.Count; i++)
         {
@@ -86,7 +91,9 @@ public class PlayerHotbar : MonoBehaviour
         }
     }
 
-    
+    private void OnTriggerEnter(Collider other)
+    {
+    }
 
     public void checkIfActive()
     {

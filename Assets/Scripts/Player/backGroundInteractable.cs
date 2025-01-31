@@ -18,9 +18,12 @@ public class backGroundInteractable : MonoBehaviour ,GameManager.IInteractable
 
         }
         _player = FindFirstObjectByType<Player>();
+        isHeld = false;
     }
-    
-    
+
+
+    public bool isHeld { get; set; }
+
     public void Interact()
     {
         _player.isOpen = !_player.isOpen;

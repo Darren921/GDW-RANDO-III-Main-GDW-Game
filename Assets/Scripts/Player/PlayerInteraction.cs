@@ -10,14 +10,15 @@ using UnityEngine.UI;
 public class PlayerInteraction : MonoBehaviour
 {
     public GameManager.IInteractable currentInteractable;
-
+    private bool isHeldInteraction;
     [SerializeField] internal TextMeshProUGUI InteractText;
     private Player _player;
     PlayerHotbar hotbar;
     [SerializeField] private Slider InteractionBar;
    [SerializeField] internal InputActionReference HeldInteractionAction;
     internal float holdDuration;
-    [SerializeField]private IceMelting iceMelting;
+    [SerializeField]internal IceMelting iceMelting;
+    private bool _isResetting;
 
     private void Start()
     {
@@ -41,32 +42,49 @@ public class PlayerInteraction : MonoBehaviour
             if (other.GetComponent<GroundObj>() != null)
             {
                 InteractText.text = $"Press E to pickup {other.GetComponent<GroundObj>().item.data.Name.ToLower()}";
+                isHeldInteraction = other.GetComponent<GroundObj>().isHeld;
             }
             else if(other.GetComponent<backGroundInteractable>() != null)
             {
                 InteractText.text = $"Press E to read {other.GetComponent<backGroundInteractable>().name.ToLower()}";
+                isHeldInteraction = other.GetComponent<GroundObj>().isHeld;
             }
         }
-        
     }
 
     private void Update()
     {
-           if (HeldInteractionAction.action.IsPressed() && currentInteractable != null)
-           {
-               hotbar._equipmentBases[hotbar.returnTorchLocation()].GetComponent<Torch>().torchActive = true;
-               InteractionBar.gameObject.SetActive(true);
-               holdDuration += Time.deltaTime;
-               InteractionBar.value = holdDuration;
-           }
-           else if (HeldInteractionAction.action.WasReleasedThisFrame() || HeldInteractionAction.action.WasPerformedThisFrame())
-           {
-               holdDuration = 0;
-               hotbar._equipmentBases[hotbar.returnTorchLocation()].GetComponent<Torch>().torchActive = false;
-               InteractText.text = iceMelting.isMelting ? "" : " Hold E to Melt";
-               InteractionBar.gameObject.SetActive(false);
+        if (HeldInteractionAction.action.IsPressed() && currentInteractable != null && isHeldInteraction &&
+            hotbar._equipmentBases[hotbar.returnTorchLocation()].CurrentUses > 0 &&  hotbar._equipmentBases[hotbar.returnTorchLocation()].equipped)
+        {
+            hotbar._equipmentBases[hotbar.returnTorchLocation()].GetComponent<Torch>().torchActive = true;
+            InteractText.text = iceMelting.AtMeltingPoint &&  hotbar._equipmentBases[hotbar.returnTorchLocation()].gameObject.GetComponent<Torch>().CurrentUses > 0 ? "Hold E to Melt" : "";            
+            InteractionBar.gameObject.SetActive(true);
+            holdDuration += Time.deltaTime;
+            InteractionBar.value = holdDuration;
+        }
+        else if(HeldInteractionAction.action.WasReleasedThisFrame() || isHeldInteraction && !hotbar._equipmentBases[hotbar.returnTorchLocation()].equipped && !iceMelting.AtMeltingPoint && !_isResetting   )
+        {
+            Reset();
+        }
+    }
 
-           }
+    public void Reset()
+    {
+
+        if (!_isResetting)
+        {
+            _isResetting = true;
+            holdDuration = 0;
+            InteractionBar.gameObject.SetActive(false);
+            hotbar._equipmentBases[hotbar.returnTorchLocation()].GetComponent<Torch>().torchActive = false;
+            InteractText.text = iceMelting.AtMeltingPoint && hotbar._equipmentBases[hotbar.returnTorchLocation()].gameObject.GetComponent<Torch>().CurrentUses > 0 ? "Hold E to Melt" : "";           
+            HeldInteractionAction.action.Disable();
+            _isResetting = false;
+            HeldInteractionAction.action.Enable();
+
+        }
+
     }
 
     private void OnTriggerStay(Collider other)
@@ -75,6 +93,19 @@ public class PlayerInteraction : MonoBehaviour
         {
             InteractText.text = "";
             return;
+        } 
+        if(other.GetComponent<IceMelting>() != null)
+        {
+            iceMelting = other.GetComponent<IceMelting>();
+            isHeldInteraction = other.GetComponent<IceMelting>().isHeld;
+            if (iceMelting != null)
+            {
+                iceMelting.AtMeltingPoint = true;
+            }
+        }
+        else
+        {
+            iceMelting.AtMeltingPoint = false;
         }
         GameManager.IInteractable interactable = other.GetComponent<GameManager.IInteractable>();
         if (interactable == null) return;
@@ -83,8 +114,7 @@ public class PlayerInteraction : MonoBehaviour
             print(other.CompareTag("IceWall"));
            print(hotbar._equipmentBases[hotbar.returnTorchLocation()].gameObject.GetComponent<Torch>().equipped);
             iceMelting.AtMeltingPoint = true;
-           if(hotbar._equipmentBases[hotbar.returnTorchLocation()].gameObject.GetComponent<Torch>().equipped == false) iceMelting.AtMeltingPoint = false;
-           InteractText.text = iceMelting.isMelting ? "" : " Hold E to Melt";
+           InteractText.text = iceMelting.AtMeltingPoint && hotbar._equipmentBases[hotbar.returnTorchLocation()].gameObject.GetComponent<Torch>().CurrentUses > 0 ? "Hold E to Melt" : "";
      
         }
         if (other.GetComponent<backGroundInteractable>() == null) return;
@@ -101,8 +131,14 @@ public class PlayerInteraction : MonoBehaviour
         if (other.GetComponent<GameManager.IInteractable>() != currentInteractable) return;
         currentInteractable = null; 
         InteractText.text = "";
+        
         iceMelting.AtMeltingPoint = false;
+        
         InteractionBar.gameObject.SetActive(false);
+        holdDuration = 0;
+        iceMelting.AtMeltingPoint = false;
+        isHeldInteraction = false;
+
     }
 
     public void TryInteract()
@@ -113,8 +149,9 @@ public class PlayerInteraction : MonoBehaviour
 
     public void TryHeldInteract()
     {
+        print("tryed");
         InteractText.enabled = false;
-        InteractionBar.gameObject.SetActive(true);
+        InteractionBar.gameObject.SetActive(false);
         currentInteractable?.HeldInteract();
 
     }

@@ -37,7 +37,7 @@ public class SpawnManager : MonoBehaviour
         {
             var tag = item[i].prefab.tag;
             var curItemCount = GameObject.FindGameObjectsWithTag(tag).Length;
-            var cap = item[i].itemLimit;
+            var cap = item[i].data.ItemSpawnLimit;
 
             if (curItemCount < cap && SpawnedList.Count < MaxItems)
             {
@@ -54,7 +54,7 @@ public class SpawnManager : MonoBehaviour
                     if (curItemCount >= cap || spawnCount >= amount || SpawnedList.Count >= MaxItems) break;
 
                     float SpawnChance = Random.value;
-                    if (SpawnChance <= item[i].itemRarity)
+                    if (SpawnChance <= item[i].data.ItemSpawnLimit)
                     {
                         if (Physics.Raycast(ItemSpawnPoints[spawn].transform.position, Vector3.down, out RaycastHit hit, Mathf.Infinity))
                         {

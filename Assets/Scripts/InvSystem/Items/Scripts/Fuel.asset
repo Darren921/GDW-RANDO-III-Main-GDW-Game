@@ -15,15 +15,14 @@ MonoBehaviour:
   stackable: 0
   description: 
   prefab: {fileID: 8266241314038867389, guid: fce6ce3c65a480949bd51ec38c3236c6, type: 3}
-  itemLimit: 5
-  itemRarity: 0.5
   data:
     Name: Fuel
-    Id: 3
+    Id: 4
     Description: 
     UiDisplay: {fileID: 21300000, guid: f59ad82925182644dbcaddeabcbde943, type: 3}
     ItemType: 2
     Prefab: {fileID: 0}
-    ItemLimit: 0
-    ItemRarity: 0
+    ItemSpawnLimit: 5
+    Limit: 3
+    ItemRarity: 0.5
     Categories: []

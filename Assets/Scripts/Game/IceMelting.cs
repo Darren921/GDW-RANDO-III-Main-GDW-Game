@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 public class IceMelting : MonoBehaviour,GameManager.IInteractable
 {
     [SerializeField] private float opacityLoss;  
-    [SerializeField]internal bool isMelting;
+    internal bool isMelting;
    private float curMeltingTime;
    private float _curOpacity; 
    [SerializeField]private float meltingTime; 
@@ -27,8 +27,8 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
    
 
    void Start()
-   { 
-
+   {
+       isHeld = true;
        exitCollider.enabled = false;
        //Time.timeScale = 10;
         _boxCollider = GetComponent<BoxCollider>();
@@ -43,9 +43,14 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
     {
 //        print(isMelting);
   //      print(other.gameObject.tag);
+     if (other.CompareTag("Torch"))
+    {
+      AtMeltingPoint = true;
+
+     }
   torchActive = _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].gameObject.GetComponent<Torch>().torchActive;
-     
-        if  (torchActive && AtMeltingPoint && _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].gameObject.GetComponent<Torch>().equipped)
+     print(torchActive);
+        if  (torchActive && AtMeltingPoint && _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().equipped)
         {
            // print(other.gameObject.tag);
             isMelting = true;
@@ -83,6 +88,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
         } 
         
     }
+    
 
     private void CheckMeltingProgress()
     {
@@ -133,6 +139,8 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
         active = false;
     }
 
+    public bool isHeld { get; set; }
+
     public void Interact()
     {
        
@@ -142,16 +150,22 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
     {
         if (_playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].CurrentUses > 0)
         {
-            if (isMelting)
+            print("in 1 ");
+            if (isMelting && _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].equipped  )
             {
-                if (_playerHotbar.gameObject.GetComponent<PlayerInteraction>().holdDuration >= 10)
+                print("in 2 ");
+                if (_playerHotbar.gameObject.GetComponent<PlayerInteraction>().holdDuration >= 9.9)
                 {
                     print("Held Interact");
                     _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().reduceCount();
+                    _playerHotbar.gameObject.GetComponent<PlayerInteraction>().GetComponent<PlayerInteraction>().Reset();
                 }
                 else
                 {
+                    print("in oh no ");
                     print(_playerHotbar.gameObject.GetComponent<PlayerInteraction>().holdDuration);
+                    _playerHotbar.gameObject.GetComponent<PlayerInteraction>().GetComponent<PlayerInteraction>().Reset();
+
                 }
             }
         }

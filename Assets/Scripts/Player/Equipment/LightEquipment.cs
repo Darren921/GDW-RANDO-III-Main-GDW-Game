@@ -10,7 +10,7 @@ public class LightEquipment : EquipmentBase
     internal bool active;
     internal bool checkActive;
     protected Slider slider;
-
+    internal PlayerHotbar _playerHotbar;
 
     public override void Start()
     {
@@ -32,9 +32,29 @@ public class LightEquipment : EquipmentBase
         
         if(CurrentUses < 0)
         {
-            CurrentUses = 0;
-            active = false;
-            lightObj.SetActive(false);
+            switch (matchingItem.data.Name)
+            {
+                case "Fuel":
+                    if (_playerHotbar.FuelCount > 0)
+                    {
+                        _playerHotbar.FuelCount--;
+                        CurrentUses = RefillAmount;
+                    }
+                    break;
+                case "Battery":
+                    if (_playerHotbar.batteryCount > 0)
+                    {
+                        _playerHotbar.batteryCount--;
+                        CurrentUses = RefillAmount;
+                    }
+                    break;
+                default:
+                    CurrentUses = 0;
+                    active = false;
+                    lightObj.SetActive(false);
+                    break;
+            }
+           
         }
 
     }
@@ -101,24 +121,10 @@ public class LightEquipment : EquipmentBase
 
     public override void LimitCheck(GameObject other)
     {
-        if (CurrentUses < MaxUses && other.CompareTag(matchingItem.name))
-        {
-            var tracker = other.GetComponent<GroundObj>().tracker;
-            CurrentUses += RefillAmount;
+     
          
-            if (_spawnManager.trackedIndexs.Contains((tracker)))
-            {
-                _spawnManager.SpawnedList.Remove(tracker);
-                _spawnManager.trackedIndexs.Remove(tracker);
-                Destroy(other.gameObject,0.1f);
-            }
-        }
-        if (CurrentUses > MaxUses)
-        {
-            Debug.Log($" entred with {CurrentUses}");
-            CurrentUses = MaxUses;
-            
-        }
+        
+     
     }
     private void OnDisable()
     {
