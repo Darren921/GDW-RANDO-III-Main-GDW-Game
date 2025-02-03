@@ -12,9 +12,9 @@ public class LightEquipment : EquipmentBase
     protected Slider slider;
     internal PlayerHotbar _playerHotbar;
 
-    public override void Start()
+    public override void Awake()
     {
-        base.Start(); // Calls EquipmentBase.Start()
+        base.Awake(); // Calls EquipmentBase.Start()
         lightObj = FindChildWithNameContaining(baseObject.transform, "Light");
         lightObj.SetActive(false);
         slider = baseObject.GetComponentInChildren<Slider>();

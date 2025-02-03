@@ -27,6 +27,10 @@ public class PlayerHotbar : MonoBehaviour
             Hotbar.AddItem(new Item(EquipmentObjs[2]) , 1);
         }
 
+        foreach (var VARIABLE in _equipmentBases)
+        {
+            VARIABLE.gameObject.SetActive(false);
+        }
         
     }
 
@@ -37,13 +41,13 @@ public class PlayerHotbar : MonoBehaviour
 
     public void ChangeItem(float slot)
     {
-        print (slot + " change");
+      //  print (slot + " change");
         int inputtedSlot = (int)slot - 1 ;
         var targetSlot = Hotbar.Container.Slots[inputtedSlot]; // Get selected slot
-        print(Hotbar.Container.Slots[inputtedSlot]);
+      //  print(Hotbar.Container.Slots[inputtedSlot]);
         if(targetSlot.ItemObj == null) return;
         var targetId = targetSlot.ItemObj.data.Id; // Get item ID
-        print(targetId);
+    //    print(targetId);
         // Disable outlines for all slots
         foreach (var slots in Hotbar.Container.Slots)
         {
@@ -59,6 +63,9 @@ public class PlayerHotbar : MonoBehaviour
         {
             var item = _equipmentBases[i];
             bool isActive = (item.ID == targetId);
+          //  print (item.ID);
+          //  print (targetId);
+          //  print(isActive);
             item.gameObject.SetActive(isActive);
       
             if (item.GetComponent<LightEquipment>() != null)

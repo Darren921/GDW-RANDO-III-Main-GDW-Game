@@ -64,22 +64,25 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
                        _spawnManager.SpawnedList.Remove(tracker);
                        _spawnManager.trackedIndexs.Remove(tracker);
                        Destroy(gameObject,0.1f);
+                       _playerHotbar.GetComponent<PlayerInteraction>().InteractText.text = "";
                        return;
                    }
                    _playerHotbar.batteryCount++;
                    _spawnManager.SpawnedList.Remove(tracker);
                    _spawnManager.trackedIndexs.Remove(tracker);
                    Destroy(gameObject,0.1f);
+                   _playerHotbar.GetComponent<PlayerInteraction>().InteractText.text = "";
                }
                else if (item.CompareTag("Fuel") && _playerHotbar.FuelCount < item.item.data.Limit )
                {
                    if (!_spawnManager.trackedIndexs.Contains((tracker))) return;
                    _playerHotbar.FuelCount++;
                    _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].CurrentUses = _playerHotbar.FuelCount;
-
                    _spawnManager.SpawnedList.Remove(tracker);
                    _spawnManager.trackedIndexs.Remove(tracker);
                    Destroy(gameObject,0.1f);
+                   _playerHotbar.GetComponent<PlayerInteraction>().InteractText.text = "";
+
                }
            }
 

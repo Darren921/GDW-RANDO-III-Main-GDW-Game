@@ -23,7 +23,7 @@ public abstract class EquipmentBase : MonoBehaviour
 
     public abstract void LimitCheck(GameObject other);
 
-    public virtual void Start()
+    public virtual void Awake()
     {
         ID =  equipmentObj.data.Id ;
         _spawnManager = FindFirstObjectByType<SpawnManager>();
@@ -34,7 +34,7 @@ public abstract class EquipmentBase : MonoBehaviour
             MaxUses = equipmentObj.data.Limit;
             //change this after 
           //  CurrentUses =  0;
-          CurrentUses = 3;
+          CurrentUses = 0;
             RefillAmount = equipmentObj.refuel;
         }
     }

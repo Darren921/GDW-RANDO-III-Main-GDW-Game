@@ -46,25 +46,28 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
      if (other.CompareTag("Torch"))
     {
       AtMeltingPoint = true;
-
-     }
+      print(AtMeltingPoint);
+      print(other.tag);
+    }
   torchActive = _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].gameObject.GetComponent<Torch>().torchActive;
 //     print(torchActive);
         if  (torchActive && AtMeltingPoint && _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().equipped)
         {
            // print(other.gameObject.tag);
             isMelting = true;
+            
         }
         else
         {
             isMelting = false;
-            AtMeltingPoint = false;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
         isMelting = false;
+        AtMeltingPoint = false;
+
     }
 
     void Update()

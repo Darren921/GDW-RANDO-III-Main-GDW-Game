@@ -23,7 +23,7 @@ MonoBehaviour:
     ItemType: 3
     Prefab: {fileID: 0}
     ItemSpawnLimit: 0
-    Limit: 3
+    Limit: 100
     ItemRarity: 0
     Categories: []
-  refuel: 3
+  refuel: 100
