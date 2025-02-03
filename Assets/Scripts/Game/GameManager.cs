@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
                          
                          if (_player.dead)
                          {
-                             StartCoroutine(_player.LookatDeath());
+                             StartCoroutine(Player.LookAtDeath());
 
                          }
                      }

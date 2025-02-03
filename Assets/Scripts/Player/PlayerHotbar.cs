@@ -12,7 +12,12 @@ public class PlayerHotbar : MonoBehaviour
     internal int batteryCount;
     internal int FuelCount;
     private int CurrentItem;
+    public void ManageHotbar ()
+    {
+        isOpen = !isOpen;
+    }
 
+    internal bool isOpen { get; set; }
     private void Start()
     {
        

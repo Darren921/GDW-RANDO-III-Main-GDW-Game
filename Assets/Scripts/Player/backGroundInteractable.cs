@@ -8,7 +8,7 @@ public class backGroundInteractable : MonoBehaviour ,GameManager.IInteractable
     [SerializeField] private GameObject[] display;
    [SerializeField] Sprite _sprite;
 
-   private Player _player;
+   private PlayerHotbar _playerHotbar;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +17,7 @@ public class backGroundInteractable : MonoBehaviour ,GameManager.IInteractable
             gameObjects.SetActive(false);
 
         }
-        _player = FindFirstObjectByType<Player>();
+        _playerHotbar = FindFirstObjectByType<PlayerHotbar>();
         isHeld = false;
     }
 
@@ -26,8 +26,8 @@ public class backGroundInteractable : MonoBehaviour ,GameManager.IInteractable
 
     public void Interact()
     {
-        _player.isOpen = !_player.isOpen;
-        if (_player.isOpen)
+        _playerHotbar.isOpen = !_playerHotbar.isOpen;
+        if (_playerHotbar.isOpen)
         {
             if (GetComponent<GameManager.IInteractable>() == null) return;
             foreach (var gameObjects in display)

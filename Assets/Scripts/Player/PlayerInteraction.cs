@@ -73,29 +73,20 @@ public class PlayerInteraction : MonoBehaviour
 
         if (!iceMelting.AtMeltingPoint && hotbar._equipmentBases[hotbar.returnTorchLocation()].equipped && !isHeldInteraction)
         {
-            print("melting");
+//            print("melting");
             hotbar._equipmentBases[hotbar.returnTorchLocation()].gameObject.GetComponent<Torch>().torchActive = false;
 
         }
-        
-     
-        
-        print(HeldInteractionAction.action.WasPerformedThisFrame());
-
     }
 
     public void Reset()
     {
-
-        if (!_isResetting)
-        {
-            _isResetting = true;
-            hotbar._equipmentBases[hotbar.returnTorchLocation()].GetComponent<Torch>().torchActive = false;
-            holdDuration = 0;
-            InteractionBar.gameObject.SetActive(false);
-            _isResetting = false;
-
-        }
+        if (_isResetting) return;
+        _isResetting = true;
+        hotbar._equipmentBases[hotbar.returnTorchLocation()].GetComponent<Torch>().torchActive = false;
+        holdDuration = 0;
+        InteractionBar.gameObject.SetActive(false);
+        _isResetting = false;
     }
 
     private void OnTriggerStay(Collider other)
@@ -110,15 +101,15 @@ public class PlayerInteraction : MonoBehaviour
             iceMelting = other.GetComponent<IceMelting>();
             isHeldInteraction = other.GetComponent<IceMelting>().isHeld;
         }
-        GameManager.IInteractable interactable = other.GetComponent<GameManager.IInteractable>();
+        var interactable = other.GetComponent<GameManager.IInteractable>();
         if (interactable == null) return;
         if (other.GetComponent<IceMelting>() != null)
         {
             InteractText.text = iceMelting.isMelting ? "" : "Hold E to Melt";
         }
         if (other.GetComponent<backGroundInteractable>() == null) return;
-        InteractText.text = _player.isOpen ? "" : $"Press E to read {other.GetComponent<backGroundInteractable>().name.ToLower()}";
-        if (!_player.isOpen)
+        InteractText.text = hotbar.isOpen ? "" : $"Press E to read {other.GetComponent<backGroundInteractable>().name.ToLower()}";
+        if (!hotbar.isOpen)
         {
             InteractText.enabled = true;
         }
@@ -144,7 +135,7 @@ public class PlayerInteraction : MonoBehaviour
 
     public void TryHeldInteract()
     {
-        print("tryed");
+        print("tried");
         InteractText.enabled = false;
         InteractionBar.gameObject.SetActive(false);
         currentInteractable?.HeldInteract();

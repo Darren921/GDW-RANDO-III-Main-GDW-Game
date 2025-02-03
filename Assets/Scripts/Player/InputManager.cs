@@ -20,10 +20,12 @@ public class InputManager : MonoBehaviour
     {
         controls = new Controls();
 
-         
+        var PlayerMovement = player.GetComponent<PlayerMovement>();
+        var PlayerHotbar = player.GetComponent<PlayerHotbar>();
+        var PlayerInteraction = player.GetComponent<PlayerInteraction>();
         controls.InGame.Movement.performed += _ =>
         {
-            player.SetMoveDirection(_.ReadValue<Vector3>());
+            PlayerMovement.SetMoveDirection(_.ReadValue<Vector3>());
           
             if (_.ReadValue<Vector3>() != Vector3.zero)
             {
@@ -36,11 +38,11 @@ public class InputManager : MonoBehaviour
         };
         controls.InGame.Sprint.performed += _ =>
         {
-            player.startSprint();
+            PlayerMovement.startSprint();
         };
         controls.InGame.Sprint.canceled += _ =>
         {
-            player.cancelSprint();   
+            PlayerMovement.cancelSprint();   
         };
         controls.InGame.MousePos.performed += _ =>
         {
@@ -48,23 +50,23 @@ public class InputManager : MonoBehaviour
         };
         controls.InGame.Hide.performed += _ =>
         {
-            player.Hide();
+      //      player.Hide();
         };
         controls.InGame.ItemSwap.performed += _ =>
         {
-            player.GetComponent<PlayerHotbar>().ChangeItem(_.ReadValue<Single>());
+            PlayerHotbar.ChangeItem(_.ReadValue<Single>());
         };
         controls.InGame.OffOn.performed += _ =>
         {
             player.GetComponent<PlayerHotbar>()?.checkIfActive();
         };
          controls.InGame.OpenAndCloseInv.performed += _ =>
-         {
-            player.ManageHotbar();
+         { 
+             player.GetComponent<PlayerHotbar>()?.ManageHotbar();
          };
         controls.InGame.Interact.performed += _ =>
         {
-            player.GetComponent<PlayerInteraction>()?.TryInteract();
+            PlayerInteraction?.TryInteract();
         };
         controls.InGame.HeldInteract.ApplyBindingOverride(new InputBinding
         {
@@ -73,7 +75,7 @@ public class InputManager : MonoBehaviour
         });
         controls.InGame.HeldInteract.performed += _ =>
         {
-            player.GetComponent<PlayerInteraction>()?.TryHeldInteract();
+            PlayerInteraction?.TryHeldInteract();
         };
 
     }
