@@ -62,7 +62,7 @@ public class PlayerInteraction : MonoBehaviour
             holdDuration += Time.deltaTime;
             InteractionBar.value = holdDuration;
         }
-        else if(HeldInteractionAction.action.WasReleasedThisFrame()  || isHeldInteraction && !hotbar._equipmentBases[hotbar.returnTorchLocation()].equipped && !iceMelting.isMelting && !_isResetting   )
+        else if(HeldInteractionAction.action.WasReleasedThisFrame() && isHeldInteraction || isHeldInteraction && !hotbar._equipmentBases[hotbar.returnTorchLocation()].equipped && !iceMelting.isMelting && !_isResetting   )
         {
             print("resetiing");
             hotbar._equipmentBases[hotbar.returnTorchLocation()].gameObject.GetComponent<Torch>().torchActive = false;
