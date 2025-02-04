@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RetroFilter
+  m_Name: RetroFilter 2
   m_Shader: {fileID: -6465566751694194690, guid: e6d838f7a3a705644957e82ddfae2701,
     type: 3}
   m_Parent: {fileID: 0}
@@ -38,9 +38,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _ColourResolution: -8.36
-    - _Float: 1.72
-    - _ditherSpread: -0.02
-    m_Colors:
-    - _Vector4: {r: 2, g: 2, b: 1, a: 1}
+    - _ColourResolution: -0.04
+    - _Float: 1
+    - _ditherSpread: -0.2
+    m_Colors: []
   m_BuildTextureStacks: []
