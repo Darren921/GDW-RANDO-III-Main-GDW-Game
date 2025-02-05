@@ -60,4 +60,9 @@ public class Torch : LightEquipment
         CurrentUses -= 1;
         _playerHotbar.FuelCount--;
     }
+
+  
+   
+
+   
 }

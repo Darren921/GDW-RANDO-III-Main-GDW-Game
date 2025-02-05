@@ -19,14 +19,10 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
        _playerHotbar = _player.GetComponent<PlayerHotbar>();
        isHeld = false;
    }
-
-
    public bool isHeld { get; set; }
 
    public void Interact()
    {
-
-       
        print("Pick up Item");
        if (this != null)
        {
@@ -55,7 +51,7 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
            }
            else
            {
-               if (item.CompareTag("Batteries") && _playerHotbar.batteryCount < item.item.data.Limit )
+               if (item.CompareTag("Batteries") && _playerHotbar.batteryCount < item.item.data.Limit)
                {
                    if (!_spawnManager.trackedIndexs.Contains((tracker))) return;
                    if (_playerHotbar.batteryCount <= 0 &&  _playerHotbar._equipmentBases[1].CurrentUses <= 0)
@@ -73,7 +69,9 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
                    Destroy(gameObject,0.1f);
                    _playerHotbar.GetComponent<PlayerInteraction>().InteractText.text = "";
                }
-               else if (item.CompareTag("Fuel") && _playerHotbar.FuelCount < item.item.data.Limit )
+            
+               
+               if (item.CompareTag("Fuel") && _playerHotbar.FuelCount < item.item.data.Limit )
                {
                    if (!_spawnManager.trackedIndexs.Contains((tracker))) return;
                    _playerHotbar.FuelCount++;
@@ -82,12 +80,18 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
                    _spawnManager.trackedIndexs.Remove(tracker);
                    Destroy(gameObject,0.1f);
                    _playerHotbar.GetComponent<PlayerInteraction>().InteractText.text = "";
-
                }
+             
            }
 
        }
    }
+
+   private void OnDestroy()
+   {
+       if(_playerHotbar.GetComponent<PlayerInteraction>().InteractText != null) _playerHotbar.GetComponent<PlayerInteraction>().InteractText.text = "";
+   }
+   
 
    public void HeldInteract()
    {

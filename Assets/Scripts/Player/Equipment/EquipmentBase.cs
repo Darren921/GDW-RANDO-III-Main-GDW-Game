@@ -34,7 +34,7 @@ public abstract class EquipmentBase : MonoBehaviour
             MaxUses = equipmentObj.data.Limit;
             //change this after 
           //  CurrentUses =  0;
-          CurrentUses = 0;
+          CurrentUses = 1;
             RefillAmount = equipmentObj.refuel;
         }
     }

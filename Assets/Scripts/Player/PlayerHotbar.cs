@@ -20,9 +20,6 @@ public class PlayerHotbar : MonoBehaviour
     internal bool isOpen { get; set; }
     private void Start()
     {
-       
-            
-       
         CurrentItem = -1;
 
         if (!GameManager.firstLoad)
@@ -32,9 +29,9 @@ public class PlayerHotbar : MonoBehaviour
             Hotbar.AddItem(new Item(EquipmentObjs[2]) , 1);
         }
 
-        foreach (var VARIABLE in _equipmentBases)
+        foreach (var equipment in _equipmentBases)
         {
-            VARIABLE.gameObject.SetActive(false);
+            equipment.gameObject.SetActive(false);
         }
         
     }

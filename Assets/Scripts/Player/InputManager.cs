@@ -68,18 +68,36 @@ public class InputManager : MonoBehaviour
         {
             PlayerInteraction?.TryInteract();
         };
-        controls.InGame.HeldInteract.ApplyBindingOverride(new InputBinding
-        {
-            overrideInteractions = "Hold(duration= 10,pressPoint=0.2)"
-            
-        });
+        
         controls.InGame.HeldInteract.performed += _ =>
         {
             PlayerInteraction?.TryHeldInteract();
         };
 
     }
-   
+
+    public static void ChangeBinding(bool onSelf)
+    {
+        var doorMelting = "Hold(duration= 10,pressPoint=0.2)";
+        var self = "Hold(duration= 5,pressPoint=0.2)";
+        if (!onSelf)
+        {
+            controls.InGame.HeldInteract.ApplyBindingOverride(new InputBinding
+            {
+                overrideInteractions = doorMelting
+            
+            });
+        }
+        else
+        {
+            controls.InGame.HeldInteract.ApplyBindingOverride(new InputBinding
+            {
+                overrideInteractions = self
+            
+            });
+        }
+        
+    }
     public static void EnableInGame()
     {
         controls.InGame.Enable();

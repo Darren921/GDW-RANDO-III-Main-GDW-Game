@@ -23,7 +23,7 @@ public class NewMonster : MonoBehaviour
     void Update()
     {
         
-        Debug.Log(cube.transform.position - gameObject.transform.position);
+//        Debug.Log(cube.transform.position - gameObject.transform.position);
         facing =  (cube.transform.position - gameObject.transform.position );
          LayerMask layer = LayerMask.GetMask("Player", "Wall");
         cube.transform.position = player.transform.position;
