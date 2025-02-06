@@ -39,16 +39,12 @@ public class NewMonster : MonoBehaviour
             Debug.Log(hit.transform.name);
             if (hit.transform.tag == "Player")
             {
-                
-                if (facing.z <= 0 )
-                {
-                    GoToPlayer = true;
 
-                }
-                else
-                {
-                    GoToPlayer= false;
-                }
+
+                GoToPlayer = true;
+
+               
+                
                 
                 
                
@@ -96,4 +92,5 @@ public class NewMonster : MonoBehaviour
         agent.SetDestination(Destination);
 
     }
+    
 }

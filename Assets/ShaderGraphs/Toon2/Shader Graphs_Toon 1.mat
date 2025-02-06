@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2475860136600102289
+--- !u!114 &-3662454017188026747
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,14 +20,14 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_Fire test
-  m_Shader: {fileID: -6465566751694194690, guid: 8200fadf7d3419445bc27f1c77798897,
+  m_Name: Shader Graphs_Toon 1
+  m_Shader: {fileID: -6465566751694194690, guid: 11cee702f1d5eae4d8da577a026eeb6f,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
-  m_LightmapFlags: 2
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -37,8 +37,8 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _Texture2D:
-        m_Texture: {fileID: 2800000, guid: fe9337ca477008943a0e6c834c000b0a, type: 3}
+    - _Texture:
+        m_Texture: {fileID: 2800000, guid: 2de24a0c9d67eb449a6b54f54482510f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -55,10 +55,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _MaxBright: 1.01
+    - _MinBright: -0.15
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _dist_ammount: 0.02
+    - _Shades: 0.33
+    - _offset: 0
+    - _strength: 0
     m_Colors:
-    - _Color: {r: 1, g: 0.79205436, b: 0, a: 0}
-    - _fire_area: {r: 0, g: -3.34, b: 0, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 0}
+    - _Vector3: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

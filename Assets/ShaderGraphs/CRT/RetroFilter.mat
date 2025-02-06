@@ -38,7 +38,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _ColourResolution: -8.36
+    - _ColourResolution: -6.28
     - _Float: 1.72
     - _ditherSpread: -0.02
     m_Colors:
