@@ -63,11 +63,14 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
                        _playerHotbar.GetComponent<PlayerInteraction>().InteractText.text = "";
                        return;
                    }
+                   _playerHotbar.GetComponent<PlayerInteraction>().InteractText.text = "";
+                   _player.GetComponent<PlayerInteraction>().Reset();
+                   _player.GetComponent<PlayerInteraction>().HeldInteractionAction.action.Reset();
                    _playerHotbar.batteryCount++;
                    _spawnManager.SpawnedList.Remove(tracker);
                    _spawnManager.trackedIndexs.Remove(tracker);
                    Destroy(gameObject,0.1f);
-                   _playerHotbar.GetComponent<PlayerInteraction>().InteractText.text = "";
+               
                }
             
                
@@ -78,8 +81,11 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
                    _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].CurrentUses = _playerHotbar.FuelCount;
                    _spawnManager.SpawnedList.Remove(tracker);
                    _spawnManager.trackedIndexs.Remove(tracker);
-                   Destroy(gameObject,0.1f);
+                   _player.GetComponent<PlayerInteraction>().Reset();
+                   _player.GetComponent<PlayerInteraction>().HeldInteractionAction.action.Reset();
                    _playerHotbar.GetComponent<PlayerInteraction>().InteractText.text = "";
+                   Destroy(gameObject,0.1f);
+                 
                }
              
            }
@@ -90,6 +96,8 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
    private void OnDestroy()
    {
        if(_playerHotbar.GetComponent<PlayerInteraction>().InteractText != null) _playerHotbar.GetComponent<PlayerInteraction>().InteractText.text = "";
+       _player.GetComponent<PlayerInteraction>().Reset();
+       _player.GetComponent<PlayerInteraction>().HeldInteractionAction.action.Reset();
    }
    
 

@@ -78,8 +78,8 @@ public class InputManager : MonoBehaviour
 
     public static void ChangeBinding(bool onSelf)
     {
-        var doorMelting = "Hold(duration= 10,pressPoint=0.2)";
-        var self = "Hold(duration= 5,pressPoint=0.2)";
+        var doorMelting = "Hold(duration= 10,pressPoint=0.1)";
+        var self = "Hold(duration= 5,pressPoint=0.15)";
         if (!onSelf)
         {
             controls.InGame.HeldInteract.ApplyBindingOverride(new InputBinding

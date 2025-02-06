@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,8 @@ public class PlayerHotbar : MonoBehaviour
     [SerializeField] internal InventoryObj Hotbar;
     [SerializeField] internal List<EquipmentBase>  _equipmentBases;
     [SerializeField] private ItemObj[] EquipmentObjs;
+    [SerializeField] internal TextMeshProUGUI FuelCountText, BatteryCountText;
+
     internal int batteryCount;
     internal int FuelCount;
     private int CurrentItem;
@@ -34,6 +37,13 @@ public class PlayerHotbar : MonoBehaviour
             equipment.gameObject.SetActive(false);
         }
         
+    }
+
+    private void Update()
+    {
+        BatteryCountText.text = $"Battery count {batteryCount} / 3";
+        FuelCountText.text = $"Fuel count \n {FuelCount} / 3";
+
     }
 
     private void OnApplicationQuit()

@@ -25,6 +25,12 @@ public class SpawnManager : MonoBehaviour
         for (var i = 0; i < ItemSpawnPoints.Count; i++) RandomNum.Add(i);
     }
     
+    /*
+    Note: this method was aided by AI
+    notable changes, 
+    random spawns are generated via the list rather than a flawed random num provider
+    Cleaned up code and added debugging statements
+    */ 
     private IEnumerator itemSpawn(ItemObj[] item, int amount)
     {
         if (active) yield break;
@@ -83,6 +89,7 @@ public class SpawnManager : MonoBehaviour
             {
                 Debug.Log($"Skipping spawn for tag {tag} (Current count: {curItemCount}, Cap: {cap})");
             }
+            
             if (curItemCount < cap && SpawnedList.Count < MaxItems)
             {
                 // get available spawn points, and randomize them
