@@ -11,11 +11,15 @@ public class NewMonster : MonoBehaviour
     [SerializeField] GameObject cube;
     [SerializeField] Rigidbody rb;
     [SerializeField] Vector3 facing;
+    [SerializeField] bool GoToPlayer;
+    [SerializeField] bool RandomDestination;
+    [SerializeField] float MaxDistance;
+    [SerializeField] Vector3 direction;
     // Start is called before the first frame update
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        
+        RandomDestination = true;
     }
     
 
@@ -35,36 +39,23 @@ public class NewMonster : MonoBehaviour
             Debug.Log(hit.transform.name);
             if (hit.transform.tag == "Player")
             {
-                if (gameObject.transform.rotation.y > 90 || gameObject.transform.rotation.y < -90)
+                
+                if (facing.z <= 0 )
                 {
-                    if (facing.z * gameObject.transform.rotation.y > 1)
-                    {
-                        facing.z = +facing.z;
-                    }
+                    GoToPlayer = true;
+
                 }
-                Debug.Log("True hit");
-                if (facing.z  >= 0 )
+                else
                 {
-
-                    Debug.Log("Go to player");
-                    agent.destination = player.transform.position;
-
-
-
+                    GoToPlayer= false;
                 }
                 
                 
-                
-                
-                else 
-                {
-                    agent.destination = gameObject.transform.position;
-                
-                }
+               
             }
             else
             {
-                agent.destination = gameObject.transform.position;
+               GoToPlayer = false;
             }
             // Debug.Log(cube.transform.position);
 
@@ -72,9 +63,37 @@ public class NewMonster : MonoBehaviour
             //agent.destination = player.transform.position;
         }
         
+        if (GoToPlayer == true)
+        {
+            agent.destination = cube.transform.position;
+        }
+        else if ( GoToPlayer == false && RandomDestination == true)
+        {
+            RandomDestination = false;
+            Destination();
+            
+        }
+        if (GoToPlayer == false && Vector3.Distance(transform.position, agent.destination) < 3)
+        {
+            Destination();
+        }
+        
+            
+        
         
 
            
         
+    }
+    private void Destination()
+    {
+        direction = Random.insideUnitSphere * MaxDistance;
+        direction += transform.position;
+        NavMeshHit hit;
+        NavMesh.SamplePosition(direction, out hit, Random.Range(0, MaxDistance), 1);
+        Vector3 Destination = hit.position;
+        
+        agent.SetDestination(Destination);
+
     }
 }
