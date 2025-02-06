@@ -39,24 +39,7 @@ public class PlayerInteraction : MonoBehaviour
         if (interactable == null) return;
         currentInteractable = interactable; 
       //  print(currentInteractable);
-        if (other.GetComponent<GroundObj>() != null )
-        {
-            var groundObj = other.GetComponent<GroundObj>();
-            if (groundObj != null)
-            {
-                switch (other.GetComponent<GroundObj>().item.data.Name)
-                {
-                    case "Battery":
-                        InteractText.text = hotbar.batteryCount < groundObj.item.data.Limit ? $"Press E to Pickup {groundObj.item.data.Name.ToLower()} " : $"Carry limit for {groundObj.item.data.Name.ToLower()} has been reached";
-                        break;
-                    case "Fuel" :
-                        InteractText.text = hotbar.FuelCount < groundObj.item.data.Limit ? $"Press E to Pickup {groundObj.item.data.Name.ToLower()}" : $"Carry limit for {groundObj.item.data.Name.ToLower()} has been reached";
-                        break;
-                }
-                   
-            }
-              
-        }
+       
         if (other.GetComponent<FrostSystem>() != null)
         {
             if (_frostSystem._frost > 100)
@@ -115,7 +98,24 @@ public class PlayerInteraction : MonoBehaviour
         if (interactable == null) return;
         currentInteractable = interactable; 
         print(currentInteractable);
-
+        if (other.GetComponent<GroundObj>() != null )
+        {
+            var groundObj = other.GetComponent<GroundObj>();
+            if (groundObj != null)
+            {
+                switch (other.GetComponent<GroundObj>().item.data.Name)
+                {
+                    case "Battery":
+                        InteractText.text = hotbar.batteryCount < groundObj.item.data.Limit ? $"Press E to Pickup {groundObj.item.data.Name.ToLower()} " : $"Carry limit for {groundObj.item.data.Name.ToLower()} has been reached";
+                        break;
+                    case "Fuel" :
+                        InteractText.text = hotbar.FuelCount < groundObj.item.data.Limit ? $"Press E to Pickup {groundObj.item.data.Name.ToLower()}" : $"Carry limit for {groundObj.item.data.Name.ToLower()} has been reached";
+                        break;
+                }
+                   
+            }
+              
+        }
         if (other.GetComponent<IceMelting>() != null && hotbar._equipmentBases[hotbar.returnTorchLocation()].CurrentUses > 00)
         {
             InteractText.text = iceMelting.isMelting ? "" : "Hold E to Melt";

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,13 +16,28 @@ public class FrostSystem : MonoBehaviour,GameManager.IInteractable
     [SerializeField] private Player _player;
     PlayerHotbar _playerHotbar;
 
+    private Vector3 oldColliderSize;
     // Start is called before the first frame update
     void Start()
     {
+        oldColliderSize = GetComponentInChildren<BoxCollider>().size;
         _playerHotbar = FindFirstObjectByType<PlayerHotbar>();
         isHeld = true;
         isFreezing = true;
         _frost = 0;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.GetComponent<GameManager.IInteractable>() != null)
+        {
+           GetComponentInChildren<BoxCollider>().size = new Vector3(1.1f,0.9f,1.5f);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        GetComponentInChildren<BoxCollider>().size = oldColliderSize;
     }
 
     // Update is called once per frame
