@@ -68,7 +68,6 @@ public class FrostSystem : MonoBehaviour,GameManager.IInteractable
     public void HeldInteract()
     {
         print("here");
-        InputManager.ChangeBinding(true);
         
         if (!(_playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].CurrentUses > 0) ||
             !(_playerHotbar.gameObject.GetComponent<PlayerInteraction>().holdDuration <= 5.1f)) return;

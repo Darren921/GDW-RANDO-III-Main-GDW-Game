@@ -143,7 +143,6 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
 
     public void HeldInteract()
     {
-        InputManager.ChangeBinding(false);
         if (!(_playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].CurrentUses > 0) ||
             !(_playerHotbar.gameObject.GetComponent<PlayerInteraction>().holdDuration <= 10.1f)) return;
         print("in 1 ");

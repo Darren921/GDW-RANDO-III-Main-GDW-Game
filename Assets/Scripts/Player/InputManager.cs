@@ -70,8 +70,7 @@ public class InputManager : MonoBehaviour
         };
         controls.InGame.HeldInteract.ApplyBindingOverride(new InputBinding
         {
-            overrideInteractions = "Hold(duration= 10,pressPoint=0.1)"
-            
+            overrideInteractions = "Hold(duration= 10,pressPoint=0.2)"
         });
 
         controls.InGame.HeldInteract.performed += _ =>
@@ -79,11 +78,6 @@ public class InputManager : MonoBehaviour
             PlayerInteraction?.TryHeldInteract();
         };
 
-    }
-
-    public static void ChangeBinding(bool onSelf)
-    {
-        
     }
     public static void EnableInGame()
     {

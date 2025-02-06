@@ -54,6 +54,10 @@ public class PlayerInteraction : MonoBehaviour
             InteractText.text = $"Press E to read {other.GetComponent<backGroundInteractable>().name.ToLower()}";
             isHeldInteraction = other.GetComponent<backGroundInteractable>().isHeld;
         }
+        else if(other.GetComponent<IceMelting>() != null)
+        {
+            isHeldInteraction = other.GetComponent<IceMelting>().isHeld;
+        }
      
     }
 
@@ -67,10 +71,6 @@ public class PlayerInteraction : MonoBehaviour
             holdDuration += Time.deltaTime;
             InteractionBar.value = holdDuration;
         }
-        
-        
-        
-        
     }
 
     public void Reset()
@@ -116,7 +116,7 @@ public class PlayerInteraction : MonoBehaviour
             }
               
         }
-        if (other.GetComponent<IceMelting>() != null && hotbar._equipmentBases[hotbar.returnTorchLocation()].CurrentUses > 00)
+        if (other.GetComponent<IceMelting>() != null && hotbar._equipmentBases[hotbar.returnTorchLocation()].CurrentUses > 0)
         {
             InteractText.text = iceMelting.isMelting ? "" : "Hold E to Melt";
         }
