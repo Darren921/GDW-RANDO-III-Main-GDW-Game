@@ -103,6 +103,7 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
 
    private void OnDestroy()
    {
+       if(_playerHotbar == null) return;
        if(_playerHotbar.GetComponent<PlayerInteraction>().InteractText != null) _playerHotbar.GetComponent<PlayerInteraction>().InteractText.text = "";
        _player.GetComponent<PlayerInteraction>().Reset();
        _player.GetComponent<PlayerInteraction>().HeldInteractionAction.action.Reset();
