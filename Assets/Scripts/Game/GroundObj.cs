@@ -53,7 +53,7 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
            {
                if (item.CompareTag("Batteries") && _playerHotbar.batteryCount < item.item.data.Limit)
                {
-                   if (!_spawnManager.trackedIndexs.Contains((tracker)) || !_spawnManager.trackedIndexs.Contains(tracker) && item.name == "battery") return;
+                  // if (!_spawnManager.trackedIndexs.Contains((tracker)) || !_spawnManager.trackedIndexs.Contains(tracker) && item.name == "battery") return;
                    if (_playerHotbar.batteryCount <= 0 &&  _playerHotbar._equipmentBases[1].CurrentUses <= 0)
                    {
                        print("in here battery");

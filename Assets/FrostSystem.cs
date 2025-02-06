@@ -31,13 +31,13 @@ public class FrostSystem : MonoBehaviour,GameManager.IInteractable
     {
         if (other.GetComponent<GameManager.IInteractable>() != null)
         {
-           GetComponentInChildren<BoxCollider>().size = new Vector3(1.1f,0.9f,1.5f);
+      //     GetComponentInChildren<BoxCollider>().size = new Vector3(1.1f,0.9f,1.5f);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        GetComponentInChildren<BoxCollider>().size = oldColliderSize;
+     //   GetComponentInChildren<BoxCollider>().size = oldColliderSize;
     }
 
     // Update is called once per frame
