@@ -59,6 +59,10 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
                    {
                        print("in here battery");
                        _playerHotbar._equipmentBases[1].CurrentUses = _playerHotbar._equipmentBases[1].MaxUses;
+                       Destroy(gameObject,0.1f);
+                       _player.GetComponent<PlayerInteraction>().Reset();
+                       _player.GetComponent<PlayerInteraction>().HeldInteractionAction.action.Reset();  
+                       _playerHotbar.GetComponent<PlayerInteraction>().InteractText.text = "";
                        if (CompareTag("Batteries"))
                        {
                            _spawnManager.AvaiableSpawns.Add(tracker);
@@ -68,19 +72,19 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
                        {
                            print("Spec object");
                        }
-                    
-                       
-                    
-                       Destroy(gameObject,0.1f);
-                       _player.GetComponent<PlayerInteraction>().Reset();
-                       _player.GetComponent<PlayerInteraction>().HeldInteractionAction.action.Reset();  
-                       _playerHotbar.GetComponent<PlayerInteraction>().InteractText.text = "";
                        return;
                    }
              
                    _playerHotbar.batteryCount++;
-                  
-
+                   if (CompareTag("Batteries"))
+                   {
+                       _spawnManager.AvaiableSpawns.Add(tracker);
+                       _spawnManager.TrackedIndex.Remove(tracker);
+                   }
+                   else
+                   {
+                       print("Spec object");
+                   }
                    Destroy(gameObject,0.1f);
                    _player.GetComponent<PlayerInteraction>().Reset();
                    _player.GetComponent<PlayerInteraction>().HeldInteractionAction.action.Reset();  

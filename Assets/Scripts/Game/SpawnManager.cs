@@ -75,6 +75,7 @@ public class SpawnManager : MonoBehaviour
         print("spawning ended");
     }
 
+    private ItemObj lastItem;
     private List<ItemObj> ShuffleRandomItems()  
     {  
         List<ItemObj> ShuffledItems  = new List<ItemObj>();
@@ -83,11 +84,15 @@ public class SpawnManager : MonoBehaviour
             var rnd = Random.Range(0,i);
             // ReSharper disable once SwapViaDeconstruction
 
-            var temp = RandomItems[i];
-		
+            var tempStorage = RandomItems[i];
+            lastItem = RandomItems[i];
+            while (RandomItems[i] == lastItem && i > 1)
+            {
+                rnd = Random.Range(0,i);
+            }
             RandomItems[i] = RandomItems[rnd];
             
-            RandomItems[rnd] = temp;
+            RandomItems[rnd] = tempStorage;
         }
         ShuffledItems.AddRange(RandomItems);
         return ShuffledItems;
