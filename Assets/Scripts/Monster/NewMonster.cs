@@ -186,7 +186,8 @@ public class NewMonster : MonoBehaviour
 
     void Roam()
     {
-        int transform = UnityEngine.Random.Range(0, positions.Length);
+        int transform = UnityEngine.Random.Range(0, positions.Length );
+        print(transform);
         agent.SetDestination(positions[transform].transform.position);
         if (!GoToPlayer && !canGo)
         {

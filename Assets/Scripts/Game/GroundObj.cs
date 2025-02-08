@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GroundObj : MonoBehaviour,GameManager.IInteractable 
 {
-   internal int tracker;
+   [SerializeField]internal int tracker;
    private SpawnManager _spawnManager;
    private Player _player;
    private PlayerHotbar _playerHotbar;
@@ -31,7 +32,7 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
 
            var item = GetComponent<GroundObj>();
            var equipment = item.equipment;
-           if (item && !item.CompareTag("Batteries") && !item.CompareTag("Fuel") )
+           if (item && !item.CompareTag("Batteries") && !item.CompareTag("Fuel") && item.item.data.Id == 3 && item.item.data.Id == 4   )
            {
                print(item.tag);
                Item _item = new Item(item.item);
@@ -51,25 +52,34 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
            }
            else
            {
-               if (item.CompareTag("Batteries") && _playerHotbar.batteryCount < item.item.data.Limit)
+               if (item.item.data.Id == _playerHotbar.Hotbar.database.ItemObjects[3].data.Id && _playerHotbar.batteryCount < item.item.data.Limit)
                {
                   // if (!_spawnManager.trackedIndexs.Contains((tracker)) || !_spawnManager.trackedIndexs.Contains(tracker) && item.name == "battery") return;
                    if (_playerHotbar.batteryCount <= 0 &&  _playerHotbar._equipmentBases[1].CurrentUses <= 0)
                    {
                        print("in here battery");
                        _playerHotbar._equipmentBases[1].CurrentUses = _playerHotbar._equipmentBases[1].MaxUses;
-                       _spawnManager.SpawnedList.Remove(tracker);
-                       _spawnManager.trackedIndexs.Remove(tracker);
+                       if (CompareTag("Batteries"))
+                       {
+                           _spawnManager.AvaiableSpawns.Add(tracker);
+                           _spawnManager.TrackedIndex.Remove(tracker);
+                       }
+                       else
+                       {
+                           print("Spec object");
+                       }
+                    
+                       
+                    
                        Destroy(gameObject,0.1f);
                        _player.GetComponent<PlayerInteraction>().Reset();
                        _player.GetComponent<PlayerInteraction>().HeldInteractionAction.action.Reset();  
                        _playerHotbar.GetComponent<PlayerInteraction>().InteractText.text = "";
                        return;
                    }
-                 
+             
                    _playerHotbar.batteryCount++;
-                   _spawnManager.SpawnedList.Remove(tracker);
-                   _spawnManager.trackedIndexs.Remove(tracker);
+                  
 
                    Destroy(gameObject,0.1f);
                    _player.GetComponent<PlayerInteraction>().Reset();
@@ -80,14 +90,22 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
                }
             
                
-               if (item.CompareTag("Fuel") && _playerHotbar.FuelCount < item.item.data.Limit )
+               if (item.item.data.Id == _playerHotbar.Hotbar.database.ItemObjects[4].data.Id  && _playerHotbar.FuelCount < item.item.data.Limit )
                {
                    print("in here fuel");
                  // if (!_spawnManager.trackedIndexs.Contains((tracker)) || (!_spawnManager.trackedIndexs.Contains(tracker))&& item.name == "Gas canister obj") return;
                    _playerHotbar.FuelCount++;
                    _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].CurrentUses = _playerHotbar.FuelCount;
-                   _spawnManager.SpawnedList.Remove(tracker);
-                   _spawnManager.trackedIndexs.Remove(tracker);
+                   if (CompareTag("Fuel"))
+                   {
+                       _spawnManager.AvaiableSpawns.Add(tracker);
+                       _spawnManager.TrackedIndex.Remove(tracker);
+                   }
+                   else
+                   {
+                       print("Spec object");
+                   }
+                   
                    Destroy(gameObject,0.1f);
                    _player.GetComponent<PlayerInteraction>().Reset();
                    _player.GetComponent<PlayerInteraction>().HeldInteractionAction.action.Reset();
