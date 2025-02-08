@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -21,13 +22,16 @@ public class NewMonster : MonoBehaviour
     [SerializeField] bool IsSpotted;
     [SerializeField] float range;
     [SerializeField] bool canGo;
+
+    [SerializeField] public GameObject[] positions;
+    [SerializeField] bool canRoam;
     
     // Start is called before the first frame update
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.speed = 4;
-        
+        canRoam = true;
     }
 
 
@@ -147,6 +151,7 @@ public class NewMonster : MonoBehaviour
 
         if (GoToPlayer == true)
         {
+            canRoam = false;
             if (IsSpotted)
             {
                 canGo = true;
@@ -160,8 +165,12 @@ public class NewMonster : MonoBehaviour
                 LastPosition();
             }
         }
-
-
+        else if (canRoam && !GoToPlayer && !IsSpotted && Vector3.Distance(transform.position, agent.destination) < 3)
+        {
+            canRoam = false;
+            Roam();
+        }
+        
 
 
 
@@ -173,6 +182,17 @@ public class NewMonster : MonoBehaviour
         agent.SetDestination(cube.gameObject.transform.position);
         agent.speed = 4;
         GoToPlayer = false;
+    }
+
+    void Roam()
+    {
+        int transform = UnityEngine.Random.Range(0, positions.Length);
+        agent.SetDestination(positions[transform].transform.position);
+        if (!GoToPlayer && !canGo)
+        {
+            canRoam = true;
+        }
+        
     }
     
 }
