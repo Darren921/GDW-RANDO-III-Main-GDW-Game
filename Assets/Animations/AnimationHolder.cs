@@ -1,39 +1,43 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class AnimationHolder : MonoBehaviour
 {
-    [SerializeField] GameObject deadmonster;
-    [SerializeField] GameObject othermonster;
-    [SerializeField] Animator gooddoor;
-    [SerializeField] GameObject fade;
-    public void Death()
-    {
-        othermonster.SetActive(false);
-        deadmonster.SetActive(true);
-        StartCoroutine(daaaaaa());
-    }
+    [SerializeField] Animator animator;
+    [SerializeField] string GameScene;
+    [SerializeField] GameObject door;
+    [SerializeField] CinemachineVirtualCamera cam;
+    
+    
 
-    IEnumerator daaaaaa()
+    private void Start()
     {
+        
+        
+    }
+    private void Update()
+    {
+        
+    }
+    public void OnStart()
+    {
+        StartCoroutine(PlayCutsceneMainMenu());
+    }
+    IEnumerator PlayCutsceneMainMenu()
+    {
+        animator.Play("MenuTransition");
+        
+        yield return new WaitForSeconds(19);
+        door.GetComponent<Animator>().Play("Slide");
+        yield return new WaitForSeconds(6);
+       
         yield return new WaitForSeconds(3);
-        SceneManager.LoadScene("MainMenu");
-    }
-    public void life()
-    {
-        gooddoor.Play("Door Open");
-    }
-    public void limbnb()
-    {
-        fade.SetActive(true);
-        StartCoroutine(fadeAway());
-    }
-
-    IEnumerator fadeAway()
-    {
-        yield return new WaitForSeconds (2);
-        SceneManager.LoadScene("NarrativeTest");
+        SceneManager.LoadScene(GameScene);
+        
     }
 }
