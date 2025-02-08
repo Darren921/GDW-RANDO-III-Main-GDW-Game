@@ -40,9 +40,13 @@ Material:
     m_Ints: []
     m_Floats:
     - _Boolean: 1
-    - _Colour_Threshold: 0.11
-    - _Normal_Threshold: 5.5
+    - _Colour_Threshold: 0.8
+    - _Fullscreen_DepthTest: 8
+    - _Fullscreen_DepthWrite: 0
+    - _Normal_Threshold: 12.64
     - _OVERLAY: 1
+    - _QueueControl: 0
+    - _QueueOffset: 0
     m_Colors:
     - _OutlineColour: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

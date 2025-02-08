@@ -9,88 +9,170 @@ public class NewMonster : MonoBehaviour
     [SerializeField] GameObject player;
     NavMeshAgent agent;
     [SerializeField] GameObject cube;
-    [SerializeField] Rigidbody rb;
-    [SerializeField] Vector3 facing;
+   
+   
     [SerializeField] bool GoToPlayer;
-    [SerializeField] bool RandomDestination;
+    
     [SerializeField] float MaxDistance;
-    [SerializeField] Vector3 direction;
+    
+
+
+    [SerializeField] GameObject RayTarget;
+    [SerializeField] bool IsSpotted;
+    [SerializeField] float range;
+    [SerializeField] bool canGo;
+    
     // Start is called before the first frame update
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        RandomDestination = true;
+        agent.speed = 4;
+        
     }
-    
+
 
     // Update is called once per frame
     void Update()
     {
-        
-//        Debug.Log(cube.transform.position - gameObject.transform.position);
-        facing =  (cube.transform.position - gameObject.transform.position );
-         LayerMask layer = LayerMask.GetMask("Player", "Wall");
-        cube.transform.position = player.transform.position;
         RaycastHit hit;
-        if (Physics.Raycast(gameObject.transform.position, cube.transform.position - gameObject.transform.position, out hit, layer)) 
+        Physics.Raycast(gameObject.transform.position, cube.transform.position - gameObject.transform.position, out hit, Mathf.Infinity);
+        if (hit.transform.tag == "Player")
         {
-          
-            Debug.DrawRay(transform.position,cube.transform.position - gameObject.transform.position, Color.red);
-            Debug.Log(hit.transform.name);
+            IsSpotted = true;
+        }
+        else
+        {
+            IsSpotted= false;
+        }
+
+
+        Debug.DrawRay(gameObject.transform.position, RayTarget.transform.position - gameObject.transform.position, Color.red);
+
+        //        Debug.Log(cube.transform.position - gameObject.transform.position);
+        
+
+        cube.transform.position = player.transform.position;
+        LayerMask layer = LayerMask.GetMask("Player", "Wall");
+        RaycastHit hit1;
+        RaycastHit hit2;
+        RaycastHit hit3;
+        RaycastHit hit4;
+        RaycastHit hit5;
+        RaycastHit hit6;
+        RaycastHit hit7;
+        RaycastHit hit8;
+        RaycastHit hit9;
+
+        if (Physics.Raycast(gameObject.transform.position, RayTarget.transform.position - gameObject.transform.position, out hit1, range, layer))
+        {
             if (hit.transform.tag == "Player")
             {
-
-
                 GoToPlayer = true;
-
-               
-                
-                
-                
-               
             }
-            else
-            {
-               GoToPlayer = false;
-            }
-            // Debug.Log(cube.transform.position);
 
 
-            //agent.destination = player.transform.position;
         }
-        
+        if (Physics.Raycast(gameObject.transform.position, RayTarget.transform.position - gameObject.transform.position + new Vector3(0.5f,0,0), out hit2, range, layer))
+        {
+            if (hit2.transform.tag == "Player")
+            {
+                GoToPlayer = true;
+            }
+
+
+        }
+        if (Physics.Raycast(gameObject.transform.position, RayTarget.transform.position - gameObject.transform.position + new Vector3(1f, 0, 0), out hit3, range, layer))
+        {
+            if (hit3.transform.tag == "Player")
+            {
+                GoToPlayer = true;
+            }
+
+
+        }
+        if (Physics.Raycast(gameObject.transform.position, RayTarget.transform.position - gameObject.transform.position + new Vector3(1.5f, 0, 0), out hit4, range, layer))
+        {
+            if (hit4.transform.tag == "Player")
+            {
+                GoToPlayer = true;
+            }
+
+
+        }
+        if (Physics.Raycast(gameObject.transform.position, RayTarget.transform.position - gameObject.transform.position + new Vector3(2, 0, 0), out hit5, range, layer))
+        {
+            if (hit5.transform.tag == "Player")
+            {
+                GoToPlayer = true;
+            }
+
+
+        }
+        if (Physics.Raycast(gameObject.transform.position, RayTarget.transform.position - gameObject.transform.position - new Vector3(0.5f, 0, 0), out hit6, range, layer))
+        {
+            if (hit6.transform.tag == "Player")
+            {
+                GoToPlayer = true;
+            }
+
+
+        }
+        if (Physics.Raycast(gameObject.transform.position, RayTarget.transform.position - gameObject.transform.position - new Vector3(1, 0, 0), out hit7, range, layer))
+        {
+            if (hit7.transform.tag == "Player")
+            {
+                GoToPlayer = true;
+            }
+
+
+        }
+        if (Physics.Raycast(gameObject.transform.position, RayTarget.transform.position - gameObject.transform.position - new Vector3(1.5f, 0, 0), out hit8, range, layer))
+        {
+            if (hit8.transform.tag == "Player")
+            {
+                GoToPlayer = true;
+            }
+
+
+        }
+        if (Physics.Raycast(gameObject.transform.position, RayTarget.transform.position - gameObject.transform.position - new Vector3(2, 0, 0), out hit9, range, layer))
+        {
+            if (hit9.transform.tag == "Player")
+            {
+                GoToPlayer = true;
+            }
+
+
+        }
+
         if (GoToPlayer == true)
         {
-            agent.destination = cube.transform.position;
+            if (IsSpotted)
+            {
+                canGo = true;
+                agent.destination = cube.transform.position;
+                agent.speed = 7;
+            }
+            else if (canGo)
+            {
+                GoToPlayer = false;
+                IsSpotted = false;
+                LastPosition();
+            }
         }
-        else if ( GoToPlayer == false && RandomDestination == true)
-        {
-            RandomDestination = false;
-            Destination();
-            
-        }
-        if (GoToPlayer == false && Vector3.Distance(transform.position, agent.destination) < 3)
-        {
-            Destination();
-        }
-        
-            
-        
-        
 
-           
-        
+
+
+
+
+
     }
-    private void Destination()
+    void LastPosition()
     {
-        direction = Random.insideUnitSphere * MaxDistance;
-        direction += transform.position;
-        NavMeshHit hit;
-        NavMesh.SamplePosition(direction, out hit, Random.Range(0, MaxDistance), 1);
-        Vector3 Destination = hit.position;
-        
-        agent.SetDestination(Destination);
-
+        canGo = false;
+        agent.SetDestination(cube.gameObject.transform.position);
+        agent.speed = 4;
+        GoToPlayer = false;
     }
     
 }

@@ -38,8 +38,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _ColourResolution: -11.16
-    - _Float: -1
+    - _ColourResolution: 7.22
+    - _Float: 1
     - _ditherSpread: -0.02
-    m_Colors: []
+    m_Colors:
+    - _Vector4: {r: 13.67, g: 23.05, b: 16.64, a: 0}
   m_BuildTextureStacks: []
