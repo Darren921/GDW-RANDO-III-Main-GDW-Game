@@ -50,7 +50,7 @@ public class NewMonster : MonoBehaviour
         animator.SetLayerWeight(1, walkValue);
         animator.SetLayerWeight(2, runValue);
 
-        if (agent.speed == 10)
+        if (agent.speed == 6)
         {
             if (walkValue < 1)
             {
@@ -84,17 +84,19 @@ public class NewMonster : MonoBehaviour
             }
         }
         RaycastHit hit;
-        Physics.Raycast(gameObject.transform.position, cube.transform.position - gameObject.transform.position, out hit, Mathf.Infinity);
-        if (hit.transform.tag == "Player")
-        {
-            IsSpotted = true;
-        }
-        else
-        {
-            IsSpotted= false;
-        }
 
+        if (Physics.Raycast(gameObject.transform.position, cube.transform.position - gameObject.transform.position, out hit, Mathf.Infinity))
+        {
+            if (hit.transform.tag == "Player")
+            {
+                IsSpotted = true;
+            }
+            else
+            {
+                IsSpotted = false;
+            }
 
+        }
         Debug.DrawRay(gameObject.transform.position, RayTarget.transform.position - gameObject.transform.position, Color.red);
 
         //        Debug.Log(cube.transform.position - gameObject.transform.position);
