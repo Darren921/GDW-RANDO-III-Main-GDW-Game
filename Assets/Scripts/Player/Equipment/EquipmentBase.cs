@@ -21,7 +21,6 @@ public abstract class EquipmentBase : MonoBehaviour
     
     protected internal abstract IEnumerator CheckCharge();
 
-    public abstract void LimitCheck(GameObject other);
 
     public virtual void Awake()
     {

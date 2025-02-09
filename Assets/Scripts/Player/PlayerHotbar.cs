@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,7 +15,7 @@ public class PlayerHotbar : MonoBehaviour
 
     internal int batteryCount;
     internal int FuelCount;
-    private int CurrentItem;
+    internal int CurrentEquipped;
     public void ManageHotbar ()
     {
         isOpen = !isOpen;
@@ -23,8 +24,7 @@ public class PlayerHotbar : MonoBehaviour
     internal bool isOpen { get; set; }
     private void Start()
     {
-        CurrentItem = -1;
-
+        CurrentEquipped = -1;
         if (!GameManager.firstLoad)
         {
             GameManager.firstLoad  = true;
@@ -37,6 +37,8 @@ public class PlayerHotbar : MonoBehaviour
             equipment.gameObject.SetActive(false);
         }
         
+        print($"Forced selection: {_equipmentBases[1].gameObject.name}");
+
     }
 
     private void Update()
@@ -53,62 +55,49 @@ public class PlayerHotbar : MonoBehaviour
 
     public void ChangeItem(float slot)
     {
-      //  print (slot + " change");
-        int inputtedSlot = (int)slot - 1 ;
-        var targetSlot = Hotbar.Container.Slots[inputtedSlot]; // Get selected slot
-      //  print(Hotbar.Container.Slots[inputtedSlot]);
-        if(targetSlot.ItemObj == null) return;
-        var targetId = targetSlot.ItemObj.data.Id; // Get item ID
-    //    print(targetId);
-        // Disable outlines for all slots
-        foreach (var slots in Hotbar.Container.Slots)
+        var inputtedSlot = (int)slot - 1;
+
+        for (var i = 1; i < Hotbar.Container.Slots.Length; i++)
         {
-            var outline = slots.slotDisplay.transform.GetChild(0).gameObject.GetComponentInChildren<Outline>();
-            if (outline != null)
+            var outline = Hotbar.Container.Slots[i].slotDisplay.transform.GetChild(0).GetComponentInChildren<Outline>();
+            if (Hotbar.Container.Slots[i] != Hotbar.Container.Slots[inputtedSlot])
             {
                 outline.enabled = false;
             }
-        }
-            
-        // Activate/deactivate equipment based on selected item ID
-        for (int i = 0; i < _equipmentBases.Count; i++)
-        {
-            var item = _equipmentBases[i];
-            bool isActive = (item.ID == targetId);
-          //  print (item.ID);
-          //  print (targetId);
-          //  print(isActive);
-            item.gameObject.SetActive(isActive);
-      
-            if (item.GetComponent<LightEquipment>() != null)
+            else
             {
-                if (targetId >= 1)
-                {
-                    var lightEquipment = item.GetComponent<LightEquipment>();
-                    lightEquipment.lightObj?.gameObject?.SetActive(false);
-                    lightEquipment.active = false;
-                }
-                else
-                {
-                    item.gameObject.SetActive(false);
-
-                }
-            }
-        
-            item.equipped = isActive;
-        
-            if (isActive)
-            {
-                CurrentItem = targetId;
+                outline.enabled = true;
             }
         }
 
-        var selectedOutline = targetSlot.slotDisplay.transform.GetChild(0).gameObject.GetComponentInChildren<Outline>();
-        if (selectedOutline != null)
+        inputtedSlot = (int)slot;
+
+        print(inputtedSlot);
+        for (var i = 0; i < _equipmentBases.Count; i++)
         {
-            selectedOutline.enabled = true;
+            _equipmentBases[i].gameObject.SetActive(false);
+            var lightEquipment = _equipmentBases[i].GetComponent<LightEquipment>();
+            if (lightEquipment != null)
+            {
+                lightEquipment.equipped = false;
+                lightEquipment.lightObj.gameObject.SetActive(false);
+            }
         }
+        if (inputtedSlot < _equipmentBases.Count)
+        {
+            _equipmentBases[inputtedSlot].gameObject.SetActive(true);
+            var curWeapon = _equipmentBases[inputtedSlot];
+            var lightEquipment = curWeapon.GetComponent<LightEquipment>();
+    
+            if (lightEquipment != null)
+            {
+                lightEquipment.equipped = true;
+                lightEquipment.lightObj.gameObject.SetActive(false); 
+            }
+        }
+
     }
+
 
     private void OnTriggerEnter(Collider other)
     {

@@ -92,20 +92,14 @@ public class LightEquipment : EquipmentBase
                     active = true;
                     StartCoroutine(CheckCharge()) ;
                     lightObj.SetActive(true);
-                    if (GetComponentInChildren<Collider>() != null)
-                    {
-                        GetComponentInChildren<Collider>().enabled = true;
-                    }
+                    
                 }
                 else
                 {
                   
                     active = false;
                     lightObj.SetActive(false);
-                    if (GetComponentInChildren<Collider>() != null)
-                    {
-                        GetComponentInChildren<Collider>().enabled = true;
-                    }
+                
                     
                 }
             }
@@ -114,10 +108,6 @@ public class LightEquipment : EquipmentBase
                 
                 active = false;
                 lightObj.SetActive(false);
-                if (GetComponentInChildren<Collider>() != null)
-                {
-                    GetComponentInChildren<Collider>().enabled = true;
-                };
 
             }
         }
@@ -132,13 +122,7 @@ public class LightEquipment : EquipmentBase
     }
     
 
-    public override void LimitCheck(GameObject other)
-    {
-     
-         
-        
-     
-    }
+ 
     private void OnDisable()
     {
         active = false;

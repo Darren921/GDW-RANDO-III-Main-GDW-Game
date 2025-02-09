@@ -52,8 +52,8 @@ public class SpawnManager : MonoBehaviour
             RandomItem = ShuffleRandomItems();
             tag = RandomItem[0].prefab.tag;            
             curerentItemSpawn = GameObject.FindGameObjectsWithTag(tag).Length;
-            print($"{tag} spawned with {curerentItemSpawn} and {SpawnPointIndex[i]}");
-            print($"RandomItem: {RandomItem[0]} + {curerentItemSpawn}");
+      //      print($"{tag} spawned with {curerentItemSpawn} and {SpawnPointIndex[i]}");
+        //    print($"RandomItem: {RandomItem[0]} + {curerentItemSpawn}");
             if (spawnedCount < SpawnCycleCap && curerentItemSpawn < RandomItem[0].data.ItemSpawnLimit)
             {
                 if (!TrackedIndex.Contains(SpawnPointIndex[i]))
@@ -72,7 +72,7 @@ public class SpawnManager : MonoBehaviour
         }
         yield return new WaitForSecondsRealtime(20);
         active = false;
-        print("spawning ended");
+     //   print("spawning ended");
     }
 
     private ItemObj lastItem;

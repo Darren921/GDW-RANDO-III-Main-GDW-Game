@@ -73,7 +73,7 @@ public class PlayerInteraction : MonoBehaviour
         }
         if(HeldInteractionAction.action.WasReleasedThisFrame()  || isHeldInteraction && !hotbar._equipmentBases[hotbar.returnTorchLocation()].equipped && !iceMelting.isMelting && !_isResetting   )
         {
-            print("resetiing");
+          //  print("resetiing");
             hotbar._equipmentBases[hotbar.returnTorchLocation()].gameObject.GetComponent<Torch>().torchActive = false;
             Reset();
             HeldInteractionAction.action.Reset();
@@ -82,7 +82,7 @@ public class PlayerInteraction : MonoBehaviour
 
         if (!iceMelting.AtMeltingPoint && hotbar._equipmentBases[hotbar.returnTorchLocation()].equipped && !isHeldInteraction)
         {
-            print("melting");
+//            print("melting");
             hotbar._equipmentBases[hotbar.returnTorchLocation()].gameObject.GetComponent<Torch>().torchActive = false;
 
         }
