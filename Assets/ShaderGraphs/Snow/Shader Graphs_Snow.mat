@@ -65,7 +65,7 @@ Material:
     m_Floats:
     - _Float: 1
     - _Frost_value: 0.1
-    - _Opacity: 0.1
+    - _Opacity: 0.5
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
