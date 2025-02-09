@@ -25,6 +25,11 @@ public class NewMonster : MonoBehaviour
 
     [SerializeField] public GameObject[] positions;
     [SerializeField] bool canRoam;
+
+
+    [SerializeField] Animator animator;
+    [SerializeField] float walkValue;
+    [SerializeField] float runValue;
     
     // Start is called before the first frame update
     void Start()
@@ -38,6 +43,8 @@ public class NewMonster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        animator.SetLayerWeight(1, walkValue);
+        animator.SetLayerWeight(2, runValue);
         RaycastHit hit;
         Physics.Raycast(gameObject.transform.position, cube.transform.position - gameObject.transform.position, out hit, Mathf.Infinity);
         if (hit.transform.tag == "Player")
@@ -157,6 +164,16 @@ public class NewMonster : MonoBehaviour
                 canGo = true;
                 agent.destination = cube.transform.position;
                 agent.speed = 7;
+                if (runValue < 1)
+                {
+                    runValue += 0.01f;
+                    if (walkValue > 0)
+                    {
+                        walkValue -= 0.01f;
+                    }
+
+
+                }
             }
             else if (canGo)
             {
@@ -170,6 +187,32 @@ public class NewMonster : MonoBehaviour
             canRoam = false;
             Roam();
         }
+        
+        if (agent.velocity == new Vector3 (0,0,0))
+        {
+            if (walkValue > 0)
+            {
+                walkValue -= 0.01f;
+            }
+            if (runValue > 0)
+            {
+                runValue -= 0.01f;
+            }
+        }
+        else if (!GoToPlayer && !IsSpotted && agent.velocity != Vector3.zero)
+        {
+            if (runValue > 0)
+            {
+                runValue -= 0;
+            }
+            if (walkValue < 1)
+            {
+                walkValue += 1;
+            }
+        }
+
+
+
         
 
 
