@@ -30,6 +30,9 @@ public class NewMonster : MonoBehaviour
     [SerializeField] Animator animator;
     [SerializeField] float walkValue;
     [SerializeField] float runValue;
+
+
+    [SerializeField] float distanceAway;
     
     // Start is called before the first frame update
     void Start()
@@ -43,8 +46,43 @@ public class NewMonster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        distanceAway = Vector3.Distance(transform.position, agent.destination);
         animator.SetLayerWeight(1, walkValue);
         animator.SetLayerWeight(2, runValue);
+
+        if (agent.speed == 10)
+        {
+            if (walkValue < 1)
+            {
+                walkValue += 0.01f;
+            }
+            if (runValue > 0)
+            {
+                runValue -= 0.01f;
+            }
+        }
+        if (agent.speed == 14)
+        {
+            if (walkValue > 0)
+            {
+                walkValue -= 0.01f;
+            }
+            if (runValue < 1)
+            {
+                runValue += 0.01f;
+            }
+        }
+        if (agent.speed == 0)
+        {
+            if (walkValue > 0)
+            {
+                walkValue -= 0.01f;
+            }
+            if (runValue > 0)
+            {
+                runValue -= 0.01f;
+            }
+        }
         RaycastHit hit;
         Physics.Raycast(gameObject.transform.position, cube.transform.position - gameObject.transform.position, out hit, Mathf.Infinity);
         if (hit.transform.tag == "Player")
@@ -80,6 +118,10 @@ public class NewMonster : MonoBehaviour
             {
                 GoToPlayer = true;
             }
+            else
+            {
+                GoToPlayer= false;
+            }
 
 
         }
@@ -88,6 +130,10 @@ public class NewMonster : MonoBehaviour
             if (hit2.transform.tag == "Player")
             {
                 GoToPlayer = true;
+            }
+            else
+            {
+                GoToPlayer = false;
             }
 
 
@@ -98,6 +144,10 @@ public class NewMonster : MonoBehaviour
             {
                 GoToPlayer = true;
             }
+            else
+            {
+                GoToPlayer = false;
+            }
 
 
         }
@@ -107,7 +157,10 @@ public class NewMonster : MonoBehaviour
             {
                 GoToPlayer = true;
             }
-
+            else
+            {
+                GoToPlayer = false;
+            }
 
         }
         if (Physics.Raycast(gameObject.transform.position, RayTarget.transform.position - gameObject.transform.position + new Vector3(2, 0, 0), out hit5, range, layer))
@@ -115,6 +168,10 @@ public class NewMonster : MonoBehaviour
             if (hit5.transform.tag == "Player")
             {
                 GoToPlayer = true;
+            }
+            else
+            {
+                GoToPlayer = false;
             }
 
 
@@ -125,6 +182,10 @@ public class NewMonster : MonoBehaviour
             {
                 GoToPlayer = true;
             }
+            else
+            {
+                GoToPlayer = false;
+            }
 
 
         }
@@ -134,7 +195,10 @@ public class NewMonster : MonoBehaviour
             {
                 GoToPlayer = true;
             }
-
+            else
+            {
+                GoToPlayer = false;
+            }
 
         }
         if (Physics.Raycast(gameObject.transform.position, RayTarget.transform.position - gameObject.transform.position - new Vector3(1.5f, 0, 0), out hit8, range, layer))
@@ -143,7 +207,10 @@ public class NewMonster : MonoBehaviour
             {
                 GoToPlayer = true;
             }
-
+            else
+            {
+                GoToPlayer = false;
+            }
 
         }
         if (Physics.Raycast(gameObject.transform.position, RayTarget.transform.position - gameObject.transform.position - new Vector3(2, 0, 0), out hit9, range, layer))
@@ -152,68 +219,47 @@ public class NewMonster : MonoBehaviour
             {
                 GoToPlayer = true;
             }
-
+            else
+            {
+                GoToPlayer = false;
+            }
 
         }
 
-        if (GoToPlayer == true)
+        
+        if (GoToPlayer)
         {
-            canRoam = false;
-            if (IsSpotted)
+            if ( IsSpotted )
             {
                 canGo = true;
                 agent.destination = cube.transform.position;
                 agent.speed = 14;
-                if (runValue < 1)
-                {
-                    runValue += 0.01f;
-                    if (walkValue > 0)
-                    {
-                        walkValue -= 0.01f;
-                    }
-
-
-                }
+                
+                
             }
+            
             else if (canGo)
             {
                 GoToPlayer = false;
                 IsSpotted = false;
                 LastPosition();
             }
+            if (Vector3.Distance(transform.position, agent.destination) < 3 && !IsSpotted)
+            {
+                GoToPlayer = false;
+                canRoam = true;
+            }
         }
-        else if (canRoam && !GoToPlayer && !IsSpotted && Vector3.Distance(transform.position, agent.destination) < 3)
+        if (!GoToPlayer  && Vector3.Distance(transform.position, agent.destination) < 3)
         {
-            canRoam = false;
             Roam();
+            canRoam = false;
+            
         }
         
-        if (agent.velocity == new Vector3 (0,0,0))
-        {
-            if (walkValue > 0)
-            {
-                walkValue -= 0.01f;
-            }
-            if (runValue > 0)
-            {
-                runValue -= 0.01f;
-            }
-        }
-        else if (!GoToPlayer && !IsSpotted && agent.velocity != Vector3.zero)
-        {
-            if (runValue > 0)
-            {
-                runValue -= 0;
-            }
-            if (walkValue < 1)
-            {
-                walkValue += 1;
-            }
-        }
-
-
-
         
+        
+
 
 
 
@@ -221,14 +267,16 @@ public class NewMonster : MonoBehaviour
     }
     void LastPosition()
     {
+        GoToPlayer = false;
         canGo = false;
         agent.SetDestination(cube.gameObject.transform.position);
         agent.speed = 10;
-        GoToPlayer = false;
+        
     }
 
     void Roam()
     {
+        canRoam = false;
         int transform = UnityEngine.Random.Range(0, positions.Length );
         print(transform);
         agent.SetDestination(positions[transform].transform.position);
