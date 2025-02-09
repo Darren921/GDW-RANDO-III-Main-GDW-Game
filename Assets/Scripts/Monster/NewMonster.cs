@@ -35,7 +35,7 @@ public class NewMonster : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.speed = 4;
+        agent.speed = 6;
         canRoam = true;
     }
 
@@ -163,7 +163,7 @@ public class NewMonster : MonoBehaviour
             {
                 canGo = true;
                 agent.destination = cube.transform.position;
-                agent.speed = 10;
+                agent.speed = 14;
                 if (runValue < 1)
                 {
                     runValue += 0.01f;
@@ -223,7 +223,7 @@ public class NewMonster : MonoBehaviour
     {
         canGo = false;
         agent.SetDestination(cube.gameObject.transform.position);
-        agent.speed = 6;
+        agent.speed = 10;
         GoToPlayer = false;
     }
 
