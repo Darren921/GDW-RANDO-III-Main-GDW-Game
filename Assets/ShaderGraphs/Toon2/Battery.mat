@@ -55,14 +55,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _MaxBright: -0.16
-    - _MinBright: 0.41
+    - _MaxBright: 2.35
+    - _MinBright: 1.52
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Shades: 0.22
+    - _Shades: -0.71
     - _offset: 0
     - _strength: 0
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 0}
+    - _Color: {r: 0.9716981, g: 0.9716981, b: 0.9716981, a: 0}
     - _Vector3: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

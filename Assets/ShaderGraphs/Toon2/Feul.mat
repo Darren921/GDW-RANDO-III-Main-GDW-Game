@@ -55,11 +55,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _MaxBright: -0.61
-    - _MinBright: 1.29
+    - _MaxBright: 0.63
+    - _MinBright: 1.71
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Shades: -0.21
+    - _Shades: -0.03
     - _offset: 0
     - _strength: 0
     m_Colors:
