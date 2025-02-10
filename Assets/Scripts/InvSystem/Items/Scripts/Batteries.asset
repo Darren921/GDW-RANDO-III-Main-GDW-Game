@@ -13,15 +13,14 @@ MonoBehaviour:
   m_Name: Batteries
   m_EditorClassIdentifier: 
   stackable: 0
-  description: 
-  prefab: {fileID: 5002360986888236374, guid: c7834891679ef4247bea190951332a31, type: 3}
   data:
     Name: Battery
     Id: 3
     Description: 
     UiDisplay: {fileID: 21300000, guid: 317462bbe242b18408f484cd8d28fe24, type: 3}
     ItemType: 2
-    Prefab: {fileID: 0}
+    Prefab: {fileID: 5002360986888236374, guid: c7834891679ef4247bea190951332a31,
+      type: 3}
     ItemSpawnLimit: 5
     Limit: 3
     ItemRarity: 0.5

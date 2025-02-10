@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -9,10 +10,8 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
 {
     [SerializeField] private float opacityLoss;  
     internal bool isMelting;
-   private float curMeltingTime;
    private float _curOpacity; 
-   [SerializeField]private float meltingTime; 
-   [SerializeField] private float MeltingStage;
+   [SerializeField] internal float MeltingStage;
     private float melted;
 
    private bool active , checkPoint1, checkPoint2, checkPoint3, checkPoint4, checkPoint5;
@@ -20,14 +19,15 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
    private BoxCollider _boxCollider;
    [SerializeField]private BoxCollider exitCollider;
    internal PlayerHotbar _playerHotbar;
-   private Material iceMat;
    [SerializeField] GameObject _DoorHitbox;
    internal bool AtMeltingPoint;
    private bool torchActive;
    
+   [SerializeField] internal TextMeshProUGUI IcemeltingText;
 
    void Start()
    {
+
        isHeld = true;
        exitCollider.enabled = false;
        //Time.timeScale = 10;
@@ -36,7 +36,6 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
         _playerHotbar = FindObjectOfType<PlayerHotbar>();
       //  meltingProgress = 400;
         _curOpacity = 1;
-        iceMat = GetComponent<Renderer>().material;
     }
  
     private void OnTriggerStay(Collider other)
@@ -99,27 +98,27 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
             exitCollider.enabled = true;
 
         } 
-        else if (MeltingStage <= 2)
+        else if (MeltingStage == 1)
         {
             checkPoint2 = true;
           //  print("third last checkpoint");
             PlayerPrefs.SetFloat("CheckpointOpacity", 25);
         }
 
-        else if (MeltingStage <= 4)
+        else if (MeltingStage == 2)
         {
             checkPoint3 = true;
          //   print("second checkpoint");
             PlayerPrefs.SetFloat("CheckpointOpacity", 50);
         }
 
-        else if (MeltingStage <= 6)
+        else if (MeltingStage == 3)
         {
             checkPoint4 = true;
            // print("first checkpoint");
             PlayerPrefs.SetFloat("CheckpointOpacity", 75);
         }
-        else if (MeltingStage <= 8)
+        else if (MeltingStage == 4)
         {
             checkPoint5 = true;
             // print("first checkpoint");
@@ -143,6 +142,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
 
     public void HeldInteract()
     {
+       
         if (!(_playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].CurrentUses > 0) ||
             !(_playerHotbar.gameObject.GetComponent<PlayerInteraction>().holdDuration <= 10.1f)) return;
         print("in 1 ");
@@ -155,6 +155,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
             MeltingStage--;
             _playerHotbar.gameObject.GetComponent<PlayerInteraction>().Reset();
             _playerHotbar.GetComponent<PlayerInteraction>().HeldInteractionAction.action.Reset();
+
         }
         else if(_playerHotbar.gameObject.GetComponent<PlayerInteraction>().holdDuration <= 9.9)
         {

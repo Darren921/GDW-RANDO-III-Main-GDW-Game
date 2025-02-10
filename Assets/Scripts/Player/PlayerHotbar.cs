@@ -21,19 +21,36 @@ public class PlayerHotbar : MonoBehaviour
         isOpen = !isOpen;
     }
 
+    private void Awake()
+    {
+        if (!GameManager.firstLoad)
+        {
+            GameManager.firstLoad = true;
+            Hotbar.AddItem(new Item(EquipmentObjs[1]) , 1);
+            Hotbar.AddItem(new Item(EquipmentObjs[2]) , 1); 
+        }
+           
+        
+         
+        
+
+    }
+
+    public void SwapEquimpment(List<EquipmentBase> equipmentList, int equipmentIndex1, int equipmentIndex2)
+    {
+        // ReSharper disable once SwapViaDeconstruction
+        var temp = equipmentList[equipmentIndex2];
+        equipmentList[equipmentIndex2] = equipmentList[equipmentIndex1];
+        equipmentList[equipmentIndex1] = temp;
+        
+    }
+    
     internal bool isOpen { get; set; }
     private void Start()
     {
-        var pain =  (int)_equipmentBases[returnTorchLocation()].CurrentUses;
-        FuelCount = pain ;
+        var currentUsesInInt =  (int)_equipmentBases[returnTorchLocation()].CurrentUses; //Stores Current Uses in Torch as int 
+        FuelCount = currentUsesInInt ; 
         CurrentEquipped = -1;
-        if (!GameManager.firstLoad)
-        {
-            GameManager.firstLoad  = true;
-            Hotbar.AddItem(new Item(EquipmentObjs[1]) , 1);
-            Hotbar.AddItem(new Item(EquipmentObjs[2]) , 1);
-        }
-
         foreach (var equipment in _equipmentBases)
         {
             equipment.gameObject.SetActive(false);
@@ -59,43 +76,64 @@ public class PlayerHotbar : MonoBehaviour
     {
         var inputtedSlot = (int)slot - 1;
 
-        for (var i = 1; i < Hotbar.Container.Slots.Length; i++)
+        for (var i = 0; i < Hotbar.Container.Slots.Length; i++)
         {
             var outline = Hotbar.Container.Slots[i].slotDisplay.transform.GetChild(0).GetComponentInChildren<Outline>();
-            if (Hotbar.Container.Slots[i] != Hotbar.Container.Slots[inputtedSlot])
-            {
-                outline.enabled = false;
-            }
-            else
-            {
-                outline.enabled = true;
-            }
+            outline.enabled = Hotbar.Container.Slots[i] == Hotbar.Container.Slots[inputtedSlot];
         }
 
         inputtedSlot = (int)slot;
 
         print(inputtedSlot);
-        for (var i = 0; i < _equipmentBases.Count; i++)
+        for (var i = 1; i < _equipmentBases.Count; i++)
         {
             _equipmentBases[i].gameObject.SetActive(false);
             var lightEquipment = _equipmentBases[i].GetComponent<LightEquipment>();
             if (lightEquipment != null)
             {
                 lightEquipment.equipped = false;
-         //       lightEquipment.lightObj.gameObject.SetActive(false);
             }
         }
         if (inputtedSlot < _equipmentBases.Count)
         {
-            _equipmentBases[inputtedSlot].gameObject.SetActive(true);
-            var curWeapon = _equipmentBases[inputtedSlot];
-            var lightEquipment = curWeapon.GetComponent<LightEquipment>();
-    
-            if (lightEquipment != null)
+            print(Hotbar.Container.Slots[inputtedSlot - 1].item.Id);
+            print(_equipmentBases[inputtedSlot].ID);
+            if (Hotbar.Container.Slots[inputtedSlot - 1].item.Id == _equipmentBases[inputtedSlot].ID)
             {
-                lightEquipment.equipped = true;
-       //         lightEquipment.lightObj.gameObject.SetActive(false); 
+                print("Equipped Normal");
+                _equipmentBases[inputtedSlot].gameObject.SetActive(true);
+                var curWeapon = _equipmentBases[inputtedSlot];
+                var lightEquipment = curWeapon.GetComponent<LightEquipment>();
+    
+                if (lightEquipment != null)
+                {
+                    lightEquipment.equipped = true;
+                } 
             }
+            else
+            {
+                var Target = 0;
+                for (var i = 0; i < _equipmentBases.Count; i++)
+                {
+              //    if()
+                }
+                print(Target);
+                _equipmentBases[Target].gameObject.SetActive(true);
+                var lightEquipment = _equipmentBases[Target].GetComponent<LightEquipment>();
+    
+                if (lightEquipment != null)
+                {
+                    lightEquipment.equipped = true;
+                } 
+
+
+             
+            }
+            
+               
+            
+           
+
         }
 
     }

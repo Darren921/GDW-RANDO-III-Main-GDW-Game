@@ -42,7 +42,7 @@ public class SpawnManager : MonoBehaviour
     private IEnumerator SpawnItems( int SpawnCycleCap)
     {
         var RandomItem = ShuffleRandomItems();
-        var tag = RandomItem[0].prefab.tag;
+        var tag = RandomItem[0].data.Prefab.tag;
         var curerentItemSpawn = GameObject.FindGameObjectsWithTag(tag).Length;
         if (active) yield break;
         active = true;
@@ -50,7 +50,7 @@ public class SpawnManager : MonoBehaviour
         for(int i = 0; i < SpawnPointIndex.Count; i++)
         {
             RandomItem = ShuffleRandomItems();
-            tag = RandomItem[0].prefab.tag;            
+            tag = RandomItem[0].data.Prefab.tag;            
             curerentItemSpawn = GameObject.FindGameObjectsWithTag(tag).Length;
       //      print($"{tag} spawned with {curerentItemSpawn} and {SpawnPointIndex[i]}");
         //    print($"RandomItem: {RandomItem[0]} + {curerentItemSpawn}");
@@ -58,14 +58,26 @@ public class SpawnManager : MonoBehaviour
             {
                 if (!TrackedIndex.Contains(SpawnPointIndex[i]))
                 {
-                   
-                    var SpawnedItem = Instantiate(RandomItem[0].prefab,SpawnPoints[SpawnPointIndex[i]].transform.position,SpawnPoints[SpawnPointIndex[i]].transform.rotation );
+
+                    
+        
+                    if (Physics.Raycast(SpawnPoints[SpawnPointIndex[i]].transform.position, Vector3.down, out RaycastHit hit, Mathf.Infinity))
+                    {
+                        var SpawnedItem = Instantiate(RandomItem[0].data.Prefab, SpawnPoints[SpawnPointIndex[i]].transform.position, SpawnPoints[SpawnPointIndex[i]].transform.rotation);
+                        var collider = SpawnedItem?.GetComponent<Collider>();
+                        if (collider is not null)
+                        {
+                            var ColliderHeight = collider.bounds.extents.y;
+                            SpawnedItem.transform.position = hit.point + (Vector3.up * ColliderHeight);
+                        }
+                        SpawnedItem.GetComponent<GroundObj>().tracker = SpawnPointIndex[i];
+
+                    }
                     TrackedIndex.Add(SpawnPointIndex[i]);
                     if (AvaiableSpawns.Contains(SpawnPointIndex[i]))
                     {
                         AvaiableSpawns.Remove(SpawnPointIndex[i]);
                     }
-                    SpawnedItem.GetComponent<GroundObj>().tracker = SpawnPointIndex[i];
                     spawnedCount++;
                 }
             }

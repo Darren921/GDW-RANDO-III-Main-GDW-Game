@@ -10,7 +10,8 @@ public class StaticInterface : UserInterface
     protected override void CreateSlots()
     {
         slotsOnInterface = new Dictionary<GameObject,InventoryObj.InventorySlot>();
-        for (int i = 0; i < inventory.GetSlots.Length; i++)
+        
+        for (var i = 0; i < inventory.GetSlots.Length; i++)
         {
             var obj = slots[i];
             AddEvent(obj, EventTriggerType.PointerEnter, delegate { OnEnter(obj); });
@@ -23,6 +24,8 @@ public class StaticInterface : UserInterface
         }
     }
 
+
+    
     private void OnApplicationQuit()
     {
         

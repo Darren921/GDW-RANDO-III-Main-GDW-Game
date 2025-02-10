@@ -7,9 +7,7 @@ using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
-    
     public static bool firstLoad;
-    
     private void Start()
     {
 

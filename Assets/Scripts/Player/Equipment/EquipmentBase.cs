@@ -31,6 +31,7 @@ public abstract class EquipmentBase : MonoBehaviour
         }
     }
 
+    
     public abstract void CheckIfUsable();
 }
 
