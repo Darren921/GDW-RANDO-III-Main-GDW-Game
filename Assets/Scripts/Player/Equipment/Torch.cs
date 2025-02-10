@@ -36,4 +36,10 @@ public class Torch : LightEquipment
     public override void CheckIfUsable()
     {
     }
+
+    public void ReduceCount()
+    {
+        CurrentUses--;
+        _playerHotbar.FuelCount--;
+    }
 }

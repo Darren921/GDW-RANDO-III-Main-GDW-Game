@@ -19,7 +19,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
    private Renderer _renderer;
    private BoxCollider _boxCollider;
    [SerializeField]private BoxCollider exitCollider;
-   private PlayerHotbar _playerHotbar;
+   internal PlayerHotbar _playerHotbar;
    private Material iceMat;
    [SerializeField] GameObject _DoorHitbox;
    internal bool AtMeltingPoint;
@@ -151,7 +151,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
         if (_playerHotbar.gameObject.GetComponent<PlayerInteraction>().holdDuration >= 9.9)
         {
             print("Held Interact");
-          _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().CurrentUses --;
+            _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().ReduceCount();
             MeltingStage--;
             _playerHotbar.gameObject.GetComponent<PlayerInteraction>().Reset();
             _playerHotbar.GetComponent<PlayerInteraction>().HeldInteractionAction.action.Reset();
