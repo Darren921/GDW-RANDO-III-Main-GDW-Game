@@ -27,7 +27,7 @@ public class SceneLoader : MonoBehaviour
     
         public void  goToMainMenu()
         {
-            Scene = "NewMainMenu";
+            Scene = "FinalMainMenu";
             SceneManager.LoadScene(Scene);
         }
     
