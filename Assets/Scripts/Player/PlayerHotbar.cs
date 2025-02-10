@@ -24,6 +24,8 @@ public class PlayerHotbar : MonoBehaviour
     internal bool isOpen { get; set; }
     private void Start()
     {
+        var pain =  (int)_equipmentBases[returnTorchLocation()].CurrentUses;
+        FuelCount = pain ;
         CurrentEquipped = -1;
         if (!GameManager.firstLoad)
         {
@@ -80,7 +82,7 @@ public class PlayerHotbar : MonoBehaviour
             if (lightEquipment != null)
             {
                 lightEquipment.equipped = false;
-                lightEquipment.lightObj.gameObject.SetActive(false);
+         //       lightEquipment.lightObj.gameObject.SetActive(false);
             }
         }
         if (inputtedSlot < _equipmentBases.Count)
@@ -92,7 +94,7 @@ public class PlayerHotbar : MonoBehaviour
             if (lightEquipment != null)
             {
                 lightEquipment.equipped = true;
-                lightEquipment.lightObj.gameObject.SetActive(false); 
+       //         lightEquipment.lightObj.gameObject.SetActive(false); 
             }
         }
 
@@ -110,7 +112,7 @@ public class PlayerHotbar : MonoBehaviour
          
             if (_equipmentBases[i].equipped )
             {
-                _equipmentBases[i].CheckIfActive();
+                _equipmentBases[i].CheckIfUsable();
             }
         }
     }

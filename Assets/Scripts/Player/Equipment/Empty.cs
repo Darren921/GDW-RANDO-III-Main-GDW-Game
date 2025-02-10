@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class Empty : EquipmentBase
 {
-    protected internal override void CheckIfActive()
+    public override void CheckIfUsable()
     {
-
-    }
-
-    protected internal override IEnumerator CheckCharge()
-    {
-        yield return null;
+        
     }
 }
-
 

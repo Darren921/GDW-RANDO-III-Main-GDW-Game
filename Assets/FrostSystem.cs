@@ -81,7 +81,7 @@ public class FrostSystem : MonoBehaviour,GameManager.IInteractable
         {
             print("Held Interact Self");
              reduceFrost();
-            _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().reduceCount();
+          _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().CurrentUses--;
             _playerHotbar.gameObject.GetComponent<PlayerInteraction>().Reset();
             _playerHotbar.GetComponent<PlayerInteraction>().HeldInteractionAction.action.Reset();
         }

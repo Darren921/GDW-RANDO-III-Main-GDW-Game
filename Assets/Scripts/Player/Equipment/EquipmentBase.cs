@@ -15,42 +15,22 @@ public abstract class EquipmentBase : MonoBehaviour
     internal float  MaxUses;
     internal float  CurrentUses;
     protected int RefillAmount;
-    protected SpawnManager _spawnManager;
-    protected GameObject baseObject;
-    protected internal abstract void CheckIfActive();
-    
-    protected internal abstract IEnumerator CheckCharge();
-
-
-    public virtual void Awake()
+    protected GameObject baseObj;
+    protected PlayerHotbar _playerHotbar;
+    protected virtual void Awake()
     {
-        ID =  equipmentObj.data.Id ;
-        _spawnManager = FindFirstObjectByType<SpawnManager>();
-        baseObject = gameObject;
+        _playerHotbar =FindFirstObjectByType<PlayerHotbar>();
+        ID = equipmentObj.data.Id;
+        baseObj = gameObject;
         if (equipmentObj is not null)
         {
             //Values can be changed in equipmentObj in items (inv system)
             MaxUses = equipmentObj.data.Limit;
-            //change this after 
-             CurrentUses =  0;
-          // CurrentUses = 1;
+            CurrentUses =  0;
             RefillAmount = equipmentObj.refuel;
         }
     }
 
-    protected GameObject FindChildWithNameContaining(Transform parent, string substring)
-    {
-        foreach (Transform child in parent)
-        {
-            if (child.name.Contains(substring))
-            {
-                return child.gameObject; 
-            }
-        }
-
-        return null; 
-    }
-
-    
+    public abstract void CheckIfUsable();
 }
 

@@ -59,10 +59,6 @@ public class Player : MonoBehaviour
         _playerHotbar = GetComponent<PlayerHotbar>();
         _playerMovement = GetComponent<PlayerMovement>(); 
         isDead = false;
-        //turn on and off when needed
-       // torchActive = true;
-       //fuelLeft = 500;
-      // fuelLeft = 100;
        _capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
        _enemy = FindFirstObjectByType<Enemy>();
        playerCam = gameObject.GetComponentInChildren<Camera>();

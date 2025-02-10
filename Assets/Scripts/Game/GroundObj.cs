@@ -100,6 +100,8 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
                  // if (!_spawnManager.trackedIndexs.Contains((tracker)) || (!_spawnManager.trackedIndexs.Contains(tracker))&& item.name == "Gas canister obj") return;
                    _playerHotbar.FuelCount++;
                    _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].CurrentUses = _playerHotbar.FuelCount;
+                   print( _playerHotbar.FuelCount);
+                   print(  _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].CurrentUses );
                    if (CompareTag("Fuel"))
                    {
                        _spawnManager.AvaiableSpawns.Add(tracker);

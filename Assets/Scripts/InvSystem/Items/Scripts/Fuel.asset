@@ -24,5 +24,5 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     ItemSpawnLimit: 5
     Limit: 3
-    ItemRarity: 0.5
+    ItemRarity: 3.21
     Categories: []

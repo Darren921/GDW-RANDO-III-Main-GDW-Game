@@ -151,7 +151,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
         if (_playerHotbar.gameObject.GetComponent<PlayerInteraction>().holdDuration >= 9.9)
         {
             print("Held Interact");
-            _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().reduceCount();
+          _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().CurrentUses --;
             MeltingStage--;
             _playerHotbar.gameObject.GetComponent<PlayerInteraction>().Reset();
             _playerHotbar.GetComponent<PlayerInteraction>().HeldInteractionAction.action.Reset();
