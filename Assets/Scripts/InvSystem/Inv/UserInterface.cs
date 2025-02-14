@@ -12,7 +12,8 @@ public abstract class UserInterface : MonoBehaviour
 {
     [SerializeField] protected Transform parentTransform ;
     public InventoryObj inventory;
-    public Dictionary<GameObject, InventoryObj.InventorySlot > slotsOnInterface = new Dictionary<GameObject, InventoryObj.InventorySlot>();
+    protected Dictionary<GameObject, InventoryObj.InventorySlot > slotsOnInterface = new Dictionary<GameObject, InventoryObj.InventorySlot>();
+    protected Dictionary<InventoryObj.InventorySlot, EquipmentBase> _equipmentBases = new Dictionary<InventoryObj.InventorySlot, EquipmentBase>();
 
     // Start is called before the first frame update
     void Awake()
@@ -20,7 +21,9 @@ public abstract class UserInterface : MonoBehaviour
         for (int i = 0; i < inventory.GetSlots.Length; i++)
         {
             inventory.GetSlots[i].parent = this;
+           inventory.GetSlots[i].OnBeforeUpdate += OnSlotUpdate;
            inventory.GetSlots[i].OnAfterUpdate += OnSlotUpdate;
+          
         }
         
         CreateSlots();
@@ -73,24 +76,26 @@ public abstract class UserInterface : MonoBehaviour
         trigger.triggers.Add(eventTrigger);
     }
 
-    public void OnEnter( GameObject obj )
+    protected void OnEnter( GameObject obj )
     {
 
         MouseData.slotHoveredOver = obj;
 
     }
-    public void OnExit( GameObject obj )
+
+    protected void OnExit( GameObject obj )
     {
         MouseData.slotHoveredOver = null;
 
         
     }
-    public void OnDragStart( GameObject obj )
+
+    protected void OnDragStart( GameObject obj )
     {
         MouseData.tempItemBeingDragged = CreateTempItem(obj);
     }
 
-    public GameObject CreateTempItem(GameObject obj)
+    private GameObject CreateTempItem(GameObject obj)
     {
         GameObject tempItem = null;
         if (slotsOnInterface[obj].item.Id >= 0)
@@ -109,16 +114,17 @@ public abstract class UserInterface : MonoBehaviour
        return tempItem;
     }
 
-    public void OnEnterInterface(GameObject obj)
+    private void OnEnterInterface(GameObject obj)
     {
         MouseData.interfaceMouseIsOver = obj.GetComponent<UserInterface>();
     }
-    public void OnExitInterface(GameObject obj)
+
+    private void OnExitInterface(GameObject obj)
     {
         MouseData.interfaceMouseIsOver = null;
     }
-    
-    public void OnDragEnd( GameObject obj )
+
+    protected void OnDragEnd( GameObject obj )
     {
         Destroy(MouseData.tempItemBeingDragged);
         if (MouseData.interfaceMouseIsOver is null)
@@ -128,12 +134,13 @@ public abstract class UserInterface : MonoBehaviour
 
         if (MouseData.slotHoveredOver)
         {
-            InventoryObj.InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];
+            var mouseHoverSlotData = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];
 
             inventory.SwapItems(slotsOnInterface[obj], mouseHoverSlotData);
         }
     }
-    public void OnDrag( GameObject obj )
+
+    protected void OnDrag( GameObject obj )
     {
         if (MouseData.tempItemBeingDragged != null)
         {
@@ -141,7 +148,7 @@ public abstract class UserInterface : MonoBehaviour
         }
     }
 
-    public static class MouseData
+    private static class MouseData
     {
         public static UserInterface interfaceMouseIsOver;
         public static GameObject tempItemBeingDragged;

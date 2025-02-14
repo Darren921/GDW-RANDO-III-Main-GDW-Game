@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -30,10 +31,14 @@ public class PlayerMovement : MonoBehaviour
     private Player _player;
     private PlayerHotbar _playerHotbar;
     private Torch _torch;
+    [SerializeField] AudioSource walking;
+    [SerializeField] private Slider SprintBar;
 
     // Start is called before the first frame update
     void Start()
     {
+        SprintBar.maxValue = maxSprintTime;
+        SprintBar.value = sprintTime;
         _player = GetComponent<Player>();
         CamTransform = Camera.main.transform;
         _playerHotbar = GetComponent<PlayerHotbar>();
@@ -51,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+    
 
     private void FixedUpdate()
     {
@@ -95,7 +101,20 @@ public class PlayerMovement : MonoBehaviour
     
     }
 
-   
+    public void stopWalkingSound()
+    {
+        if (walking != null)
+        {
+            walking.enabled = false;
+        }
+    }
+
+    public void walkingSound()
+    {
+        if (walking is null || walking.isPlaying) return;
+        walking.enabled = true;
+        walking.Play();
+    }
 
     private void CheckSprint()
     {
@@ -143,5 +162,6 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         CheckSprint();
+        SprintBar.value = sprintTime;
     }
 }

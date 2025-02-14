@@ -87,11 +87,13 @@ public class PlayerInteraction : MonoBehaviour
 
     public void Reset()
     {
-        if (_isResetting) return;
+        
+        if (_isResetting || this is null) return;
         _isResetting = true;
         hotbar._equipmentBases[hotbar.returnTorchLocation()].GetComponent<Torch>().torchActive = false;
         holdDuration = 0;
-        InteractionBar.gameObject.SetActive(false);
+        if(InteractionBar)
+         InteractionBar?.gameObject.SetActive(false);
         _isResetting = false;
     }
 
@@ -128,7 +130,8 @@ public class PlayerInteraction : MonoBehaviour
         }
         if (other.GetComponent<IceMelting>() != null && hotbar._equipmentBases[hotbar.returnTorchLocation()].CurrentUses > 0)
         {
-            InteractText.text = iceMelting.isMelting ? "" : "Hold E to Melt";
+            InteractText.text = iceMelting.isMelting ? "" : $"Hold E to Melt,  {iceMelting.MeltingStage} times to fully melt ";
+            iceMelting.IcemeltingText.text = iceMelting.isMelting ? $"Melting Ice {iceMelting.MeltingStage} / 5 " : ""   ;
         }
         if (other.GetComponent<backGroundInteractable>() == null) return;
         InteractText.text = hotbar.isOpen ? "" : $"Press E to read {other.GetComponent<backGroundInteractable>().name.ToLower()}";

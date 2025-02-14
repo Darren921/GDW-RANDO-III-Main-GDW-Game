@@ -29,11 +29,11 @@ public class InputManager : MonoBehaviour
           
             if (_.ReadValue<Vector3>() != Vector3.zero)
             {
-                player.walkingSound();
+                PlayerMovement.walkingSound();
             }
             else
             {
-                player.stopWalkingSound();
+                PlayerMovement.stopWalkingSound();
             }
         };
         controls.InGame.Sprint.performed += _ =>

@@ -23,7 +23,8 @@ MonoBehaviour:
         UiDisplay: {fileID: 0}
         ItemType: 0
         Prefab: {fileID: 0}
-        ItemLimit: 0
+        ItemSpawnLimit: 0
+        Limit: 0
         ItemRarity: 0
         Categories: []
       amount: 0
@@ -34,7 +35,8 @@ MonoBehaviour:
         UiDisplay: {fileID: 0}
         ItemType: 0
         Prefab: {fileID: 0}
-        ItemLimit: 0
+        ItemSpawnLimit: 0
+        Limit: 0
         ItemRarity: 0
         Categories: []
       amount: 0
@@ -45,7 +47,8 @@ MonoBehaviour:
         UiDisplay: {fileID: 0}
         ItemType: 0
         Prefab: {fileID: 0}
-        ItemLimit: 0
+        ItemSpawnLimit: 0
+        Limit: 0
         ItemRarity: 0
         Categories: []
       amount: 0
@@ -56,7 +59,8 @@ MonoBehaviour:
         UiDisplay: {fileID: 0}
         ItemType: 0
         Prefab: {fileID: 0}
-        ItemLimit: 0
+        ItemSpawnLimit: 0
+        Limit: 0
         ItemRarity: 0
         Categories: []
       amount: 0
@@ -67,7 +71,8 @@ MonoBehaviour:
         UiDisplay: {fileID: 0}
         ItemType: 0
         Prefab: {fileID: 0}
-        ItemLimit: 0
+        ItemSpawnLimit: 0
+        Limit: 0
         ItemRarity: 0
         Categories: []
       amount: 0

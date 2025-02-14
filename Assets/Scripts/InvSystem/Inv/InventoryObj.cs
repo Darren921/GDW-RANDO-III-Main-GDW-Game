@@ -200,6 +200,7 @@ public class InventoryObj : ScriptableObject
             OnBeforeUpdate?.Invoke(this);
             item = _item;
             amount = _amount;
+            
             OnAfterUpdate?.Invoke(this);
         }
       

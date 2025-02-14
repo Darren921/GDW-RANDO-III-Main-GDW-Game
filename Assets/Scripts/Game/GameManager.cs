@@ -7,12 +7,18 @@ using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
-    
     public static bool firstLoad;
-    
+    internal PlayerHotbar playerHotbar;
+    private void Awake()
+    {
+        PlayerPrefs.SetString("StartingItemsGiven", "false");
+        PlayerPrefs.Save();
+        playerHotbar = FindObjectOfType<PlayerHotbar>();
+        firstLoad = true;
+    }
+
     private void Start()
     {
-
     }
     private void Update()
     {

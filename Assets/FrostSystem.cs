@@ -50,7 +50,7 @@ public class FrostSystem : MonoBehaviour,GameManager.IInteractable
         {
             _player.dead = true;
 
-            if (_player.dead) StartCoroutine(Player.LookAtDeath());
+            if (_player.dead) StartCoroutine(Player.LookAtDeath("Frost"));
         }
     }
 

@@ -40,7 +40,6 @@ public class Player : MonoBehaviour
     [SerializeField] AudioClip heartbeatS, heartbeatSM, heartbeatM, heartbeatF;
 
     
-    [SerializeField] AudioSource walking;
     private CapsuleCollider _capsuleCollider;
   
   
@@ -84,28 +83,7 @@ public class Player : MonoBehaviour
         {
             heartBeat.Stop();
         }
-            /*if (Input.GetMouseButtonDown(0)) // Left-click
-            {
-                PointerEventData pointerData = new PointerEventData(EventSystem.current)
-                {
-                    position = Input.mousePosition
-                };
-
-                // Raycast results
-                var results = new List<RaycastResult>();
-                EventSystem.current.RaycastAll(pointerData, results);
-
-                foreach (var result in results)
-                {
-                    Debug.Log($"Hit UI Element: {result.gameObject.name}");
-                }
-
-                if (results.Count == 0)
-                {
-                    Debug.Log("No UI Element hit.");
-                }
-            }*/
-        }
+    }
     
     private void OnTriggerEnter(Collider other)
     {
@@ -119,7 +97,7 @@ public class Player : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag("Enemy")) return;
         dead = true;
-        StartCoroutine(LookAtDeath());
+        StartCoroutine(LookAtDeath("enemy"));
     }
 
     private void OnTriggerStay(Collider other)
@@ -137,7 +115,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public static IEnumerator LookAtDeath()
+    public static IEnumerator LookAtDeath(string message)
     {
         //heartBeat.clip = heartbeatF;
         //heartBeat.Play();
@@ -148,24 +126,12 @@ public class Player : MonoBehaviour
         yield return null;
         Cursor.lockState = CursorLockMode.None;
         isDead = true;
+        print($"Died to {message}");
         SceneManager.LoadScene("DeathScreen");
     }
 
 
-    public void stopWalkingSound()
-    {
-        if (walking != null)
-        {
-            walking.enabled = false;
-        }
-    }
 
-    public void walkingSound()
-    {
-        if (walking is null || walking.isPlaying) return;
-        walking.enabled = true;
-        walking.Play();
-    }
 
  
 }
