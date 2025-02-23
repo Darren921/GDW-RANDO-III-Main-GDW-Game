@@ -55,13 +55,31 @@ public class AudioManager : MonoBehaviour
 
         else
         {
-            sfxSource.PlayOneShot(s.clip);
+            sfxSource.clip = s.clip;
+            sfxSource.Play();
         }
     }
 
+    public void StopSFX(string name)
+    {
+        Sound s = Array.Find(sfxSounds, x => x.name == name);
+
+        if (s == null)
+        {
+            Debug.Log("Sound Not Found");
+        }
+
+        else
+        {
+            sfxSource.clip = s.clip;
+            sfxSource.Stop();
+        }
+    }
+
+    /*
     public void PlaySFXLoop(string name)
     {
-        Sound s = Array.Find(musicSounds, x => x.name == name);
+        Sound s = Array.Find(sfxLoopSounds, x => x.name == name);
 
         if (s == null)
         {
@@ -74,4 +92,5 @@ public class AudioManager : MonoBehaviour
             sfxLoopSource.Play();
         }
     }
+    */
 }

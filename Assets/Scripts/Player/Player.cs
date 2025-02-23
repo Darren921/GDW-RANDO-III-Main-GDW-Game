@@ -39,8 +39,8 @@ public class Player : MonoBehaviour
     private Enemy _enemy;
     [SerializeField] AudioClip heartbeatS, heartbeatSM, heartbeatM, heartbeatF;
 
-    
-    [SerializeField] AudioSource walking;
+    private bool isWalking = false;
+    private Coroutine footstepCoroutine;
     private CapsuleCollider _capsuleCollider;
   
   
@@ -151,23 +151,48 @@ public class Player : MonoBehaviour
         SceneManager.LoadScene("DeathScreen");
     }
 
-
-    public void stopWalkingSound()
+    public void walkingSound()
     {
-        if (walking != null)
+        if (!isWalking)
         {
-            walking.enabled = false;
+            isWalking = true;
+            footstepCoroutine = StartCoroutine(DelayWalkingSound(0.3f));
         }
     }
 
-    public void walkingSound()
+    public void stopWalkingSound()
     {
-        if (walking is null || walking.isPlaying) return;
-        walking.enabled = true;
-        walking.Play();
+        if (isWalking)
+        {
+            isWalking = false;
+            if (footstepCoroutine != null)
+            {
+                StopCoroutine(footstepCoroutine);
+            }
+            StartCoroutine(DelayStopWalkingSound(0.3f));
+        }
     }
 
- 
+    private IEnumerator DelayStopWalkingSound(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (!isWalking)
+        {
+            AudioManager.Instance.StopSFX("Metal Footstep Player");
+        }
+    }
+
+    private IEnumerator DelayWalkingSound(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (isWalking)
+        {
+            AudioManager.Instance.PlaySFX("Metal Footstep Player");
+        }
+    }
+
 }
     
 
