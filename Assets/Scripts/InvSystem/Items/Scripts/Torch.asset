@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: Torch
   m_EditorClassIdentifier: 
   stackable: 0
-  description: 
-  prefab: {fileID: 0}
   data:
     Name: Torch
     Id: 2
@@ -26,4 +24,4 @@ MonoBehaviour:
     Limit: 3
     ItemRarity: 0
     Categories: []
-  refuel: 1
+  refuel: 3

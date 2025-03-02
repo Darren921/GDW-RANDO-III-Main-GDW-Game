@@ -1,98 +1,124 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
-public class FrostSystem : MonoBehaviour,GameManager.IInteractable
+public class FrostSystem : MonoBehaviour
 {
     [Header("Frost")]
     bool isFreezing;
     [SerializeField]internal float _frost;
+    internal bool DeFrosting;
+    [SerializeField] internal GameObject DeFrost;
     [SerializeField] private float maxFrost;
+    [SerializeField] private Material _frostTexture;
+    private IceMelting iceMelting;
     private float _curOpacity;
 
-    
     [Header("References")]
-    [SerializeField] private Player _player;
-    PlayerHotbar _playerHotbar;
+    [SerializeField] internal Player _player;
 
-    private Vector3 oldColliderSize;
+    protected PlayerHotbar _playerHotbar;
+    private GameManager.IInteractable currentInteractable;
+
+
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
-        oldColliderSize = GetComponentInChildren<BoxCollider>().size;
+        iceMelting = FindObjectOfType<IceMelting>();
         _playerHotbar = FindFirstObjectByType<PlayerHotbar>();
-        isHeld = true;
         isFreezing = true;
+        
         _frost = 0;
+        _frostTexture.SetFloat("_Opacity", -1);
+        _curOpacity = -1;
+
     }
 
-    private void OnTriggerStay(Collider other)
+    protected void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<GameManager.IInteractable>() != null)
+        var interactable = other.GetComponent<GameManager.IInteractable>();
+        if (interactable == null) return;
+        currentInteractable = interactable; 
+        print(currentInteractable);
+        if (currentInteractable != null )
         {
-      //     GetComponentInChildren<BoxCollider>().size = new Vector3(1.1f,0.9f,1.5f);
+            DeFrost.SetActive(false); 
         }
+        else switch (iceMelting.AtMeltingPoint)
+        {
+            case true:
+                DeFrost.SetActive(false); 
+                break;
+            case false:
+                DeFrost.SetActive(true); 
+              //  print("Tell me WHY");
+                break;
+        }
+        
+       
+        
     }
 
-    private void OnTriggerExit(Collider other)
+    protected void OnTriggerStay(Collider other)
     {
-     //   GetComponentInChildren<BoxCollider>().size = oldColliderSize;
+        var interactable = other.GetComponent<GameManager.IInteractable>();
+        if (interactable == null) return;
+        currentInteractable = interactable; 
+        print(currentInteractable);
+        if (currentInteractable != null )
+        {
+            DeFrost.SetActive(false); 
+        }
+        else switch (iceMelting.AtMeltingPoint)
+        {
+            case true:
+                DeFrost.SetActive(false); 
+                break;
+            case false:
+                DeFrost.SetActive(true); 
+              //  print("Tell me WHY");
+                break;
+        }
+        
+       
+        
     }
+
+    protected void OnTriggerExit(Collider other)
+    {
+         DeFrost.gameObject.SetActive(true); 
+    }
+    
 
     // Update is called once per frame
     void Update()
     {
         if (_player is null) return;
         if (!isFreezing) return;
-        _frost += Time.deltaTime;
+        if (!_player.dead)
+        {
+            _frost += Time.deltaTime;
+            _curOpacity += 0.019f * Time.deltaTime;
+            _frostTexture.SetFloat("_Opacity" , _curOpacity);     
+
+        }
         if (_frost >= maxFrost)
         {
             _player.dead = true;
-
-            if (_player.dead) StartCoroutine(Player.LookAtDeath());
+            _curOpacity = -1;
+            if (_player.dead) StartCoroutine(Player.LookAtDeath("frost"));
         }
     }
 
     public void reduceFrost()
     {
         _frost -= _frost;
+        _curOpacity = -1;
     }
     
-    public bool isHeld { get; set; }
-    public void Interact()
-    {
-        
-    }
-
-    public void HeldInteract()
-    {
-        print("here");
-        
-        if (!(_playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].CurrentUses > 0) ||
-            !(_playerHotbar.gameObject.GetComponent<PlayerInteraction>().holdDuration <= 5.1f)) return;
-        
-        print("in 1 ");
-        
-        if (!_playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].equipped) return;
-        print("in 2 ");
-        
-        if (_playerHotbar.gameObject.GetComponent<PlayerInteraction>().holdDuration >= 4.9f)
-        {
-            print("Held Interact Self");
-             reduceFrost();
-          _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().ReduceCount();
-            _playerHotbar.gameObject.GetComponent<PlayerInteraction>().Reset();
-            _playerHotbar.GetComponent<PlayerInteraction>().HeldInteractionAction.action.Reset();
-        }
-        
-        else if(_playerHotbar.gameObject.GetComponent<PlayerInteraction>().holdDuration <= 5.1)
-        {
-            print("in oh no ");
-            print(_playerHotbar.gameObject.GetComponent<PlayerInteraction>().holdDuration);
-            _playerHotbar.gameObject.GetComponent<PlayerInteraction>().Reset();
-            _playerHotbar.GetComponent<PlayerInteraction>().HeldInteractionAction.action.Reset();
-
-        }
-    }
+    
 }

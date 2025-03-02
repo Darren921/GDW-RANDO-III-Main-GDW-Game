@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -68,16 +68,32 @@ public class InputManager : MonoBehaviour
         {
             PlayerInteraction?.TryInteract();
         };
-        controls.InGame.HeldInteract.ApplyBindingOverride(new InputBinding
-        {
-            overrideInteractions = "Hold(duration= 10,pressPoint=0.2)"
-        });
+       
 
         controls.InGame.HeldInteract.performed += _ =>
         {
             PlayerInteraction?.TryHeldInteract();
         };
 
+    }
+
+    public static void HoldChange(bool isSelf)
+    {
+        if (isSelf)
+        {
+            controls.InGame.HeldInteract.ApplyBindingOverride(new InputBinding
+            {
+                overrideInteractions = "Hold(duration= 5,pressPoint=0.2)"
+            }); 
+        }
+        else
+        {
+            controls.InGame.HeldInteract.ApplyBindingOverride(new InputBinding
+            {
+                overrideInteractions = "Hold(duration= 10,pressPoint=0.2)"
+            }); 
+        }
+         
     }
     public static void EnableInGame()
     {

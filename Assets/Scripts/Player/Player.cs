@@ -119,7 +119,7 @@ public class Player : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag("Enemy")) return;
         dead = true;
-        StartCoroutine(LookAtDeath());
+        StartCoroutine(LookAtDeath("Monster"));
     }
 
     private void OnTriggerStay(Collider other)
@@ -137,7 +137,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public static IEnumerator LookAtDeath()
+    public static IEnumerator LookAtDeath(string deathmessage)
     {
         //heartBeat.clip = heartbeatF;
         //heartBeat.Play();
@@ -145,6 +145,7 @@ public class Player : MonoBehaviour
         //sound.Play();
         //yield return new WaitForSeconds(3);
         InputManager.DisableInGame();
+        print($"death by {deathmessage}");
         yield return null;
         Cursor.lockState = CursorLockMode.None;
         isDead = true;

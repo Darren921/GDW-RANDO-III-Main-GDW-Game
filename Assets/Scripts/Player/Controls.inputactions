@@ -83,7 +83,16 @@
                     "id": "6a62a3fb-5632-4762-b7c7-395db6f161d7",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold",
+                    "interactions": "Hold(duration=10)",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Defrost",
+                    "type": "PassThrough",
+                    "id": "c6b7373b-2825-47a1-bc1c-cba3b3189dda",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold(duration=5)",
                     "initialStateCheck": true
                 },
                 {
@@ -314,6 +323,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "OpenAndCloseInv",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "82ba7219-38d4-4602-be76-c7ba10365dae",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Defrost",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

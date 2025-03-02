@@ -105,7 +105,16 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""id"": ""6a62a3fb-5632-4762-b7c7-395db6f161d7"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Hold"",
+                    ""interactions"": ""Hold(duration=10)"",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Defrost"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""c6b7373b-2825-47a1-bc1c-cba3b3189dda"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold(duration=5)"",
                     ""initialStateCheck"": true
                 },
                 {
@@ -338,6 +347,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""OpenAndCloseInv"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""82ba7219-38d4-4602-be76-c7ba10365dae"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Defrost"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -355,6 +375,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_InGame_OffOn = m_InGame.FindAction("OffOn", throwIfNotFound: true);
         m_InGame_Interact = m_InGame.FindAction("Interact", throwIfNotFound: true);
         m_InGame_HeldInteract = m_InGame.FindAction("HeldInteract", throwIfNotFound: true);
+        m_InGame_Defrost = m_InGame.FindAction("Defrost", throwIfNotFound: true);
         m_InGame_OpenAndCloseInv = m_InGame.FindAction("OpenAndCloseInv", throwIfNotFound: true);
     }
 
@@ -431,6 +452,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_InGame_OffOn;
     private readonly InputAction m_InGame_Interact;
     private readonly InputAction m_InGame_HeldInteract;
+    private readonly InputAction m_InGame_Defrost;
     private readonly InputAction m_InGame_OpenAndCloseInv;
     public struct InGameActions
     {
@@ -445,6 +467,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @OffOn => m_Wrapper.m_InGame_OffOn;
         public InputAction @Interact => m_Wrapper.m_InGame_Interact;
         public InputAction @HeldInteract => m_Wrapper.m_InGame_HeldInteract;
+        public InputAction @Defrost => m_Wrapper.m_InGame_Defrost;
         public InputAction @OpenAndCloseInv => m_Wrapper.m_InGame_OpenAndCloseInv;
         public InputActionMap Get() { return m_Wrapper.m_InGame; }
         public void Enable() { Get().Enable(); }
@@ -482,6 +505,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @HeldInteract.started += instance.OnHeldInteract;
             @HeldInteract.performed += instance.OnHeldInteract;
             @HeldInteract.canceled += instance.OnHeldInteract;
+            @Defrost.started += instance.OnDefrost;
+            @Defrost.performed += instance.OnDefrost;
+            @Defrost.canceled += instance.OnDefrost;
             @OpenAndCloseInv.started += instance.OnOpenAndCloseInv;
             @OpenAndCloseInv.performed += instance.OnOpenAndCloseInv;
             @OpenAndCloseInv.canceled += instance.OnOpenAndCloseInv;
@@ -516,6 +542,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @HeldInteract.started -= instance.OnHeldInteract;
             @HeldInteract.performed -= instance.OnHeldInteract;
             @HeldInteract.canceled -= instance.OnHeldInteract;
+            @Defrost.started -= instance.OnDefrost;
+            @Defrost.performed -= instance.OnDefrost;
+            @Defrost.canceled -= instance.OnDefrost;
             @OpenAndCloseInv.started -= instance.OnOpenAndCloseInv;
             @OpenAndCloseInv.performed -= instance.OnOpenAndCloseInv;
             @OpenAndCloseInv.canceled -= instance.OnOpenAndCloseInv;
@@ -547,6 +576,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnOffOn(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnHeldInteract(InputAction.CallbackContext context);
+        void OnDefrost(InputAction.CallbackContext context);
         void OnOpenAndCloseInv(InputAction.CallbackContext context);
     }
 }

@@ -40,5 +40,7 @@ public class FlashLight : LightEquipment
     private void OnDisable()
     {
         active = false;
+        light.SetActive(false);
+
     }
 }

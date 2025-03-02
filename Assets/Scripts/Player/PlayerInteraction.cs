@@ -39,15 +39,12 @@ public class PlayerInteraction : MonoBehaviour
         if (interactable == null) return;
         currentInteractable = interactable; 
       //  print(currentInteractable);
-       
-        if (other.GetComponent<FrostSystem>() != null)
+        if (other.GetComponent<DeFrost>() != null)
         {
-            if (_frostSystem._frost > 100)
-            {
-                InteractText.text = $"Hold E to warm up ";
-            }
-            isHeldInteraction = other.GetComponent<FrostSystem>().isHeld;
-         
+            InteractText.text = _frostSystem._frost > 50 ? $"Hold E to warm up " : "";
+            isHeldInteraction = other.GetComponent<DeFrost>().isHeld;
+            InputManager.HoldChange(true);
+
         }
         else if(other.GetComponent<backGroundInteractable>() != null)
         {
@@ -56,6 +53,7 @@ public class PlayerInteraction : MonoBehaviour
         }
         else if(other.GetComponent<IceMelting>() != null)
         {
+            InputManager.HoldChange(false);
             isHeldInteraction = other.GetComponent<IceMelting>().isHeld;
         }
      
@@ -63,6 +61,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Update()
     {
+        print(isHeldInteraction);
         if (HeldInteractionAction.action.IsPressed() && currentInteractable != null && isHeldInteraction &&
             hotbar._equipmentBases[hotbar.returnTorchLocation()].CurrentUses > 0 &&  hotbar._equipmentBases[hotbar.returnTorchLocation()].equipped )
         {
@@ -91,6 +90,7 @@ public class PlayerInteraction : MonoBehaviour
         _isResetting = true;
         hotbar._equipmentBases[hotbar.returnTorchLocation()].GetComponent<Torch>().torchActive = false;
         holdDuration = 0;
+        
         InteractionBar?.gameObject.SetActive(false);
         _isResetting = false;
     }
@@ -99,7 +99,6 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (other is null)
         {
-            InteractText.text = "";
             Reset();
             HeldInteractionAction.action.Reset();
             return;
@@ -126,10 +125,18 @@ public class PlayerInteraction : MonoBehaviour
             }
               
         }
+
+        if (other.GetComponent<DeFrost>() != null)
+        {
+            InteractText.text =  hotbar._equipmentBases[hotbar.returnTorchLocation()].GetComponent<Torch>().torchActive ? "Defrosting Self" : ""   ;
+            InteractionBar.maxValue = 5;
+
+        }
         if (other.GetComponent<IceMelting>() != null && hotbar._equipmentBases[hotbar.returnTorchLocation()].CurrentUses > 0)
         {
             InteractText.text = iceMelting.isMelting ? "" : $"Hold E to Melt {iceMelting.MeltingStage} times to fully melt left";
             iceMelting.IcemeltingText.text = iceMelting.isMelting ? $"Melting Ice {iceMelting.MeltingStage} / 5 " : ""   ;
+            InteractionBar.maxValue = 10;
         }
         if (other.GetComponent<backGroundInteractable>() == null) return;
         InteractText.text = hotbar.isOpen ? "" : $"Press E to read {other.GetComponent<backGroundInteractable>().name.ToLower()}";
@@ -154,7 +161,6 @@ public class PlayerInteraction : MonoBehaviour
 
     public void TryInteract()
     {
-        InteractText.enabled = false;
         currentInteractable?.Interact();
         print("Standard interaction");
     }
@@ -162,7 +168,6 @@ public class PlayerInteraction : MonoBehaviour
     public void TryHeldInteract()
     {
         print("Held interaction");
-        InteractText.enabled = false;
         InteractionBar.gameObject.SetActive(false);
         currentInteractable?.HeldInteract();
 

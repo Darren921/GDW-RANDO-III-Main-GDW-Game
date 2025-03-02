@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6279397644738052738}
   - component: {fileID: 5504682954436233639}
   - component: {fileID: 3761262654281794841}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: battery
   m_TagString: Batteries
   m_Icon: {fileID: 0}
@@ -118,5 +118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b14316e60d03f8e4d93fa34eb5161821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tracker: 0
   item: {fileID: 11400000, guid: be4b5b00e147cc340a4739e88b713cd1, type: 2}
   equipment: {fileID: 0}

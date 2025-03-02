@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -16,7 +17,8 @@ public class PlayerMovement : MonoBehaviour
     //Sprinting
     [Header("Sprinting")]
     Vector3 previousPos;
-    private bool isSprinting;
+
+    internal bool isSprinting;
     [SerializeField] float sprintTime;
     private bool onCoolDownFull;
     private bool onCoolDownNormal;
@@ -30,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     private Player _player;
     private PlayerHotbar _playerHotbar;
     private Torch _torch;
-
+    [SerializeField]private Slider _SprintSlider;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
         _torch = _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>();
         rb = GetComponent<Rigidbody>();
         sprintTime = maxSprintTime;
-
+        _SprintSlider.maxValue = maxSprintTime;
     }
     //this handles movement 
     public void SetMoveDirection(Vector3 newDir)
@@ -99,6 +101,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckSprint()
     {
+        
         if (isSprinting && !onCoolDownFull && !onCoolDownNormal && !_torch.torchActive)
         {
             sprintTime -= Time.deltaTime;
@@ -143,5 +146,6 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         CheckSprint();
+        _SprintSlider.value = sprintTime;
     }
 }

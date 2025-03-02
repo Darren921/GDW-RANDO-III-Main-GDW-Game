@@ -56,7 +56,7 @@ public class PlayerHotbar : MonoBehaviour
             equipment.gameObject.SetActive(false);
         }
         
-        print($"Forced selection: {_equipmentBases[1].gameObject.name}");
+//        print($"Forced selection: {_equipmentBases[1].gameObject.name}");
 
     }
 
@@ -100,7 +100,7 @@ public class PlayerHotbar : MonoBehaviour
             print(_equipmentBases[inputtedSlot].ID);
             if (Hotbar.Container.Slots[inputtedSlot - 1].item.Id == _equipmentBases[inputtedSlot].ID)
             {
-                print("Equipped Normal");
+          //      print("Equipped Normal");
                 _equipmentBases[inputtedSlot].gameObject.SetActive(true);
                 var curWeapon = _equipmentBases[inputtedSlot];
                 var lightEquipment = curWeapon.GetComponent<LightEquipment>();
@@ -113,10 +113,6 @@ public class PlayerHotbar : MonoBehaviour
             else
             {
                 var Target = 0;
-                for (var i = 0; i < _equipmentBases.Count; i++)
-                {
-              //    if()
-                }
                 print(Target);
                 _equipmentBases[Target].gameObject.SetActive(true);
                 var lightEquipment = _equipmentBases[Target].GetComponent<LightEquipment>();

@@ -17,7 +17,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
    private bool active , checkPoint1, checkPoint2, checkPoint3, checkPoint4, checkPoint5;
    private Renderer _renderer;
    private BoxCollider _boxCollider;
-   [SerializeField]private BoxCollider exitCollider;
+   [SerializeField]private MeshCollider exitCollider;
    internal PlayerHotbar _playerHotbar;
    [SerializeField] GameObject _DoorHitbox;
    internal bool AtMeltingPoint;
@@ -48,7 +48,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
       print(AtMeltingPoint);
       print(other.tag);
     }
-  torchActive = _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].gameObject.GetComponent<Torch>().torchActive;
+     torchActive = _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].gameObject.GetComponent<Torch>().torchActive;
 //     print(torchActive);
         if  (torchActive && AtMeltingPoint && _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().equipped)
         {
@@ -66,7 +66,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
     {
         isMelting = false;
         AtMeltingPoint = false;
-
+        IcemeltingText.text = "";
     }
 
     void Update()
@@ -155,6 +155,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
             MeltingStage--;
             _playerHotbar.gameObject.GetComponent<PlayerInteraction>().Reset();
             _playerHotbar.GetComponent<PlayerInteraction>().HeldInteractionAction.action.Reset();
+            IcemeltingText.text = "";
 
         }
         else if(_playerHotbar.gameObject.GetComponent<PlayerInteraction>().holdDuration <= 9.9)
