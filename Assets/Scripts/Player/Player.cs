@@ -42,8 +42,13 @@ public class Player : MonoBehaviour
     private bool isWalking = false;
     private Coroutine footstepCoroutine;
     private CapsuleCollider _capsuleCollider;
-  
-  
+
+    private string floor1 = "Metal Footstep Player";
+    private string floor2 = "Stone Footstep Player";
+
+    private string currentFootstep;
+
+    private string lastFootstep;
 
     //Item switching 
     [Header("Item switching ")]
@@ -65,6 +70,9 @@ public class Player : MonoBehaviour
         InputManager.Init(this);
         InputManager.EnableInGame();
         Cursor.lockState = CursorLockMode.Locked;
+
+        currentFootstep = floor1;
+        lastFootstep = currentFootstep;
     }
 
  
@@ -84,28 +92,30 @@ public class Player : MonoBehaviour
         {
             heartBeat.Stop();
         }
-            /*if (Input.GetMouseButtonDown(0)) // Left-click
+        /*if (Input.GetMouseButtonDown(0)) // Left-click
+        {
+            PointerEventData pointerData = new PointerEventData(EventSystem.current)
             {
-                PointerEventData pointerData = new PointerEventData(EventSystem.current)
-                {
-                    position = Input.mousePosition
-                };
+                position = Input.mousePosition
+            };
 
-                // Raycast results
-                var results = new List<RaycastResult>();
-                EventSystem.current.RaycastAll(pointerData, results);
+            // Raycast results
+            var results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(pointerData, results);
 
-                foreach (var result in results)
-                {
-                    Debug.Log($"Hit UI Element: {result.gameObject.name}");
-                }
+            foreach (var result in results)
+            {
+                Debug.Log($"Hit UI Element: {result.gameObject.name}");
+            }
 
-                if (results.Count == 0)
-                {
-                    Debug.Log("No UI Element hit.");
-                }
-            }*/
-        }
+            if (results.Count == 0)
+            {
+                Debug.Log("No UI Element hit.");
+            }
+        }*/
+
+        DetectTerrain();
+    }
     
     private void OnTriggerEnter(Collider other)
     {
@@ -151,12 +161,44 @@ public class Player : MonoBehaviour
         SceneManager.LoadScene("DeathScreen");
     }
 
+    private void DetectTerrain()
+    {
+        Ray ray = new Ray(transform.position, Vector3.down);
+        if (Physics.Raycast(ray, out RaycastHit hit, 5f))
+        {
+            switch (hit.collider.tag)
+            {      
+                case "Floor1":
+                    currentFootstep = floor1;
+                    Debug.Log("Current Footstep: " + currentFootstep + " | " + "Last Footstep: " + lastFootstep);
+                    break;
+
+                case "Floor2":
+                    currentFootstep = floor2;
+                    Debug.Log("Current Footstep: " + currentFootstep + " | " + "Last Footstep: " + lastFootstep);
+                    break;
+            }
+
+            if (lastFootstep != currentFootstep)
+            {
+                if (footstepCoroutine != null)
+                {
+                    StopCoroutine(footstepCoroutine);
+                }
+                StartCoroutine(DelayWalkingSound(0.1f));
+
+                lastFootstep = currentFootstep;
+            }
+
+        }
+    }
+
     public void walkingSound()
     {
         if (!isWalking)
         {
             isWalking = true;
-            footstepCoroutine = StartCoroutine(DelayWalkingSound(0.3f));
+            footstepCoroutine = StartCoroutine(DelayWalkingSound(0.1f));
         }
     }
 
@@ -169,7 +211,7 @@ public class Player : MonoBehaviour
             {
                 StopCoroutine(footstepCoroutine);
             }
-            StartCoroutine(DelayStopWalkingSound(0.3f));
+            StartCoroutine(DelayStopWalkingSound(0.1f));
         }
     }
 
@@ -179,7 +221,7 @@ public class Player : MonoBehaviour
 
         if (!isWalking)
         {
-            AudioManager.Instance.StopSFX("Metal Footstep Player");
+            AudioManager.Instance.StopSFX(currentFootstep);
         }
     }
 
@@ -189,7 +231,8 @@ public class Player : MonoBehaviour
 
         if (isWalking)
         {
-            AudioManager.Instance.PlaySFX("Metal Footstep Player");
+            AudioManager.Instance.StopSFX(lastFootstep);
+            AudioManager.Instance.PlaySFX(currentFootstep);
         }
     }
 
