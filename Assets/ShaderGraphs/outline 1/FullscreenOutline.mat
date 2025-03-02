@@ -39,11 +39,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Boolean: 1
-    - _Colour_Threshold: 0.8
+    - _Boolean: 0
+    - _Colour_Threshold: 0.06
     - _Fullscreen_DepthTest: 8
     - _Fullscreen_DepthWrite: 0
-    - _Normal_Threshold: 12.64
+    - _Normal_Threshold: 0.02
     - _OVERLAY: 1
     - _QueueControl: 0
     - _QueueOffset: 0

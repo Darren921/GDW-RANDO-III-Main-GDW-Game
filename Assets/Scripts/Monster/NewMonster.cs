@@ -38,7 +38,7 @@ public class NewMonster : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.speed = 6;
+        agent.speed = 10;
         canRoam = true;
     }
 
@@ -50,7 +50,7 @@ public class NewMonster : MonoBehaviour
         animator.SetLayerWeight(1, walkValue);
         animator.SetLayerWeight(2, runValue);
 
-        if (agent.speed == 6)
+        if (agent.speed == 10 || agent.speed == 6)
         {
             if (walkValue < 1)
             {
