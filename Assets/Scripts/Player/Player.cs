@@ -39,11 +39,18 @@ public class Player : MonoBehaviour
     private Enemy _enemy;
     [SerializeField] AudioClip heartbeatS, heartbeatSM, heartbeatM, heartbeatF;
 
-    
-    [SerializeField] AudioSource walking;
     private CapsuleCollider _capsuleCollider;
-  
-  
+
+    private bool isWalking = false;
+    private Coroutine footstepCoroutine;
+
+    private string metal = "Metal Footstep Sound";
+    private string stone = "Stone Footstep Sound";
+
+    private string currentFootstep;
+
+    private string lastFootstep;
+
 
     //Item switching 
     [Header("Item switching ")]
@@ -59,12 +66,15 @@ public class Player : MonoBehaviour
         _playerHotbar = GetComponent<PlayerHotbar>();
         _playerMovement = GetComponent<PlayerMovement>(); 
         isDead = false;
-       _capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
-       _enemy = FindFirstObjectByType<Enemy>();
-       playerCam = gameObject.GetComponentInChildren<Camera>();
+        _capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
+        _enemy = FindFirstObjectByType<Enemy>();
+        playerCam = gameObject.GetComponentInChildren<Camera>();
         InputManager.Init(this);
         InputManager.EnableInGame();
         Cursor.lockState = CursorLockMode.Locked;
+
+        currentFootstep = metal;
+        lastFootstep = currentFootstep;
     }
 
  
@@ -84,28 +94,30 @@ public class Player : MonoBehaviour
         {
             heartBeat.Stop();
         }
-            /*if (Input.GetMouseButtonDown(0)) // Left-click
+        /*if (Input.GetMouseButtonDown(0)) // Left-click
+        {
+            PointerEventData pointerData = new PointerEventData(EventSystem.current)
             {
-                PointerEventData pointerData = new PointerEventData(EventSystem.current)
-                {
-                    position = Input.mousePosition
-                };
+                position = Input.mousePosition
+            };
 
-                // Raycast results
-                var results = new List<RaycastResult>();
-                EventSystem.current.RaycastAll(pointerData, results);
+            // Raycast results
+            var results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(pointerData, results);
 
-                foreach (var result in results)
-                {
-                    Debug.Log($"Hit UI Element: {result.gameObject.name}");
-                }
+            foreach (var result in results)
+            {
+                Debug.Log($"Hit UI Element: {result.gameObject.name}");
+            }
 
-                if (results.Count == 0)
-                {
-                    Debug.Log("No UI Element hit.");
-                }
-            }*/
-        }
+            if (results.Count == 0)
+            {
+                Debug.Log("No UI Element hit.");
+            }
+        }*/
+
+        DetectTerrain();
+    }
     
     private void OnTriggerEnter(Collider other)
     {
@@ -152,23 +164,81 @@ public class Player : MonoBehaviour
         SceneManager.LoadScene("DeathScreen");
     }
 
-
-    public void stopWalkingSound()
+    private void DetectTerrain()
     {
-        if (walking != null)
+        Ray ray = new Ray(transform.position, Vector3.down);
+        if (Physics.Raycast(ray, out RaycastHit hit, 5f))
         {
-            walking.enabled = false;
+            switch (hit.collider.tag)
+            {
+                case "MetalFloor":
+                    currentFootstep = metal;
+                    Debug.Log("Current Footstep: " + currentFootstep + " | " + "Last Footstep: " + lastFootstep);
+                    break;
+
+                case "StoneFloor":
+                    currentFootstep = stone;
+                    Debug.Log("Current Footstep: " + currentFootstep + " | " + "Last Footstep: " + lastFootstep);
+                    break;
+            }
+
+            if (lastFootstep != currentFootstep)
+            {
+                if (footstepCoroutine != null)
+                {
+                    StopCoroutine(footstepCoroutine);
+                }
+                StartCoroutine(DelayWalkingSound(0.15f));
+
+                lastFootstep = currentFootstep;
+            }
+
         }
     }
 
     public void walkingSound()
     {
-        if (walking is null || walking.isPlaying) return;
-        walking.enabled = true;
-        walking.Play();
+        if (!isWalking)
+        {
+            isWalking = true;
+            footstepCoroutine = StartCoroutine(DelayWalkingSound(0.15f));
+        }
     }
 
- 
+    public void stopWalkingSound()
+    {
+        if (isWalking)
+        {
+            isWalking = false;
+            if (footstepCoroutine != null)
+            {
+                StopCoroutine(footstepCoroutine);
+            }
+            StartCoroutine(DelayStopWalkingSound(0.15f));
+        }
+    }
+
+    private IEnumerator DelayStopWalkingSound(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (!isWalking)
+        {
+            AudioManager.Instance.StopSFX(currentFootstep);
+        }
+    }
+
+    private IEnumerator DelayWalkingSound(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (isWalking)
+        {
+            AudioManager.Instance.StopSFX(lastFootstep);
+            AudioManager.Instance.PlaySFX(currentFootstep);
+        }
+    }
+
 }
     
 
