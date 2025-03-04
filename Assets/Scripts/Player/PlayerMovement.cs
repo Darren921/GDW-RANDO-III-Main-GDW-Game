@@ -97,7 +97,15 @@ public class PlayerMovement : MonoBehaviour
     
     }
 
-   
+    public void DisableInput()
+    {
+        inputProvider.enabled = false;
+    }
+
+    public void EnableInput()
+    {
+        inputProvider.enabled = true;
+    }
 
     private void CheckSprint()
     {

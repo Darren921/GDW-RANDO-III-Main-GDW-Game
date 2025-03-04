@@ -125,6 +125,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MainMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""3372bad4-dd91-48a7-a20d-a524fa2fc909"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -358,6 +367,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Defrost"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2eb925a2-eeaf-4355-bcce-83dd4ac4fd3a"",
+                    ""path"": ""<Keyboard>/backquote"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MainMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -377,6 +397,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_InGame_HeldInteract = m_InGame.FindAction("HeldInteract", throwIfNotFound: true);
         m_InGame_Defrost = m_InGame.FindAction("Defrost", throwIfNotFound: true);
         m_InGame_OpenAndCloseInv = m_InGame.FindAction("OpenAndCloseInv", throwIfNotFound: true);
+        m_InGame_MainMenu = m_InGame.FindAction("MainMenu", throwIfNotFound: true);
     }
 
     ~@Controls()
@@ -454,6 +475,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_InGame_HeldInteract;
     private readonly InputAction m_InGame_Defrost;
     private readonly InputAction m_InGame_OpenAndCloseInv;
+    private readonly InputAction m_InGame_MainMenu;
     public struct InGameActions
     {
         private @Controls m_Wrapper;
@@ -469,6 +491,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @HeldInteract => m_Wrapper.m_InGame_HeldInteract;
         public InputAction @Defrost => m_Wrapper.m_InGame_Defrost;
         public InputAction @OpenAndCloseInv => m_Wrapper.m_InGame_OpenAndCloseInv;
+        public InputAction @MainMenu => m_Wrapper.m_InGame_MainMenu;
         public InputActionMap Get() { return m_Wrapper.m_InGame; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -511,6 +534,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @OpenAndCloseInv.started += instance.OnOpenAndCloseInv;
             @OpenAndCloseInv.performed += instance.OnOpenAndCloseInv;
             @OpenAndCloseInv.canceled += instance.OnOpenAndCloseInv;
+            @MainMenu.started += instance.OnMainMenu;
+            @MainMenu.performed += instance.OnMainMenu;
+            @MainMenu.canceled += instance.OnMainMenu;
         }
 
         private void UnregisterCallbacks(IInGameActions instance)
@@ -548,6 +574,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @OpenAndCloseInv.started -= instance.OnOpenAndCloseInv;
             @OpenAndCloseInv.performed -= instance.OnOpenAndCloseInv;
             @OpenAndCloseInv.canceled -= instance.OnOpenAndCloseInv;
+            @MainMenu.started -= instance.OnMainMenu;
+            @MainMenu.performed -= instance.OnMainMenu;
+            @MainMenu.canceled -= instance.OnMainMenu;
         }
 
         public void RemoveCallbacks(IInGameActions instance)
@@ -578,5 +607,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnHeldInteract(InputAction.CallbackContext context);
         void OnDefrost(InputAction.CallbackContext context);
         void OnOpenAndCloseInv(InputAction.CallbackContext context);
+        void OnMainMenu(InputAction.CallbackContext context);
     }
 }
