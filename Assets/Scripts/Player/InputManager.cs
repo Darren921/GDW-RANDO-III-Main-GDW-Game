@@ -74,6 +74,10 @@ public class InputManager : MonoBehaviour
         {
             PlayerInteraction?.TryHeldInteract();
         };
+        controls.InGame.MainMenu.performed += _ =>
+        {
+            player.OpenMenu();
+        };
 
     }
 

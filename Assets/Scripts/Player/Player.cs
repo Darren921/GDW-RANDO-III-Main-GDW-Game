@@ -39,6 +39,8 @@ public class Player : MonoBehaviour
     private Enemy _enemy;
     [SerializeField] AudioClip heartbeatS, heartbeatSM, heartbeatM, heartbeatF;
 
+    inGameMenu _menu;
+    [SerializeField] AudioSource walking;
     private CapsuleCollider _capsuleCollider;
 
     private bool isWalking = false;
@@ -61,8 +63,9 @@ public class Player : MonoBehaviour
     private PlayerHotbar _playerHotbar;
     private PlayerMovement _playerMovement;
 
-    private void Start()
+    private void Awake()
     {
+        _menu = FindObjectOfType<inGameMenu>();
         _playerHotbar = GetComponent<PlayerHotbar>();
         _playerMovement = GetComponent<PlayerMovement>(); 
         isDead = false;
@@ -77,7 +80,15 @@ public class Player : MonoBehaviour
         lastFootstep = currentFootstep;
     }
 
- 
+    private void Start()
+    {
+    
+    }
+
+    public void OpenMenu()
+    {
+        _menu.OpenMenu();
+    }
      
       
     void Update()

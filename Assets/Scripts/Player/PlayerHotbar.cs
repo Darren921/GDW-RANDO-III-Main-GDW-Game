@@ -11,11 +11,12 @@ public class PlayerHotbar : MonoBehaviour
     [SerializeField] internal InventoryObj Hotbar;
     [SerializeField] internal List<EquipmentBase>  _equipmentBases;
     [SerializeField] private ItemObj[] EquipmentObjs;
-    [SerializeField] internal TextMeshProUGUI FuelCountText, BatteryCountText;
-
+    [SerializeField] internal TextMeshProUGUI  CountText;
+    [SerializeField] internal Image DisplayImage;
     internal int batteryCount;
     internal int FuelCount;
-    internal int CurrentEquipped;
+    private EquipmentBase curEquipmentBase;
+
     public void ManageHotbar ()
     {
         isOpen = !isOpen;
@@ -50,7 +51,6 @@ public class PlayerHotbar : MonoBehaviour
     {
         var currentUsesInInt =  (int)_equipmentBases[returnTorchLocation()].CurrentUses; //Stores Current Uses in Torch as int 
         FuelCount = currentUsesInInt ; 
-        CurrentEquipped = -1;
         foreach (var equipment in _equipmentBases)
         {
             equipment.gameObject.SetActive(false);
@@ -62,8 +62,27 @@ public class PlayerHotbar : MonoBehaviour
 
     private void Update()
     {
-        BatteryCountText.text = $"Battery count {batteryCount} / 3";
-        FuelCountText.text = $"Fuel count \n {FuelCount} / 3";
+        if (curEquipmentBase is null)
+        {
+            DisplayImage.gameObject.SetActive(false);
+            CountText.gameObject.SetActive(false);
+            return;
+        }
+        DisplayImage.gameObject.SetActive(true);
+        CountText.gameObject.SetActive(true);
+        print(DisplayImage.sprite);
+        print(curEquipmentBase.equipmentObj.data.UiDisplay);
+        DisplayImage.sprite = curEquipmentBase.equipmentObj.data.UiDisplay;
+        if (curEquipmentBase.ID == _equipmentBases[returnTorchLocation()].ID)
+        {
+          
+            CountText.text = $"X {FuelCount.ToString()}";
+        }
+        else if (curEquipmentBase.ID == _equipmentBases[1].ID)
+        {
+            CountText.text = $"X {batteryCount.ToString()}";
+        }
+
 
     }
 
@@ -100,10 +119,10 @@ public class PlayerHotbar : MonoBehaviour
             print(_equipmentBases[inputtedSlot].ID);
             if (Hotbar.Container.Slots[inputtedSlot - 1].item.Id == _equipmentBases[inputtedSlot].ID)
             {
-          //      print("Equipped Normal");
+                //print("Equipped Normal");
                 _equipmentBases[inputtedSlot].gameObject.SetActive(true);
-                var curWeapon = _equipmentBases[inputtedSlot];
-                var lightEquipment = curWeapon.GetComponent<LightEquipment>();
+                curEquipmentBase = _equipmentBases[inputtedSlot];
+                var lightEquipment = curEquipmentBase.GetComponent<LightEquipment>();
     
                 if (lightEquipment != null)
                 {
