@@ -173,12 +173,10 @@ public class Player : MonoBehaviour
             {
                 case "MetalFloor":
                     currentFootstep = metal;
-                    Debug.Log("Current Footstep: " + currentFootstep + " | " + "Last Footstep: " + lastFootstep);
                     break;
 
                 case "StoneFloor":
                     currentFootstep = stone;
-                    Debug.Log("Current Footstep: " + currentFootstep + " | " + "Last Footstep: " + lastFootstep);
                     break;
             }
 
