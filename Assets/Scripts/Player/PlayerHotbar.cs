@@ -70,9 +70,9 @@ public class PlayerHotbar : MonoBehaviour
         }
         DisplayImage.gameObject.SetActive(true);
         CountText.gameObject.SetActive(true);
-        print(DisplayImage.sprite);
-        print(curEquipmentBase.equipmentObj.data.UiDisplay);
-        DisplayImage.sprite = curEquipmentBase.equipmentObj.data.UiDisplay;
+//        print(DisplayImage.sprite);
+//        print(curEquipmentBase.equipmentObj.data.UiDisplay);
+        DisplayImage.sprite = curEquipmentBase.allClasses.equipmentObj.data.UiDisplay;
         if (curEquipmentBase.ID == _equipmentBases[returnTorchLocation()].ID)
         {
           

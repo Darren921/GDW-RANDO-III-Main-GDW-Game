@@ -12,7 +12,16 @@ public abstract class LightEquipment : EquipmentBase
 
     protected virtual void Awake()
     {
-        base.Awake();
+        _playerHotbar =FindFirstObjectByType<PlayerHotbar>();
+        ID = allClasses.equipmentObj.data.Id;
+        baseObj = gameObject;
+        if (allClasses.equipmentObj is not null)
+        {
+            //Values can be changed in equipmentObj in items (inv system)
+            MaxUses = allClasses.equipmentObj.data.Limit;
+            CurrentUses =  0;
+            RefillAmount = allClasses.equipmentObj.refuel;
+        }
         light = gameObject.transform.Find("LightSource").gameObject;
         light.SetActive(false);
         slider = baseObj.GetComponentInChildren<Slider>();

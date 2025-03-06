@@ -19,7 +19,7 @@ public class PlayerInteraction : MonoBehaviour
     internal float holdDuration;
     [SerializeField]internal IceMelting iceMelting;
     private bool _isResetting;
-    FrostSystem _frostSystem;
+  internal FrostSystem _frostSystem;
     private void Start()
     {
         hotbar = GetComponent<PlayerHotbar>();
@@ -41,7 +41,6 @@ public class PlayerInteraction : MonoBehaviour
       //  print(currentInteractable);
         if (other.GetComponent<DeFrost>() != null)
         {
-            InteractText.text = _frostSystem._frost > 50 ? $"Hold E to warm up " : "";
             isHeldInteraction = other.GetComponent<DeFrost>().isHeld;
             InputManager.HoldChange(true);
 
@@ -128,7 +127,14 @@ public class PlayerInteraction : MonoBehaviour
 
         if (other.GetComponent<DeFrost>() != null)
         {
-            InteractText.text =  hotbar._equipmentBases[hotbar.returnTorchLocation()].GetComponent<Torch>().torchActive ? "Defrosting Self" : ""   ;
+           print(_frostSystem._frost > 50);
+           print(!hotbar._equipmentBases[hotbar.returnTorchLocation()].GetComponent<Torch>().torchActive);
+            InteractText.text = _frostSystem._frost > 50 && !hotbar._equipmentBases[hotbar.returnTorchLocation()].GetComponent<Torch>().torchActive ? "Hold E to warm up " : "";
+            if (hotbar._equipmentBases[hotbar.returnTorchLocation()].GetComponent<Torch>().torchActive)
+            {
+                InteractText.text = "Defrosting Self"  ;
+            }
+        
             InteractionBar.maxValue = 5;
 
         }

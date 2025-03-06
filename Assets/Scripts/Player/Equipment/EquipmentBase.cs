@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public abstract class EquipmentBase : MonoBehaviour
 {
-    [SerializeField] internal EquipmentObj equipmentObj;
+    internal AllClasses allClasses;
     [SerializeField] protected ItemObj matchingItem;
     protected internal int ID;
     internal bool equipped;
@@ -17,19 +17,13 @@ public abstract class EquipmentBase : MonoBehaviour
     protected int RefillAmount;
     protected GameObject baseObj;
     protected PlayerHotbar _playerHotbar;
-    protected virtual void Awake()
+
+    public struct AllClasses
     {
-        _playerHotbar =FindFirstObjectByType<PlayerHotbar>();
-        ID = equipmentObj.data.Id;
-        baseObj = gameObject;
-        if (equipmentObj is not null)
-        {
-            //Values can be changed in equipmentObj in items (inv system)
-            MaxUses = equipmentObj.data.Limit;
-            CurrentUses =  0;
-            RefillAmount = equipmentObj.refuel;
-        }
+        internal EquipmentObj equipmentObj;
     }
+
+  
 
     
     public abstract void CheckIfUsable();
