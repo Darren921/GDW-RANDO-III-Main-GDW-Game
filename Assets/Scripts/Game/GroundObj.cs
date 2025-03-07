@@ -32,7 +32,7 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
 
            var item = GetComponent<GroundObj>();
            var equipment = item.equipment;
-           if (item && !item.CompareTag("Batteries") && !item.CompareTag("Fuel") && item.item.data.Id == 3 && item.item.data.Id == 4   )
+           if (item && !item.CompareTag("Batteries") && !item.CompareTag("Fuel") && item.item.data.Id != 3 && item.item.data.Id != 4   )
            {
                print(item.tag);
                Item _item = new Item(item.item);

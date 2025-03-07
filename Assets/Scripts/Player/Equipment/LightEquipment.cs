@@ -13,16 +13,10 @@ public abstract class LightEquipment : EquipmentBase
 
     protected virtual void Awake()
     {
-        _playerHotbar =FindFirstObjectByType<PlayerHotbar>();
+        base.Awake();
         ID = equipmentObj.data.Id;
-        baseObj = gameObject;
-        if (equipmentObj is not null)
-        {
-            //Values can be changed in equipmentObj in items (inv system)
-            MaxUses = equipmentObj.data.Limit;
-            CurrentUses =  0;
-            RefillAmount = equipmentObj.refuel;
-        }
+        //Values can be changed in equipmentObj in items (inv system)
+      
         light = gameObject.transform.Find("LightSource").gameObject;
         light.SetActive(false);
         slider = baseObj.GetComponentInChildren<Slider>();
@@ -30,6 +24,7 @@ public abstract class LightEquipment : EquipmentBase
 
     protected virtual void Update()
     {
+        print(CurrentUses);
         slider.value = CurrentUses;
         slider.maxValue = MaxUses;
         if (CurrentUses <= 0 && active)

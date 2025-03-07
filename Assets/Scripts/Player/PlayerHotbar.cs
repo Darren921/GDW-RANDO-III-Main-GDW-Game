@@ -7,17 +7,18 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerHotbar : MonoBehaviour
-{    
+{
     [SerializeField] internal InventoryObj Hotbar;
-    [SerializeField] internal List<EquipmentBase>  _equipmentBases;
+    [SerializeField] internal List<EquipmentBase> _equipmentBases;
     [SerializeField] private ItemObj[] EquipmentObjs;
-    [SerializeField] internal TextMeshProUGUI  CountText;
+    [SerializeField] internal TextMeshProUGUI CountText;
     [SerializeField] internal Image DisplayImage;
     internal int batteryCount;
     internal int FuelCount;
     private EquipmentBase curEquipmentBase;
+    private int inputtedSlot;
 
-    public void ManageHotbar ()
+    public void ManageHotbar()
     {
         isOpen = !isOpen;
     }
@@ -27,30 +28,33 @@ public class PlayerHotbar : MonoBehaviour
         if (!GameManager.firstLoad)
         {
             GameManager.firstLoad = true;
-            Hotbar.AddItem(new Item(EquipmentObjs[1]) , 1);
-            Hotbar.AddItem(new Item(EquipmentObjs[2]) , 1); 
+            Hotbar.AddItem(new Item(EquipmentObjs[1]), 1);
+            Hotbar.AddItem(new Item(EquipmentObjs[2]), 1);
         }
-           
-        
-         
-        
+
+
+
+
 
     }
 
-   
-    
+
+
     internal bool isOpen { get; set; }
+
     private void Start()
     {
-        var currentUsesInInt =  (int)_equipmentBases[returnTorchLocation()].CurrentUses; //Stores Current Uses in Torch as int 
-        FuelCount = currentUsesInInt ; 
-        foreach (var equipment in _equipmentBases)
+        var currentUsesInInt =
+            (int)_equipmentBases[returnTorchLocation()].CurrentUses; //Stores Current Uses in Torch as int 
+        FuelCount = currentUsesInInt;
+       
+
+//        print($"Forced selection: {_equipmentBases[1].gameObject.name}");
+        var equipments = FindObjectsOfType<EquipmentBase>();
+        foreach (var equipment in equipments)
         {
             equipment.gameObject.SetActive(false);
         }
-        
-//        print($"Forced selection: {_equipmentBases[1].gameObject.name}");
-
     }
 
     private void Update()
@@ -61,24 +65,30 @@ public class PlayerHotbar : MonoBehaviour
             CountText.gameObject.SetActive(false);
             return;
         }
+
         DisplayImage.gameObject.SetActive(true);
         CountText.gameObject.SetActive(true);
 //        print(DisplayImage.sprite);
 //        print(curEquipmentBase.equipmentObj.data.UiDisplay);
-        
-       
+
+
         if (curEquipmentBase.ID == _equipmentBases[returnTorchLocation()].ID)
         {
-          
+
             CountText.text = $"X {FuelCount.ToString()}";
         }
         else if (curEquipmentBase.ID == _equipmentBases[1].ID)
         {
             CountText.text = $"X {batteryCount.ToString()}";
         }
+        else
+        {
+            CountText.text = $"X {Hotbar.Container.Slots[inputtedSlot - 1].amount.ToString()}";
+        }
+    
 
 
-    }
+}
 
     private void OnApplicationQuit()
     {
@@ -87,7 +97,7 @@ public class PlayerHotbar : MonoBehaviour
 
     public void ChangeItem(float slot)
     {
-        var inputtedSlot = (int)slot - 1;
+         inputtedSlot = (int)slot - 1;
 
         for (var i = 0; i < Hotbar.Container.Slots.Length; i++)
         {
