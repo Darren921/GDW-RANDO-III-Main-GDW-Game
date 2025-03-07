@@ -32,6 +32,7 @@ public class InventoryObj : ScriptableObject
             SetEmptySlot(_item, _amount);
             return true;
         }
+        if (slot.amount + _amount > slot.item.Limit) return false;
         slot.addAmount(_amount);
         return true;
     }

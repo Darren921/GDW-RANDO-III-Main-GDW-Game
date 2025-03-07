@@ -8,7 +8,6 @@ using UnityEngine.UI;
 
 public abstract class EquipmentBase : MonoBehaviour
 {
-    [SerializeField] protected ItemObj matchingItem;
     protected internal int ID;
     internal bool equipped;
     internal float  MaxUses;
