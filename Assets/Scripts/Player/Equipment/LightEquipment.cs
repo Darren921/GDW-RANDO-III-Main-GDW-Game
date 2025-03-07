@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public abstract class LightEquipment : EquipmentBase
 {
+    [SerializeField] EquipmentObj equipmentObj;
     protected GameObject light;
     protected Slider slider;
     internal bool active;
@@ -13,14 +14,14 @@ public abstract class LightEquipment : EquipmentBase
     protected virtual void Awake()
     {
         _playerHotbar =FindFirstObjectByType<PlayerHotbar>();
-        ID = allClasses.equipmentObj.data.Id;
+        ID = equipmentObj.data.Id;
         baseObj = gameObject;
-        if (allClasses.equipmentObj is not null)
+        if (equipmentObj is not null)
         {
             //Values can be changed in equipmentObj in items (inv system)
-            MaxUses = allClasses.equipmentObj.data.Limit;
+            MaxUses = equipmentObj.data.Limit;
             CurrentUses =  0;
-            RefillAmount = allClasses.equipmentObj.refuel;
+            RefillAmount = equipmentObj.refuel;
         }
         light = gameObject.transform.Find("LightSource").gameObject;
         light.SetActive(false);

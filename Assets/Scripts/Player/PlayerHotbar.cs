@@ -37,14 +37,7 @@ public class PlayerHotbar : MonoBehaviour
 
     }
 
-    public void SwapEquimpment(List<EquipmentBase> equipmentList, int equipmentIndex1, int equipmentIndex2)
-    {
-        // ReSharper disable once SwapViaDeconstruction
-        var temp = equipmentList[equipmentIndex2];
-        equipmentList[equipmentIndex2] = equipmentList[equipmentIndex1];
-        equipmentList[equipmentIndex1] = temp;
-        
-    }
+   
     
     internal bool isOpen { get; set; }
     private void Start()
@@ -72,7 +65,8 @@ public class PlayerHotbar : MonoBehaviour
         CountText.gameObject.SetActive(true);
 //        print(DisplayImage.sprite);
 //        print(curEquipmentBase.equipmentObj.data.UiDisplay);
-        DisplayImage.sprite = curEquipmentBase.allClasses.equipmentObj.data.UiDisplay;
+        
+       
         if (curEquipmentBase.ID == _equipmentBases[returnTorchLocation()].ID)
         {
           
@@ -119,6 +113,7 @@ public class PlayerHotbar : MonoBehaviour
             print(_equipmentBases[inputtedSlot].ID);
             if (Hotbar.Container.Slots[inputtedSlot - 1].item.Id == _equipmentBases[inputtedSlot].ID)
             {
+                DisplayImage.sprite = Hotbar.Container.Slots[inputtedSlot - 1].item.UiDisplay;
                 //print("Equipped Normal");
                 _equipmentBases[inputtedSlot].gameObject.SetActive(true);
                 curEquipmentBase = _equipmentBases[inputtedSlot];
@@ -145,11 +140,15 @@ public class PlayerHotbar : MonoBehaviour
              
             }
             
+            
                
             
            
 
         }
+
+       
+
 
     }
 

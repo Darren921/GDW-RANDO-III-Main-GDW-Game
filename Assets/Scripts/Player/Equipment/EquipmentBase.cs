@@ -8,7 +8,6 @@ using UnityEngine.UI;
 
 public abstract class EquipmentBase : MonoBehaviour
 {
-    internal AllClasses allClasses;
     [SerializeField] protected ItemObj matchingItem;
     protected internal int ID;
     internal bool equipped;
@@ -17,10 +16,14 @@ public abstract class EquipmentBase : MonoBehaviour
     protected int RefillAmount;
     protected GameObject baseObj;
     protected PlayerHotbar _playerHotbar;
-
+    protected virtual void Awake()
+    {
+       
+    }
+    
     public struct AllClasses
     {
-        internal EquipmentObj equipmentObj;
+        public EquipmentObj equipmentObj;
     }
 
   
