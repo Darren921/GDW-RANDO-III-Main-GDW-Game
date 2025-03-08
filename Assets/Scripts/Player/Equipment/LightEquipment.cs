@@ -30,6 +30,23 @@ public abstract class LightEquipment : EquipmentBase
         print(CurrentUses);
         slider.value = CurrentUses;
         slider.maxValue = MaxUses;
-     
+        if (CurrentUses <= 0 && active )
+        {
+            if (equipmentObj.data.Id == 1)
+            {
+                if (_playerHotbar.batteryCount > 0)
+                { 
+                    _playerHotbar.batteryCount--;
+                    CurrentUses = RefillAmount;
+                }
+                else
+                {
+                    CurrentUses = 0;
+                    light.SetActive(false);
+                }
+            }
+        
+                    
+        }
     }
 }

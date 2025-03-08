@@ -17,7 +17,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
    private bool active , checkPoint1, checkPoint2, checkPoint3, checkPoint4, checkPoint5;
    private Renderer _renderer;
    private BoxCollider _boxCollider;
-   [SerializeField]private MeshCollider exitCollider;
+   [SerializeField]private BoxCollider exitCollider;
    internal PlayerHotbar _playerHotbar;
    [SerializeField] GameObject _DoorHitbox;
    internal bool AtMeltingPoint;
@@ -45,8 +45,8 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
      if (other.CompareTag("Torch"))
     {
       AtMeltingPoint = true;
-      print(AtMeltingPoint);
-      print(other.tag);
+//      print(AtMeltingPoint);
+//      print(other.tag);
     }
      torchActive = _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].gameObject.GetComponent<Torch>().torchActive;
 //     print(torchActive);

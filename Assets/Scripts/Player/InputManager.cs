@@ -68,6 +68,10 @@ public class InputManager : MonoBehaviour
         {
             PlayerInteraction?.TryInteract();
         };
+        controls.InGame.Interact.canceled += _ =>
+        {
+            PlayerInteraction?.Reset();
+        };
        
 
         controls.InGame.HeldInteract.performed += _ =>

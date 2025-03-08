@@ -43,7 +43,7 @@ public class FrostSystem : MonoBehaviour
         var interactable = other.GetComponent<GameManager.IInteractable>();
         if (interactable == null) return;
         currentInteractable = interactable; 
-        print(currentInteractable);
+//        print(currentInteractable);
         if (currentInteractable != null )
         {
             DeFrost.SetActive(false); 
@@ -68,19 +68,21 @@ public class FrostSystem : MonoBehaviour
         var interactable = other.GetComponent<GameManager.IInteractable>();
         if (interactable == null) return;
         currentInteractable = interactable; 
-        print(currentInteractable);
+//        print(currentInteractable);
         if (currentInteractable != null )
         {
-            DeFrost.SetActive(false); 
+            DeFrost.SetActive(false);
+            print(currentInteractable);
         }
         else switch (iceMelting.AtMeltingPoint)
         {
             case true:
                 DeFrost.SetActive(false); 
+                print("Frost");
                 break;
             case false:
                 DeFrost.SetActive(true); 
-              //  print("Tell me WHY");
+               print("Tell me WHY");
                 break;
         }
         
@@ -102,7 +104,7 @@ public class FrostSystem : MonoBehaviour
         if (!_player.dead)
         {
             _frost += Time.deltaTime;
-            _curOpacity += 0.019f * Time.deltaTime;
+            _curOpacity += 0.01f * Time.deltaTime;
             _frostTexture.SetFloat("_Opacity" , _curOpacity);     
 
         }
@@ -112,6 +114,13 @@ public class FrostSystem : MonoBehaviour
             _curOpacity = -1;
             if (_player.dead) StartCoroutine(Player.LookAtDeath("frost"));
         }
+    }
+
+    private void OnDisable()
+    {
+        _frost = 0;
+        _curOpacity = -1;
+
     }
 
     public void reduceFrost()

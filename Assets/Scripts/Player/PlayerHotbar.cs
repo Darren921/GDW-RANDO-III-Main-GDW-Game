@@ -107,7 +107,7 @@ public class PlayerHotbar : MonoBehaviour
 
         inputtedSlot = (int)slot;
 
-        print(inputtedSlot);
+////        print(inputtedSlot);
         for (var i = 1; i < _equipmentBases.Count; i++)
         {
             _equipmentBases[i].gameObject.SetActive(false);
@@ -119,8 +119,8 @@ public class PlayerHotbar : MonoBehaviour
         }
         if (inputtedSlot < _equipmentBases.Count)
         {
-            print(Hotbar.Container.Slots[inputtedSlot - 1].item.Id);
-            print(_equipmentBases[inputtedSlot].ID);
+//            print(Hotbar.Container.Slots[inputtedSlot - 1].item.Id);
+//            print(_equipmentBases[inputtedSlot].ID);
             if (Hotbar.Container.Slots[inputtedSlot - 1].item.Id == _equipmentBases[inputtedSlot].ID)
             {
                 DisplayImage.sprite = Hotbar.Container.Slots[inputtedSlot - 1].item.UiDisplay;

@@ -10,7 +10,7 @@ public class Torch : LightEquipment
 {
     internal bool torchActive;
     [SerializeField] private TextMeshProUGUI interactText;
-
+    [SerializeField] internal BoxCollider torchCollider;
 
     protected override void Update()
     {
