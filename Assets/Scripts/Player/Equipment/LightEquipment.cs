@@ -15,6 +15,9 @@ public abstract class LightEquipment : EquipmentBase
     {
         base.Awake();
         ID = equipmentObj.data.Id;
+        MaxUses = equipmentObj.data.Limit;
+        CurrentUses = 0;
+        RefillAmount = equipmentObj.refuel;
         //Values can be changed in equipmentObj in items (inv system)
       
         light = gameObject.transform.Find("LightSource").gameObject;
@@ -27,24 +30,6 @@ public abstract class LightEquipment : EquipmentBase
         print(CurrentUses);
         slider.value = CurrentUses;
         slider.maxValue = MaxUses;
-        if (CurrentUses <= 0 && active)
-        {
-            switch (matchingItem.data.Name)
-            {
-                case "Battery":
-                    if (_playerHotbar.batteryCount > 0)
-                    {
-                        _playerHotbar.batteryCount--;
-                        CurrentUses = RefillAmount;
-                    }
-                    else
-                    {
-                        CurrentUses = 0;
-                        light.SetActive(false);
-                    }
-
-                    break;
-            }
-        }
+     
     }
 }
