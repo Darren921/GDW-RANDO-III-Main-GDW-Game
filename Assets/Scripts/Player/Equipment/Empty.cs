@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class Empty : EquipmentBase
 {
-    public override void CheckIfUsable()
+    internal override void HeldInteract()
+    {
+        
+    }
+
+    internal override void CheckIfUsable()
     {
         
     }

@@ -7,11 +7,11 @@ using UnityEngine.UI;
 public abstract class LightEquipment : EquipmentBase
 {
     [SerializeField] EquipmentObj equipmentObj;
-    protected GameObject light;
+    protected GameObject lightSource;
     protected Slider slider;
     internal bool active;
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
         base.Awake();
         ID = equipmentObj.data.Id;
@@ -20,8 +20,8 @@ public abstract class LightEquipment : EquipmentBase
         RefillAmount = equipmentObj.refuel;
         //Values can be changed in equipmentObj in items (inv system)
       
-        light = gameObject.transform.Find("LightSource").gameObject;
-        light.SetActive(false);
+        lightSource = gameObject.transform.Find("LightSource").gameObject;
+        lightSource.SetActive(false);
         slider = baseObj.GetComponentInChildren<Slider>();
     }
 
@@ -42,7 +42,7 @@ public abstract class LightEquipment : EquipmentBase
                 else
                 {
                     CurrentUses = 0;
-                    light.SetActive(false);
+                    lightSource.SetActive(false);
                 }
             }
         

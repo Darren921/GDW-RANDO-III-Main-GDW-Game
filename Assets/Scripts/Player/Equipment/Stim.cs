@@ -11,12 +11,13 @@ public class Stim : ConsumableEquipment
     }
 
     // Update is called once per frame
-    void Update()
+
+    internal override void HeldInteract()
     {
-        
+        throw new System.NotImplementedException();
     }
 
-    public override void CheckIfUsable()
+    internal override void CheckIfUsable()
     {
         throw new System.NotImplementedException();
     }

@@ -12,7 +12,6 @@ public class PlayerInteraction : MonoBehaviour
     private GameManager.IInteractable currentInteractable;
     private bool isHeldInteraction;
     [SerializeField] internal TextMeshProUGUI InteractText;
-    private Player _player;
     PlayerHotbar hotbar;
     [SerializeField] private Slider InteractionBar;
    [SerializeField] internal InputActionReference HeldInteractionAction;
@@ -39,9 +38,9 @@ public class PlayerInteraction : MonoBehaviour
         if (interactable == null) return;
         currentInteractable = interactable; 
       //  print(currentInteractable);
-        if (other.GetComponent<DeFrost>() != null)
+        if (other.GetComponent<SelfInteractionManager>() != null)
         {
-            isHeldInteraction = other.GetComponent<DeFrost>().isHeld;
+            isHeldInteraction = other.GetComponent<SelfInteractionManager>().isHeld;
             InputManager.HoldChange(true);
 
         }
@@ -62,7 +61,7 @@ public class PlayerInteraction : MonoBehaviour
     {
 //        print(isHeldInteraction);
         if (HeldInteractionAction.action.IsPressed() && currentInteractable != null && isHeldInteraction &&
-            hotbar._equipmentBases[hotbar.returnTorchLocation()].CurrentUses > 0 &&  hotbar._equipmentBases[hotbar.returnTorchLocation()].equipped )
+            hotbar._equipmentBases?[hotbar.inputtedSlot].CurrentUses > 0 )
         {
             hotbar._equipmentBases[hotbar.returnTorchLocation()].GetComponent<Torch>().torchActive = true;
             InteractionBar.gameObject.SetActive(true);
@@ -74,9 +73,9 @@ public class PlayerInteraction : MonoBehaviour
         {
             print("released");
         }
-        if(HeldInteractionAction.action.WasReleasedThisFrame()  || isHeldInteraction && !hotbar._equipmentBases[hotbar.returnTorchLocation()].equipped && !iceMelting.isMelting && !_isResetting    )
+        if(HeldInteractionAction.action.WasReleasedThisFrame()  || isHeldInteraction && !hotbar._equipmentBases[hotbar.returnTorchLocation()].equipped && !iceMelting.isMelting && !_isResetting )
         {
-            print("Reset");
+//            print("Reset");
             hotbar._equipmentBases[hotbar.returnTorchLocation()].gameObject.GetComponent<Torch>().torchActive = false;
             Reset();
 
@@ -125,20 +124,53 @@ public class PlayerInteraction : MonoBehaviour
                     case "Fuel" :
                         InteractText.text = hotbar.FuelCount < groundObj.item.data.Limit ? $"Press E to Pickup {groundObj.item.data.Name.ToLower()}" : $"Carry limit for {groundObj.item.data.Name.ToLower()} has been reached";
                         break;
+                   default:
+                        if (hotbar.inputtedSlot != -1 )
+                        {
+                            if (hotbar.inputtedSlot <= 0)
+                            {
+//                                print("in check backup");
+
+                                InteractText.text =   $"Press E to Pickup {groundObj.item.data.Name.ToLower()} ";
+                                return;
+                            }
+                            var item = Array.Find(hotbar.Hotbar.Container.Slots, slot => slot.item.Id == groundObj.item.data.Id);
+                            if (item != null)
+                            {
+                        //        print("in check");
+                                InteractText.text =  hotbar.Hotbar.Container.Slots[hotbar.inputtedSlot].amount <  hotbar.Hotbar.Container.Slots[hotbar.inputtedSlot].item.Limit ? $"Press E to Pickup {groundObj.item.data.Name.ToLower()}" : $"Carry limit for {groundObj.item.data.Name.ToLower()} has been reached";
+                                
+                            }
+                            else
+                            {
+                      //          print("in check backup");
+
+                                InteractText.text =   $"Press E to Pickup {groundObj.item.data.Name.ToLower()} ";
+                            }                          
+
+                        }
+                        break;
+                      
+                      
                 }
                    
             }
               
         }
 
-        if (other.GetComponent<DeFrost>() != null)
+        if (other.GetComponent<SelfInteractionManager>() != null)
         {
 //           print(_frostSystem._frost > 50);
 //           print(!hotbar._equipmentBases[hotbar.returnTorchLocation()].GetComponent<Torch>().torchActive);
-            InteractText.text = _frostSystem._frost > 50 && !hotbar._equipmentBases[hotbar.returnTorchLocation()].GetComponent<Torch>().torchActive ? "Hold E to warm up " : "";
-            if (hotbar._equipmentBases[hotbar.returnTorchLocation()].GetComponent<Torch>().torchActive && !iceMelting.AtMeltingPoint)
+            if (hotbar._equipmentBases[hotbar.returnTorchLocation()].GetComponent<Torch>() != null && hotbar._equipmentBases[hotbar.returnTorchLocation()].GetComponent<Torch>().torchActive && !iceMelting.AtMeltingPoint)
             {
+//                print("in melting");
                 InteractText.text = "Defrosting Self"  ;
+            }
+            else
+            {
+//                print("in display");
+                InteractText.text = _frostSystem._frost > 50  ? "Hold E to warm up with the Torch " : "";
             }
         
             InteractionBar.maxValue = 5;

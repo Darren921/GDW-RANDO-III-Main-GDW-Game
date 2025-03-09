@@ -15,8 +15,8 @@ public class PlayerHotbar : MonoBehaviour
     [SerializeField] internal Image DisplayImage;
     internal int batteryCount;
     internal int FuelCount;
-    private EquipmentBase curEquipmentBase;
-    private int inputtedSlot;
+    internal EquipmentBase curEquipmentBase;
+    internal int inputtedSlot;
 
     public void ManageHotbar()
     {
@@ -66,8 +66,6 @@ public class PlayerHotbar : MonoBehaviour
             return;
         }
 
-        DisplayImage.gameObject.SetActive(true);
-        CountText.gameObject.SetActive(true);
 //        print(DisplayImage.sprite);
 //        print(curEquipmentBase.equipmentObj.data.UiDisplay);
 
@@ -99,6 +97,8 @@ public class PlayerHotbar : MonoBehaviour
     {
          inputtedSlot = (int)slot - 1;
 
+         DisplayImage.gameObject.SetActive(true);
+         CountText.gameObject.SetActive(true);
         for (var i = 0; i < Hotbar.Container.Slots.Length; i++)
         {
             var outline = Hotbar.Container.Slots[i].slotDisplay.transform.GetChild(0).GetComponentInChildren<Outline>();
@@ -111,51 +111,72 @@ public class PlayerHotbar : MonoBehaviour
         for (var i = 1; i < _equipmentBases.Count; i++)
         {
             _equipmentBases[i].gameObject.SetActive(false);
-            var lightEquipment = _equipmentBases[i].GetComponent<LightEquipment>();
+            var lightEquipment = _equipmentBases?[i].GetComponent<LightEquipment>();
+            var UsableEquipment = _equipmentBases?[i].GetComponent<ConsumableEquipment>();
+
             if (lightEquipment != null)
             {
                 lightEquipment.equipped = false;
             }
+            else if (UsableEquipment != null)
+            {
+                UsableEquipment.equipped = false;
+            }
         }
         if (inputtedSlot < _equipmentBases.Count)
         {
+            print("in log");
 //            print(Hotbar.Container.Slots[inputtedSlot - 1].item.Id);
 //            print(_equipmentBases[inputtedSlot].ID);
             if (Hotbar.Container.Slots[inputtedSlot - 1].item.Id == _equipmentBases[inputtedSlot].ID)
             {
+//                print(Hotbar.Container.Slots[inputtedSlot - 1].item.Id);
                 DisplayImage.sprite = Hotbar.Container.Slots[inputtedSlot - 1].item.UiDisplay;
+                
+                   
+              
                 //print("Equipped Normal");
                 _equipmentBases[inputtedSlot].gameObject.SetActive(true);
                 curEquipmentBase = _equipmentBases[inputtedSlot];
-                var lightEquipment = curEquipmentBase.GetComponent<LightEquipment>();
-    
+                var lightEquipment = curEquipmentBase?.GetComponent<LightEquipment>();
+                var UsableEquipment = curEquipmentBase?.GetComponent<ConsumableEquipment>();
                 if (lightEquipment != null)
                 {
                     lightEquipment.equipped = true;
                 } 
+                else if (UsableEquipment != null)
+                {
+                    UsableEquipment.equipped = true;
+                }
             }
             else
             {
                 var Target = 0;
-                print(Target);
+              //  print(Target);
                 _equipmentBases[Target].gameObject.SetActive(true);
-                var lightEquipment = _equipmentBases[Target].GetComponent<LightEquipment>();
-    
+                var lightEquipment = _equipmentBases?[Target].GetComponent<LightEquipment>();
+                var UsableEquipment = _equipmentBases?[Target].GetComponent<ConsumableEquipment>();
+
                 if (lightEquipment != null)
                 {
                     lightEquipment.equipped = true;
                 } 
+                else if (UsableEquipment != null)
+                {
+                    UsableEquipment.equipped = true;
+                }
 
 
              
             }
-            
-            
-               
-            
-           
-
         }
+        else if (Hotbar.Container.Slots[inputtedSlot - 1].item.Id == - 1 )
+        {
+            print("out log");
+            DisplayImage.gameObject.SetActive(false);
+            CountText.gameObject.SetActive(false);
+        }
+        
 
        
 

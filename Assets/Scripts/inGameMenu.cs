@@ -17,7 +17,7 @@ public class inGameMenu : MonoBehaviour
         menu = gameObject;
         Sens.minValue = 0.09f;
         Sens.maxValue = 0.1f;
-        print(Sens.value);
+//        print(Sens.value);
         Sens.value = _camera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed;
         Sens.value = _camera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed;
     }

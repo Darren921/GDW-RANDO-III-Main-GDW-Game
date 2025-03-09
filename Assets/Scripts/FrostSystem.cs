@@ -72,7 +72,7 @@ public class FrostSystem : MonoBehaviour
         if (currentInteractable != null )
         {
             DeFrost.SetActive(false);
-            print(currentInteractable);
+//            print(currentInteractable);
         }
         else switch (iceMelting.AtMeltingPoint)
         {
@@ -104,7 +104,7 @@ public class FrostSystem : MonoBehaviour
         if (!_player.dead)
         {
             _frost += Time.deltaTime;
-            _curOpacity += 0.01f * Time.deltaTime;
+            _curOpacity += 0.013f * Time.deltaTime;
             _frostTexture.SetFloat("_Opacity" , _curOpacity);     
 
         }

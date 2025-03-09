@@ -34,7 +34,7 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
            var equipment = item.equipment;
            if (!item.CompareTag("Batteries") && !item.CompareTag("Fuel") && item.item.data.Id != 3 && item.item.data.Id != 4   )
            {
-               print(item.tag);
+//               print(item.tag);
                Item _item = new Item(item.item);
                if (_playerHotbar.Hotbar.EmptySlotCount > 0)
                {
@@ -52,7 +52,7 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
            }
            else
            {
-               print("Pick up Item");
+           //    print("Pick up Item");
                if (item.item.data.Id == _playerHotbar.Hotbar.database.ItemObjects[3].data.Id && _playerHotbar.batteryCount < item.item.data.Limit)
                {
                   // if (!_spawnManager.trackedIndexs.Contains((tracker)) || !_spawnManager.trackedIndexs.Contains(tracker) && item.name == "battery") return;

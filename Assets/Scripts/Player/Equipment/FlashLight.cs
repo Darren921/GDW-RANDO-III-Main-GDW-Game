@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FlashLight : LightEquipment
 {
-    protected virtual void Update()
+    protected override void Update()
     {
         base.Update();
         if (CurrentUses > 0 && active)
@@ -14,25 +14,30 @@ public class FlashLight : LightEquipment
         }
     }
 
-    public override void CheckIfUsable()
+    internal override void HeldInteract()
+    {
+        
+    }
+
+    internal override void CheckIfUsable()
     {
         if (CurrentUses > 0 && equipped)
         {
             active = !active;
             if (active)
             {
-                light.SetActive(true);
+                lightSource.SetActive(true);
             }
             else
             {
                 active = false;
-                light.SetActive(false);
+                lightSource.SetActive(false);
             }
         }
         else
         {
             active = false;
-            light.SetActive(false);
+            lightSource.SetActive(false);
         }
     }
 
@@ -40,7 +45,7 @@ public class FlashLight : LightEquipment
     private void OnDisable()
     {
         active = false;
-        light.SetActive(false);
+        lightSource.SetActive(false);
 
     }
 }

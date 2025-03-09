@@ -15,20 +15,20 @@ public abstract class EquipmentBase : MonoBehaviour
     protected int RefillAmount;
     protected GameObject baseObj;
     protected PlayerHotbar _playerHotbar;
+    protected PlayerInteraction _playerInteraction;
 
-    protected void Awake()
+    protected virtual void Awake()
     {
+        _playerInteraction = FindFirstObjectByType<PlayerInteraction>();
         _playerHotbar =FindFirstObjectByType<PlayerHotbar>();
         baseObj = gameObject;
     }
-    public struct AllClasses
-    {
-        public EquipmentObj equipmentObj;
-    }
-
   
 
+    internal abstract void HeldInteract();
+   
+
     
-    public abstract void CheckIfUsable();
+    internal abstract void CheckIfUsable();
 }
 
