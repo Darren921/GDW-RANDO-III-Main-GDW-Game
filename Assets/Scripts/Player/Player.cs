@@ -40,7 +40,6 @@ public class Player : MonoBehaviour
     [SerializeField] AudioClip heartbeatS, heartbeatSM, heartbeatM, heartbeatF;
 
     inGameMenu _menu;
-    [SerializeField] AudioSource walking;
     private CapsuleCollider _capsuleCollider;
 
     private bool isWalking = false;
@@ -54,7 +53,6 @@ public class Player : MonoBehaviour
     private string currentFootstep;
 
     private string lastFootstep;
-
 
     //Item switching 
     [Header("Item switching ")]
@@ -77,14 +75,11 @@ public class Player : MonoBehaviour
         InputManager.Init(this);
         InputManager.EnableInGame();
         Cursor.lockState = CursorLockMode.Locked;
-
-        currentFootstep = metal;
-        lastFootstep = currentFootstep;
     }
 
     private void Start()
     {
-    
+        
     }
 
     public void OpenMenu()
@@ -139,13 +134,26 @@ public class Player : MonoBehaviour
         SceneManager.LoadScene("DeathScreen");
         Cursor.lockState = CursorLockMode.None;
         isDead = false;
+
+        if (footstepCoroutine != null)
+        {
+            StopCoroutine(footstepCoroutine);
+        }
+        AudioManager.Instance.StopSFX(currentFootstep);
     }
     
     private void OnCollisionEnter(Collision collision)
     {
         if (!collision.gameObject.CompareTag("Enemy")) return;
         dead = true;
+
         StartCoroutine(LookAtDeath("Monster"));
+
+        if (footstepCoroutine != null)
+        {
+            StopCoroutine(footstepCoroutine);
+        }
+        AudioManager.Instance.StopSFX(currentFootstep);
     }
 
     private void OnTriggerStay(Collider other)
@@ -178,17 +186,20 @@ public class Player : MonoBehaviour
         SceneManager.LoadScene("DeathScreen");
     }
 
-    private void DetectTerrain()
+    public void DetectTerrain()
     {
+        int layerMask = ~LayerMask.GetMask("FrostSystem", "Items");
+
         Ray ray = new Ray(transform.position, Vector3.down);
-        if (Physics.Raycast(ray, out RaycastHit hit, 5f))
+        if (Physics.Raycast(ray, out RaycastHit hit, 5f, layerMask))
         {
+            Debug.Log($"Hit: {hit.collider.name}, Tag: {hit.collider.tag}");
+
             switch (hit.collider.tag)
             {
                 case "MetalFloor":
                     currentFootstep = metal;
                     break;
-
                 case "StoneFloor":
                     currentFootstep = stone;
                     break;
@@ -206,6 +217,7 @@ public class Player : MonoBehaviour
                 {
                     StopCoroutine(footstepCoroutine);
                 }
+                AudioManager.Instance.StopSFX(lastFootstep);
                 StartCoroutine(DelayWalkingSound(0.15f));
 
                 lastFootstep = currentFootstep;
