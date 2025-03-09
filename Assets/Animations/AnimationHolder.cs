@@ -9,8 +9,11 @@ using UnityEngine.SceneManagement;
 public class AnimationHolder : MonoBehaviour
 {
     [SerializeField] Animator animator;
+    [SerializeField] Animator PlayerAnim;
+    [SerializeField] Animator Fade;
     [SerializeField] string GameScene;
     [SerializeField] GameObject door;
+    
     [SerializeField] CinemachineVirtualCamera cam;
     
     
@@ -31,12 +34,15 @@ public class AnimationHolder : MonoBehaviour
     IEnumerator PlayCutsceneMainMenu()
     {
         animator.Play("MenuTransition");
+        PlayerAnim.Play("Move");
         
-        yield return new WaitForSeconds(19);
+        yield return new WaitForSeconds(36.15f);
         door.GetComponent<Animator>().Play("Slide");
         yield return new WaitForSeconds(6);
        
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
+        Fade.Play("Fade out");
+        yield return new WaitForSeconds(1);
         SceneManager.LoadScene(GameScene);
         
     }
