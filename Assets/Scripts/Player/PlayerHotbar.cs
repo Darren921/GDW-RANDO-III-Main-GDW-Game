@@ -183,6 +183,10 @@ public class PlayerHotbar : MonoBehaviour
 
     }
 
+    private void OnDisable()
+    {
+        Hotbar.Container.Clear();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -190,9 +194,8 @@ public class PlayerHotbar : MonoBehaviour
 
     public void checkIfActive()
     {
-        for (int i = 0; i < _equipmentBases.Count; i++)
+        for (var i = 0; i < _equipmentBases.Count; i++)
         {
-         
             if (_equipmentBases[i].equipped )
             {
                 _equipmentBases[i].CheckIfUsable();
@@ -211,5 +214,16 @@ public class PlayerHotbar : MonoBehaviour
             }
         }
         return -1;
+    }
+
+    public void checkIfActiveHeld()
+    {
+        for (var i = 0; i < _equipmentBases.Count; i++)
+        {
+            if (_equipmentBases[i].equipped )
+            {
+                _equipmentBases[i].CheckIfUsable();
+            }
+        }
     }
 }

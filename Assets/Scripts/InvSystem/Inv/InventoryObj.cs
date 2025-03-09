@@ -204,12 +204,34 @@ public class InventoryObj : ScriptableObject
             amount = _amount;
             OnAfterUpdate?.Invoke(this);
         }
+        public void RemoveSlot( Item _item, int _amount )
+        {
+            OnBeforeUpdate?.Invoke(this);
+            item = null;
+            OnAfterUpdate?.Invoke(this);
+        }
       
         public void addAmount(int value)
         {
             UpdateSlot(item , amount += value);
          
         }
+
+        public void removeAmount(int value)
+        {
+            if (amount - value > 0)
+            {
+                UpdateSlot(item , amount -= value);
+            }
+            else
+            {
+                RemoveSlot(item , 0);
+            }
+          
+            
+        }
+
+       
     }
 
     

@@ -60,10 +60,15 @@ public class PlayerInteraction : MonoBehaviour
     private void Update()
     {
 //        print(isHeldInteraction);
+        print(  hotbar._equipmentBases?[hotbar.inputtedSlot].CurrentUses > 0 );
         if (HeldInteractionAction.action.IsPressed() && currentInteractable != null && isHeldInteraction &&
-            hotbar._equipmentBases?[hotbar.inputtedSlot].CurrentUses > 0 )
+            hotbar._equipmentBases?[hotbar.inputtedSlot].CurrentUses > 0 && hotbar.curEquipmentBase.ID != 1)
         {
-            hotbar._equipmentBases[hotbar.returnTorchLocation()].GetComponent<Torch>().torchActive = true;
+            print("Holding");
+            if (hotbar._equipmentBases[hotbar.returnTorchLocation()].GetComponent<Torch>().equipped)
+            {
+                hotbar._equipmentBases[hotbar.returnTorchLocation()].GetComponent<Torch>().torchActive = true;
+            }
             InteractionBar.gameObject.SetActive(true);
             holdDuration += Time.deltaTime;
             InteractionBar.value = holdDuration;
@@ -73,13 +78,13 @@ public class PlayerInteraction : MonoBehaviour
         {
             print("released");
         }
-        if(HeldInteractionAction.action.WasReleasedThisFrame()  || isHeldInteraction && !hotbar._equipmentBases[hotbar.returnTorchLocation()].equipped && !iceMelting.isMelting && !_isResetting )
-        {
-//            print("Reset");
-            hotbar._equipmentBases[hotbar.returnTorchLocation()].gameObject.GetComponent<Torch>().torchActive = false;
-            Reset();
-
-        }
+        // if(HeldInteractionAction.action.WasReleasedThisFrame()  || isHeldInteraction && !hotbar._equipmentBases[hotbar.returnTorchLocation()].equipped && !iceMelting.isMelting && !_isResetting )
+        // {
+        //  print("Reset");
+        //     hotbar._equipmentBases[hotbar.returnTorchLocation()].gameObject.GetComponent<Torch>().torchActive = false;
+        //     Reset();
+        //
+        // }
 
         if (!iceMelting.AtMeltingPoint && hotbar._equipmentBases[hotbar.returnTorchLocation()].equipped && !isHeldInteraction)
         {

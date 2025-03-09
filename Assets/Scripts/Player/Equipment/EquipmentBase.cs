@@ -30,5 +30,6 @@ public abstract class EquipmentBase : MonoBehaviour
 
     
     internal abstract void CheckIfUsable();
+    internal abstract void CheckHeldInteract();
 }
 

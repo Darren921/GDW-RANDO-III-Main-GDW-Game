@@ -58,11 +58,15 @@ public class InputManager : MonoBehaviour
         };
         controls.InGame.OffOn.performed += _ =>
         {
-            player.GetComponent<PlayerHotbar>()?.checkIfActive();
+            PlayerHotbar?.checkIfActive();
+        };
+        controls.InGame.OffOnHeld.performed += _ =>
+        {
+            PlayerHotbar?.checkIfActiveHeld();
         };
          controls.InGame.OpenAndCloseInv.performed += _ =>
          { 
-             player.GetComponent<PlayerHotbar>()?.ManageHotbar();
+             PlayerHotbar?.ManageHotbar();
          };
         controls.InGame.Interact.performed += _ =>
         {

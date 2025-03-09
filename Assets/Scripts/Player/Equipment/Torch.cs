@@ -66,6 +66,10 @@ public class Torch : LightEquipment
     {
     }
 
+    internal override void CheckHeldInteract()
+    {
+    }
+
     public void ReduceCount()
     {
         CurrentUses--;

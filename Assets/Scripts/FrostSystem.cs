@@ -104,7 +104,7 @@ public class FrostSystem : MonoBehaviour
         if (!_player.dead)
         {
             _frost += Time.deltaTime;
-            _curOpacity += 0.013f * Time.deltaTime;
+            _curOpacity += 0.012f * Time.deltaTime;
             _frostTexture.SetFloat("_Opacity" , _curOpacity);     
 
         }

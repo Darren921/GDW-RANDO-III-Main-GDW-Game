@@ -69,6 +69,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "OffOnHeld",
+                    "type": "Button",
+                    "id": "b3142366-26b1-48ad-8271-f8d37ddaa84a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Hold(duration=5)",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Interact",
                     "type": "Button",
                     "id": "e1fed016-48d5-4059-a047-944fde4c2ad1",
@@ -321,6 +330,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "OffOn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b9d78b49-4bc0-4118-ba36-0160446a65ab",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OffOnHeld",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -26,9 +26,6 @@ public abstract class  ConsumableEquipment : EquipmentBase
             {
             
                 if (_playerHotbar.Hotbar.Container.Slots[i].item.Id != matchingEquipmentBase.ID) continue;
-                print(_playerHotbar.Hotbar.Container.Slots[i].amount);
-                print(_playerHotbar.Hotbar.Container.Slots[i].item.Id);
-                print(_playerHotbar.Hotbar.Container.Slots[i].item.Name);
                 CurrentUses = _playerHotbar.Hotbar.Container.Slots[i].amount;
           
                 return;
