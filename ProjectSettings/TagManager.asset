@@ -16,6 +16,8 @@ TagManager:
   - hidingSpot
   - MetalFloor
   - StoneFloor
+  - CarpetFloor
+  - MarbleFloor
   layers:
   - Default
   - TransparentFX

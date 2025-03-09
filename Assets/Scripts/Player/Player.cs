@@ -48,6 +48,8 @@ public class Player : MonoBehaviour
 
     private string metal = "Metal Footstep Sound";
     private string stone = "Stone Footstep Sound";
+    private string marble = "Marble Footstep Sound";
+    private string carpet = "Carpet Footstep Sound";
 
     private string currentFootstep;
 
@@ -188,6 +190,12 @@ public class Player : MonoBehaviour
 
                 case "StoneFloor":
                     currentFootstep = stone;
+                    break;
+                case "MarbleFloor":
+                    currentFootstep = marble;
+                    break;
+                case "CarpetFloor":
+                    currentFootstep = carpet;
                     break;
             }
 
