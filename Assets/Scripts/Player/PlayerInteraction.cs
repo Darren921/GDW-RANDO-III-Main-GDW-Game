@@ -68,7 +68,9 @@ public class PlayerInteraction : MonoBehaviour
             if (_playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().equipped)
             {
                 _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().torchActive = true;
+                _frostSystem.isFreezing = false;
             }
+            
             InteractionBar.gameObject.SetActive(true);
             holdDuration += Time.deltaTime;
             InteractionBar.value = holdDuration;

@@ -9,7 +9,7 @@ using UnityEngine.Serialization;
 public class FrostSystem : MonoBehaviour
 {
     [Header("Frost")]
-    bool isFreezing;
+    internal bool isFreezing;
     [SerializeField]internal float _frost;
     internal bool DeFrosting;
     [SerializeField] internal GameObject DeFrost;
