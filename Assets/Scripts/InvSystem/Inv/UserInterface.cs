@@ -19,7 +19,7 @@ public abstract class UserInterface : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        for (int i = 0; i < inventory.GetSlots.Length; i++)
+        for (var i = 0; i < inventory.GetSlots.Length; i++)
         {
             inventory.GetSlots[i].parent = this;
            inventory.GetSlots[i].OnBeforeUpdate += OnSlotUpdate;
@@ -41,6 +41,16 @@ public abstract class UserInterface : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        for (var i = 0; i < inventory.GetSlots.Length; i++)
+        {
+            inventory.GetSlots[i].parent = this;
+            inventory.GetSlots[i].OnBeforeUpdate -= OnSlotUpdate;
+            inventory.GetSlots[i].OnAfterUpdate -= OnSlotUpdate;
+
+        }
+    }
 
     private void  OnSlotUpdate(InventoryObj.InventorySlot _slot)
     {

@@ -26,7 +26,10 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
 
    void Start()
    {
-
+       if (GameManager.loaded)
+       {
+           MeltingStage = PlayerPrefs.GetInt("MeltingStage");
+       }
        isHeld = true;
        exitCollider.enabled = false;
        //Time.timeScale = 10;

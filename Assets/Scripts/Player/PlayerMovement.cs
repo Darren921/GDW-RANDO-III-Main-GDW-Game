@@ -90,8 +90,11 @@ public class PlayerMovement : MonoBehaviour
     
     public void startSprint()
     {
-        if(!onCoolDownFull && !onCoolDownNormal)
+//        if(!onCoolDownFull && !onCoolDownNormal)
             isSprinting = true;
+      
+        
+        
     }
 
     public void cancelSprint()
@@ -123,6 +126,7 @@ public class PlayerMovement : MonoBehaviour
         
         if (isSprinting && !onCoolDownFull && !onCoolDownNormal && !_torch.torchActive)
         {
+//            print("Decreasing sprint");
             sprintTime -= Time.deltaTime;
             if (sprintTime <= 0)
             {
@@ -130,21 +134,25 @@ public class PlayerMovement : MonoBehaviour
                 isSprinting = false;
                 rb.velocity = Vector3.zero;
                 sprintTime = 0;
+  //              print("Sprint End");
                 return;
             }
             if (isSprinting && !(sprintTime <= 0)) return;
             if (!(sprintTime <= 2) && !(sprintTime <= maxSprintTime)) return;
         }
-        if (!onCoolDownFull && !onCoolDownNormal && sprintTime !<= maxSprintTime)
+        else if (!onCoolDownFull && !onCoolDownNormal && sprintTime !<= maxSprintTime)
         {
+      //      print("Increasing sprint");
             sprintTime += Time.deltaTime;   
         }
+        
     }
     private IEnumerator onSprintEnd(int cooldown)
     {
         if (!onCoolDownFull)
         {
             onCoolDownNormal = true;
+  //          print("cooldown normal sprint");
             yield return new WaitForSecondsRealtime(cooldown);
             onCoolDownNormal = false;
         }
@@ -154,6 +162,8 @@ public class PlayerMovement : MonoBehaviour
         if (!onCoolDownNormal)
         {
             onCoolDownFull = true;
+  //          print("cooldown full sprint");
+
             yield return new WaitForSecondsRealtime(cooldown);
             onCoolDownFull = false;
             sprintTime = maxSprintTime;

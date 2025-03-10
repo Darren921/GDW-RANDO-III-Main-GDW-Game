@@ -38,7 +38,7 @@ public class InputManager : MonoBehaviour
         };
         controls.InGame.Sprint.performed += _ =>
         {
-            PlayerMovement. startSprint();
+            PlayerMovement.startSprint();
         };
         controls.InGame.Sprint.canceled += _ =>
         {

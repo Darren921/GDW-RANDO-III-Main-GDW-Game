@@ -25,12 +25,7 @@ public class PlayerHotbar : MonoBehaviour
 
     private void Awake()
     {
-        if (!GameManager.firstLoad)
-        {
-            GameManager.firstLoad = true;
-            Hotbar.AddItem(new Item(EquipmentObjs[1]), 1);
-            Hotbar.AddItem(new Item(EquipmentObjs[2]), 1);
-        }
+       
 
 
 
@@ -44,6 +39,12 @@ public class PlayerHotbar : MonoBehaviour
 
     private void Start()
     {
+        if (!GameManager.firstLoad)
+        {
+            GameManager.firstLoad = true;
+            Hotbar.AddItem(new Item(EquipmentObjs[1]), 1);
+            Hotbar.AddItem(new Item(EquipmentObjs[2]), 1);
+        }
         var currentUsesInInt =
             (int)_equipmentBases[returnTorchLocation()].CurrentUses; //Stores Current Uses in Torch as int 
         FuelCount = currentUsesInInt;

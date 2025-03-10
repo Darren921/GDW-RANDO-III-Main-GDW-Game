@@ -194,7 +194,7 @@ public class Player : MonoBehaviour
         Ray ray = new Ray(transform.position, Vector3.down);
         if (Physics.Raycast(ray, out RaycastHit hit, 5f, layerMask))
         {
-            Debug.Log($"Hit: {hit.collider.name}, Tag: {hit.collider.tag}");
+//            Debug.Log($"Hit: {hit.collider.name}, Tag: {hit.collider.tag}");
 
             switch (hit.collider.tag)
             {

@@ -26,7 +26,7 @@ public class InventoryObj : ScriptableObject
             return false;
         }
 
-        InventorySlot slot = FindItemOnInventory(_item);
+        var slot = FindItemOnInventory(_item);
         if (!database.ItemObjects[_item.Id].stackable || slot == null)
         {
             SetEmptySlot(_item, _amount);
@@ -37,27 +37,22 @@ public class InventoryObj : ScriptableObject
         return true;
     }
 
-    public bool RemoveItem(Item _item, int _amount)
+    public void RemoveItem(Item _item, int _amount)
     {
-        InventorySlot slot = FindItemOnInventory(_item);
+        var slot = FindItemOnInventory(_item);
 
         for (var i = 0; i < GetSlots.Length; i++)
         {
-            if (GetSlots[i] == slot)
+            if (GetSlots[i] != slot) continue;
+            if (GetSlots[i].amount - _amount > 0)
             {
-                if (GetSlots[i].amount - _amount > 0)
-                {
-                    GetSlots[i].removeAmount(_amount);
-                }
-                else
-                {
-                    GetSlots[i].RemoveSlot();
-                }
-
-                return true;
+                GetSlots[i].removeAmount(_amount);
+            }
+            else
+            {
+                GetSlots[i].RemoveSlot();
             }
         }
-        return false;
     }
  
     
@@ -65,8 +60,8 @@ public class InventoryObj : ScriptableObject
     {
         get
         {
-            int counter = 0;
-            for (int i = 0; i < GetSlots.Length; i++)
+            var counter = 0;
+            for (var i = 0; i < GetSlots.Length; i++)
             {
                 if (GetSlots[i].item.Id <= -1)
                 {
@@ -78,7 +73,7 @@ public class InventoryObj : ScriptableObject
     }
     private InventorySlot FindItemOnInventory(Item _item)
     {
-        for (int i = 0; i < GetSlots.Length; i++)
+        for (var i = 0; i < GetSlots.Length; i++)
         {
             if (GetSlots[i].item.Id == _item.Id)
             {
@@ -90,10 +85,9 @@ public class InventoryObj : ScriptableObject
     }
 
 
-
-    public InventorySlot SetEmptySlot(Item _item, int _amount)
+    private InventorySlot SetEmptySlot(Item _item, int _amount)
     {
-        for (int i = 0; i < GetSlots.Length; i++)
+        for (var i = 0; i < GetSlots.Length; i++)
         {
             if (GetSlots[i].item.Id <= -1)
             {
@@ -115,19 +109,14 @@ public class InventoryObj : ScriptableObject
     [ContextMenu("Save")]
     public void Save()
     {
-        string fullPath = Path.Combine(Application.persistentDataPath, savePath);
+        var fullPath = Path.Combine(Application.persistentDataPath, savePath);
         try
         {
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
-            string saveData = JsonUtility.ToJson(this, true);
-            using (FileStream stream = new FileStream(fullPath, FileMode.Create))
-            {
-                using (StreamWriter writer = new StreamWriter(stream))
-                {
-                    writer.Write(saveData);
-                }
-            }
-            
+            var saveData = JsonUtility.ToJson(this, true);
+            using var stream = new FileStream(fullPath, FileMode.Create);
+            using var writer = new StreamWriter(stream);
+            writer.Write(saveData);
         }
         catch (Exception e)
         {
@@ -137,21 +126,21 @@ public class InventoryObj : ScriptableObject
     [ContextMenu("Load")]
     public void Load()
     {
-        string fullPath = Path.Combine(Application.persistentDataPath, savePath);
+        var fullPath = Path.Combine(Application.persistentDataPath, savePath);
         if (File.Exists(fullPath))
         {
             try
             {
-                string dataToload = "";
-                using (FileStream stream = new FileStream(fullPath, FileMode.Open))
+                var dataToload = "";
+                using (var stream = new FileStream(fullPath, FileMode.Open))
                 {
-                    using (StreamReader reader = new StreamReader(stream))
+                    using (var reader = new StreamReader(stream))
                     {
                         dataToload = reader.ReadToEnd();
                     }
                 }
                 JsonUtility.FromJsonOverwrite(dataToload, this);
-                foreach (InventorySlot slot in Container.Slots)
+                foreach (var slot in Container.Slots)
                 {
                     slot.UpdateSlot( slot.item, slot.amount);
                 }

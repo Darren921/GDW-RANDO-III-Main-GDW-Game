@@ -92,9 +92,15 @@ public class FrostSystem : MonoBehaviour
 
     protected void OnTriggerExit(Collider other)
     {
-         DeFrost.gameObject.SetActive(true); 
+       StartCoroutine(DelayRelease()) ;
     }
-    
+
+    private IEnumerator DelayRelease()
+    {
+        yield return null;
+        DeFrost.gameObject.SetActive(true); 
+    }
+
 
     // Update is called once per frame
     void Update()

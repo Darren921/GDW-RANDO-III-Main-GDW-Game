@@ -27,7 +27,7 @@ public abstract class LightEquipment : EquipmentBase
 
     protected virtual void Update()
     {
-        print(CurrentUses);
+//        print(CurrentUses);
         slider.value = CurrentUses;
         slider.maxValue = MaxUses;
         if (CurrentUses <= 0 && active )

@@ -44,7 +44,8 @@ public class SceneLoader : MonoBehaviour
     
         public void GoToLastCheckpoint()
         {
-           // SceneManager.LoadScene("MainScene");
+            GameManager.loaded = true;
+            SceneManager.LoadScene("MainScene");
         }
     public void mainScene()
     {
