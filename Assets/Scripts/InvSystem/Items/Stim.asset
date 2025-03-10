@@ -19,7 +19,7 @@ MonoBehaviour:
     Description: 
     UiDisplay: {fileID: 21300000, guid: 4665a831499bb7044b208180006e5f8c, type: 3}
     ItemType: 2
-    Prefab: {fileID: 0}
+    Prefab: {fileID: 167074595619511749, guid: a6070e1b11cc2ef4eb12323ba132c7c7, type: 3}
     ItemSpawnLimit: 3
     Limit: 1
     ItemRarity: 0

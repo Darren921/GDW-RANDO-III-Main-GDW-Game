@@ -41,15 +41,16 @@ public class SpawnManager : MonoBehaviour
 
     private IEnumerator SpawnItems( int SpawnCycleCap)
     {
+        if (active) yield break;
+        active = true;
         var RandomItem = ShuffleRandomItems();
         var tag = RandomItem[0].data.Prefab.tag;
         var curerentItemSpawn = GameObject.FindGameObjectsWithTag(tag).Length;
-        if (active) yield break;
-        active = true;
+       
         var spawnedCount = 0;
         for(int i = 0; i < SpawnPointIndex.Count; i++)
         {
-            RandomItem = ShuffleRandomItems();
+            RandomItem =  ShuffleRandomItems();
             tag = RandomItem[0].data.Prefab.tag;            
             curerentItemSpawn = GameObject.FindGameObjectsWithTag(tag).Length;
       //      print($"{tag} spawned with {curerentItemSpawn} and {SpawnPointIndex[i]}");
@@ -88,18 +89,19 @@ public class SpawnManager : MonoBehaviour
     }
 
     private ItemObj lastItem;
+   [SerializeField] private List<ItemObj> ShuffledItems;
+
     private List<ItemObj> ShuffleRandomItems()  
     {  
-        List<ItemObj> ShuffledItems  = new List<ItemObj>();
+       ShuffledItems  = new List<ItemObj>();
         for (int i = RandomItems.Count - 1; i > 0; i--)
         {
             var rnd = Random.Range(0,i);
-            // ReSharper disable once SwapViaDeconstruction
-
             var tempStorage = RandomItems[i];
             lastItem = RandomItems[i];
-            while (RandomItems[i] == lastItem && i > 1)
+            while (RandomItems[i] == lastItem && i > 2)
             {
+                print("send help");
                 rnd = Random.Range(0,i);
             }
             RandomItems[i] = RandomItems[rnd];

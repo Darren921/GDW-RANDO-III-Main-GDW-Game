@@ -159,7 +159,7 @@ public class PlayerInteraction : MonoBehaviour
                 switch (hotbar.Hotbar.Container.Slots[hotbar.inputtedSlot - 1].item.Id)
                 {
                     case 1:
-                        
+                        InteractText.text = " ";
                         break;
                     
                     case 2:
