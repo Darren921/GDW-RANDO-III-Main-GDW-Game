@@ -91,14 +91,8 @@ public class NewMonster : MonoBehaviour
             {
                 IsSpotted = true;
             }
-            else
-            {
-                if (GoToPlayer)
-                {
-                    LastPosition();
-                    GoToPlayer = false;
-                }
-            }
+            
+
             
 
         }
@@ -231,34 +225,27 @@ public class NewMonster : MonoBehaviour
         }
 
         
-        if (GoToPlayer)
-        {
-            if ( IsSpotted )
-            {
-                canGo = true;
-                agent.destination = cube.transform.position;
-                agent.speed = 14;
-                
-                
-            }
-            
-            else if (canGo)
-            {
-                GoToPlayer = false;
-                IsSpotted = false;
-                LastPosition();
-            }
-            if (Vector3.Distance(transform.position, agent.destination) < 3 && !IsSpotted)
-            {
-                GoToPlayer = false;
-                canRoam = true;
-            }
-        }
-        if (!GoToPlayer  && Vector3.Distance(transform.position, agent.destination) < 3)
+        
+        if (!GoToPlayer  && Vector3.Distance(transform.position, agent.destination) < 3 && !canGo)
         {
             Roam();
             canRoam = false;
             
+        }
+
+        if (IsSpotted)
+        {
+            if (GoToPlayer)
+            {
+                agent.destination = cube.transform.position;
+                agent.speed = 14;
+                canGo = true;
+            }
+            else if (!GoToPlayer && IsSpotted)
+            {
+                LastPosition();
+                
+            }
         }
         
         
