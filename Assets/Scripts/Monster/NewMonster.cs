@@ -91,6 +91,14 @@ public class NewMonster : MonoBehaviour
             {
                 IsSpotted = true;
             }
+            else
+            {
+                if (GoToPlayer)
+                {
+                    LastPosition();
+                    GoToPlayer = false;
+                }
+            }
             
 
         }
