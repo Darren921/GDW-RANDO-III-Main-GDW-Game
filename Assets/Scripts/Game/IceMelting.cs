@@ -16,7 +16,6 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
 
    private bool active , checkPoint1, checkPoint2, checkPoint3, checkPoint4, checkPoint5;
    private Renderer _renderer;
-   private BoxCollider _boxCollider;
    [SerializeField]private BoxCollider exitCollider;
    internal PlayerHotbar _playerHotbar;
    [SerializeField] GameObject _DoorHitbox;
@@ -31,7 +30,6 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
        isHeld = true;
        exitCollider.enabled = false;
        //Time.timeScale = 10;
-        _boxCollider = GetComponent<BoxCollider>();
         _renderer = GetComponent<Renderer>();
         _playerHotbar = FindObjectOfType<PlayerHotbar>();
       //  meltingProgress = 400;
@@ -92,10 +90,8 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
             checkPoint1 = true;
             print("Final checkpoint");
              _renderer.enabled = false;
-             _boxCollider.enabled = false;
             _DoorHitbox.SetActive(false);
             exitCollider.enabled = true;
-
         } 
         else switch (MeltingStage)
         {

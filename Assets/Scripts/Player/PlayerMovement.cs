@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
     //standard movement
-    [SerializeField] float moveSpeed;
+    [SerializeField] internal float moveSpeed;
     Rigidbody rb;
     private Vector3 smoothedMoveDir;
     private Vector3 smoothedMoveVelo;
@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float sprintTime;
     private bool onCoolDownFull;
     private bool onCoolDownNormal;
-    [SerializeField] private float sprintSpeed;
+    [SerializeField] internal float sprintSpeed;
 
     [SerializeField] private float maxSprintTime;
 
@@ -52,6 +52,17 @@ public class PlayerMovement : MonoBehaviour
             moveDir = newDir.normalized;
         }
 
+    }
+
+    public IEnumerator SetStimSpeed()
+    {
+        print("Speed Changed");
+        moveSpeed = 15;
+        sprintSpeed = 1.5f;
+        yield return new WaitForSecondsRealtime(15);
+        moveSpeed = 13.5f;
+        sprintSpeed = 1.3f;
+        
     }
 
     private void FixedUpdate()

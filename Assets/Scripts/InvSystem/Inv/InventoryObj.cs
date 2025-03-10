@@ -36,6 +36,30 @@ public class InventoryObj : ScriptableObject
         slot.addAmount(_amount);
         return true;
     }
+
+    public bool RemoveItem(Item _item, int _amount)
+    {
+        InventorySlot slot = FindItemOnInventory(_item);
+
+        for (var i = 0; i < GetSlots.Length; i++)
+        {
+            if (GetSlots[i] == slot)
+            {
+                if (GetSlots[i].amount - _amount > 0)
+                {
+                    GetSlots[i].removeAmount(_amount);
+                }
+                else
+                {
+                    GetSlots[i].RemoveSlot();
+                }
+
+                return true;
+            }
+        }
+        return false;
+    }
+ 
     
     public int EmptySlotCount
     {
@@ -204,32 +228,27 @@ public class InventoryObj : ScriptableObject
             amount = _amount;
             OnAfterUpdate?.Invoke(this);
         }
-        public void RemoveSlot( Item _item, int _amount )
-        {
-            OnBeforeUpdate?.Invoke(this);
-            item = null;
-            OnAfterUpdate?.Invoke(this);
-        }
+       
       
         public void addAmount(int value)
         {
             UpdateSlot(item , amount += value);
-         
         }
-
         public void removeAmount(int value)
         {
-            if (amount - value > 0)
-            {
-                UpdateSlot(item , amount -= value);
-            }
-            else
-            {
-                RemoveSlot(item , 0);
-            }
-          
-            
+            UpdateSlot(item , amount -= value);
         }
+        public void RemoveSlot()
+        {
+            item.Id= -1;
+            item = new Item();   
+            amount = 0;
+            OnBeforeUpdate?.Invoke(this);
+            OnAfterUpdate?.Invoke(this);
+        }
+      
+
+       
 
        
     }

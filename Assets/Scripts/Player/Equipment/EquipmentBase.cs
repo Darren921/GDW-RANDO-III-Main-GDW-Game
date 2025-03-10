@@ -16,10 +16,13 @@ public abstract class EquipmentBase : MonoBehaviour
     protected GameObject baseObj;
     protected PlayerHotbar _playerHotbar;
     protected PlayerInteraction _playerInteraction;
+    protected PlayerMovement _playerMovement;
+
 
     protected virtual void Awake()
     {
         _playerInteraction = FindFirstObjectByType<PlayerInteraction>();
+        _playerMovement = FindFirstObjectByType<PlayerMovement>();
         _playerHotbar =FindFirstObjectByType<PlayerHotbar>();
         baseObj = gameObject;
     }

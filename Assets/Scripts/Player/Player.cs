@@ -134,7 +134,8 @@ public class Player : MonoBehaviour
         SceneManager.LoadScene("DeathScreen");
         Cursor.lockState = CursorLockMode.None;
         isDead = false;
-
+       _playerHotbar.Hotbar.Container.Clear();
+        GameManager.firstLoad = false;
         if (footstepCoroutine != null)
         {
             StopCoroutine(footstepCoroutine);

@@ -9,13 +9,13 @@ public abstract class  ConsumableEquipment : EquipmentBase
     [SerializeField] EquipmentBase matchingEquipmentBase;
     
     // Start is called before the first frame update
-    protected void Awake()
+    protected override void Awake()
     {
         base.Awake();
         ID = consumable.data.Id;
         MaxUses = consumable.data.Limit;
     }
-
+    protected abstract void ActivateEffect();
    
     // Update is called once per frame
     protected virtual void Update()
@@ -27,7 +27,6 @@ public abstract class  ConsumableEquipment : EquipmentBase
             
                 if (_playerHotbar.Hotbar.Container.Slots[i].item.Id != matchingEquipmentBase.ID) continue;
                 CurrentUses = _playerHotbar.Hotbar.Container.Slots[i].amount;
-          
                 return;
             }
 

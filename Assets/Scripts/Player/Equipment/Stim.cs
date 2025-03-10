@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class Stim : ConsumableEquipment
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
+ 
     // Update is called once per frame
 
     internal override void HeldInteract()
@@ -26,8 +21,15 @@ public class Stim : ConsumableEquipment
         if (_playerHotbar.gameObject.GetComponent<PlayerInteraction>().holdDuration >= 4.9f)
         {
             print("Held Interact Self");
-            _playerHotbar.Hotbar.Container.Slots[_playerHotbar.inputtedSlot]
-                .UpdateSlot(_playerHotbar.Hotbar.Container.Slots[_playerHotbar.inputtedSlot].item, 0);
+            _playerHotbar.Hotbar.RemoveItem(_playerHotbar.Hotbar.Container.Slots[_playerHotbar.inputtedSlot - 1].item, 1);
+            if (_playerHotbar.Hotbar.Container.Slots[_playerHotbar.inputtedSlot - 1].item.Id <= 0)
+            {
+                ActivateEffect();
+                _playerHotbar.curEquipmentBase.gameObject.SetActive(false);
+                _playerHotbar._equipmentBases.Remove(_playerHotbar.curEquipmentBase);
+                _playerHotbar.ChangeItem(_playerHotbar.inputtedSlot);
+                
+            }   
             _playerHotbar.gameObject.GetComponent<PlayerInteraction>().Reset();
         }
 
@@ -41,7 +43,7 @@ public class Stim : ConsumableEquipment
         _playerInteraction.InteractText.text = "";
     }
 
-
+    
 
 
     internal override void CheckIfUsable()
@@ -51,7 +53,11 @@ public class Stim : ConsumableEquipment
 
     internal override void CheckHeldInteract()
     {
+        
+    }
 
-
+    protected override void ActivateEffect()
+    {
+        _playerMovement.StartCoroutine(_playerMovement.SetStimSpeed());
     }
 }

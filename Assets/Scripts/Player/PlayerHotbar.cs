@@ -186,6 +186,7 @@ public class PlayerHotbar : MonoBehaviour
     private void OnDisable()
     {
         Hotbar.Container.Clear();
+        GameManager.firstLoad = false;
     }
 
     private void OnTriggerEnter(Collider other)
