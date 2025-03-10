@@ -93,6 +93,7 @@ public class InputManager : MonoBehaviour
     {
         if (isSelf)
         {
+            print("Self");
             controls.InGame.HeldInteract.ApplyBindingOverride(new InputBinding
             {
                 overrideInteractions = "Hold(duration= 5,pressPoint=0.2)"
@@ -100,6 +101,7 @@ public class InputManager : MonoBehaviour
         }
         else
         {
+            print("door melting");
             controls.InGame.HeldInteract.ApplyBindingOverride(new InputBinding
             {
                 overrideInteractions = "Hold(duration= 10,pressPoint=0.2)"
