@@ -27672,7 +27672,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &922996278
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -49264,6 +49264,7 @@ MonoBehaviour:
   GameScene: newMap
   door: {fileID: 1329457661}
   cam: {fileID: 0}
+  _frostTexture: {fileID: 2100000, guid: d8fcb42a126ee60429873b0f30b0249a, type: 2}
 --- !u!43 &1774932512
 Mesh:
   m_ObjectHideFlags: 0
@@ -52262,6 +52263,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnPointIndex: 
   RandomItems: []
+  ShuffledItems: []
 --- !u!1 &1955005985
 GameObject:
   m_ObjectHideFlags: 0

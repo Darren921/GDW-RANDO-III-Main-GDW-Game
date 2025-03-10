@@ -15,13 +15,12 @@ public class AnimationHolder : MonoBehaviour
     [SerializeField] GameObject door;
     
     [SerializeField] CinemachineVirtualCamera cam;
-    
+    [SerializeField] private Material _frostTexture;
     
 
     private void Start()
     {
-        
-        
+        _frostTexture.SetFloat("_Opacity", -1);
     }
     private void Update()
     {
