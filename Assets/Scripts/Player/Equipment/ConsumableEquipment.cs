@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class  ConsumableEquipment : EquipmentBase
 {
     [SerializeField] Consumables consumable;
-    [SerializeField] EquipmentBase matchingEquipmentBase;
+    [SerializeField] internal EquipmentBase matchingEquipmentBase;
     
     // Start is called before the first frame update
     protected override void Awake()

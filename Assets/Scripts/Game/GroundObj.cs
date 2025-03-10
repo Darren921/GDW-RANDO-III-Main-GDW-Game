@@ -12,13 +12,19 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
    private PlayerHotbar _playerHotbar;
    public ItemObj item;
    public EquipmentBase equipment;
-
+  EquipmentBaseCache equipmentCache;
+   
    private void Start()
    {
        _player = FindFirstObjectByType<Player>();
        _spawnManager = FindFirstObjectByType<SpawnManager>();
        _playerHotbar = _player.GetComponent<PlayerHotbar>();
+       equipmentCache = FindObjectOfType<EquipmentBaseCache>();
        isHeld = false;
+       if (item.name == "Stim")
+       {
+           equipment = equipmentCache.StimEquipment;
+       }
    }
    public bool isHeld { get; set; }
 
@@ -43,10 +49,11 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
                        _player.GetComponent<PlayerInteraction>().InteractText.text = "";
 
                        Destroy(gameObject);
-                       if (equipment != null)
-                       {
-                           _playerHotbar._equipmentBases.Add(equipment);
-                       }
+                       _playerHotbar._equipmentBases.Add(equipment);
+                            
+                    
+                          
+                       
                    }
                }
            }
