@@ -91,13 +91,10 @@ public class NewMonster : MonoBehaviour
             {
                 IsSpotted = true;
             }
-            else
-            {
-                IsSpotted = false;
-            }
+            
 
         }
-        Debug.DrawRay(gameObject.transform.position, RayTarget.transform.position - gameObject.transform.position, Color.red);
+        Debug.DrawRay(gameObject.transform.position, cube.transform.position - gameObject.transform.position, Color.red);
 
         //        Debug.Log(cube.transform.position - gameObject.transform.position);
         
@@ -146,10 +143,7 @@ public class NewMonster : MonoBehaviour
             {
                 GoToPlayer = true;
             }
-            else
-            {
-                GoToPlayer = false;
-            }
+            
 
 
         }
