@@ -57,11 +57,11 @@ public class PlayerMovement : MonoBehaviour
     public IEnumerator SetStimSpeed()
     {
         print("Speed Changed");
-        moveSpeed = 15;
-        sprintSpeed = 1.5f;
+        moveSpeed = 17;
+        sprintSpeed = 1.7f;
         yield return new WaitForSecondsRealtime(15);
-        moveSpeed = 13.5f;
-        sprintSpeed = 1.3f;
+        moveSpeed = 15f;
+        sprintSpeed = 1.5f;
         
     }
 

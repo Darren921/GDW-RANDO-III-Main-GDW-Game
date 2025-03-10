@@ -18,6 +18,7 @@ TagManager:
   - StoneFloor
   - CarpetFloor
   - MarbleFloor
+  - Stim
   layers:
   - Default
   - TransparentFX
