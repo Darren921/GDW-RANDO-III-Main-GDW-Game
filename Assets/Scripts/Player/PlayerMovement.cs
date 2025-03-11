@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 smoothedMoveDir;
     private Vector3 smoothedMoveVelo;
     private Vector3 moveDir;
-
+    [SerializeField] CinemachineVirtualCamera virtualCamera;
     //Sprinting
     [Header("Sprinting")]
     Vector3 previousPos;
@@ -92,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
     {
 //        if(!onCoolDownFull && !onCoolDownNormal)
             isSprinting = true;
-      
+        virtualCamera.m_Lens.FieldOfView = 45;
         
         
     }
@@ -107,8 +107,8 @@ public class PlayerMovement : MonoBehaviour
             onCoolDownNormal = true;
             StartCoroutine(onSprintEnd(1));
         }
-       
-    
+        virtualCamera.m_Lens.FieldOfView = 40;
+
     }
 
     public void DisableInput()
@@ -155,6 +155,7 @@ public class PlayerMovement : MonoBehaviour
   //          print("cooldown normal sprint");
             yield return new WaitForSecondsRealtime(cooldown);
             onCoolDownNormal = false;
+            
         }
     }
     private IEnumerator onSprintEmpty(int cooldown )
@@ -167,6 +168,7 @@ public class PlayerMovement : MonoBehaviour
             yield return new WaitForSecondsRealtime(cooldown);
             onCoolDownFull = false;
             sprintTime = maxSprintTime;
+            
         }
     
     }
