@@ -5,13 +5,14 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Random = Unity.Mathematics.Random;
 
 public class QuickTimeEvents : MonoBehaviour
 {
     [SerializeField] private IceMelting iceMelting;
-    [SerializeField] private Slider _slider; 
-    [SerializeField]  internal InputActionReference QTEInteract;
-    
+    [SerializeField] private Slider _slider;
+    [SerializeField] internal InputActionReference QTEInteract;
+
 
     private float valueMin, valueMax;
     [SerializeField] private float Range;
@@ -21,13 +22,14 @@ public class QuickTimeEvents : MonoBehaviour
     private bool increasing;
     [SerializeField] private float _sliderSpeed;
     [SerializeField] private Image _targetImage;
-    enum State
+
+    private enum State
     {
         NotStarted,
         InProgress,
-        Ended,
-      
+        Ended
     }
+
     private void Start()
     {
         increasing = true;
@@ -37,30 +39,28 @@ public class QuickTimeEvents : MonoBehaviour
 
     public void StartQTE()
     {
+        //Generate Target Area
         GenerateRange();
+        //Activate slider 
         StartCoroutine(StartModValue());
-        PlaceHighlightedArea();
+        //Place Target on slider
+        PlaceTargetArea();
     }
 
     private void Update()
     {
+        // if state in progress increase and decrease based on slider values 
         if (state == State.InProgress)
         {
             if (increasing)
             {
                 _slider.value += _sliderSpeed * Time.deltaTime;
-                if (_slider.value >= _slider.maxValue)
-                {
-                    increasing = false;
-                }
+                if (_slider.value >= _slider.maxValue) increasing = false;
             }
             else
             {
                 _slider.value -= _sliderSpeed * Time.deltaTime;
-                if (_slider.value <= _slider.minValue)
-                {
-                    increasing = true;
-                }
+                if (_slider.value <= _slider.minValue) increasing = true;
             }
         }
     }
@@ -69,70 +69,55 @@ public class QuickTimeEvents : MonoBehaviour
     {
         _slider.gameObject.SetActive(true);
         state = State.InProgress;
-        yield return new WaitUntil(() => state == State.Ended); 
+        yield return new WaitUntil(() => state == State.Ended);
         StopQTE();
     }
 
-    private void PlaceHighlightedArea()
+    private void PlaceTargetArea()
     {
-      
+        _targetImage.gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(valueMin, 0.5f);
+        _targetImage.gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(valueMax, 0.5f);
     }
 
     private void GenerateRange()
     {
-         valueMin = UnityEngine.Random.Range(_slider.minValue, _slider.maxValue);
+        //generate min value
+        valueMin = UnityEngine.Random.Range(_slider.minValue, _slider.maxValue);
+
+        //choose between value that is + or - valueMin 
         var Choice = UnityEngine.Random.Range(1, 2);
         switch (Choice)
         {
             case 1:
-               valueMax =  valueMin - Range;
+                valueMax = valueMin - Range;
                 break;
             case 2:
-                valueMax =  valueMin + Range;
+                valueMax = valueMin + Range;
                 break;
-            
         }
-        if (valueMin > valueMax)
-        {
-            var temp = valueMin;
-             
-            valueMin = valueMax;
-             
-            valueMax = temp;
-        }
-         while (valueMin  < _slider.minValue || valueMax > _slider.maxValue)
-         {
-             GenerateRange();
-         }
 
-       
-         
+        //swapping min and max values if min is greater than max
+        if (valueMin > valueMax) (valueMin, valueMax) = (valueMax, valueMin);
+        //Refreshing till values meet conditions 
+        while (valueMin < _slider.minValue || valueMax > _slider.maxValue) GenerateRange();
     }
 
     public void InteractQTE()
     {
-        if(state != State.InProgress) return;
+        if (state != State.InProgress) return;
         PressedValue = _slider.value;
         Time.timeScale = 0;
         if (PressedValue >= valueMin && PressedValue <= valueMax)
-        {
             print("Successfully Performed");
-        }
         else
-        {
             print("Failed to Perform");
-        }
         state = State.Ended;
     }
 
     private void StopQTE()
     {
-       
         _slider.value = 0;
         _slider.gameObject.SetActive(false);
         Time.timeScale = 1;
     }
-    
-    
-    
 }
