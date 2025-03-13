@@ -60,9 +60,9 @@ public class InputManager : MonoBehaviour
         {
             PlayerHotbar?.checkIfActive();
         };
-        controls.InGame.OffOnHeld.performed += _ =>
+        controls.InGame.QTE.performed += _ =>
         {
-            PlayerHotbar?.checkIfActiveHeld();
+            PlayerInteraction?.InteractWithQTE();
         };
          controls.InGame.OpenAndCloseInv.performed += _ =>
          { 

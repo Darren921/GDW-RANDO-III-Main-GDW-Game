@@ -13,7 +13,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
    private float _curOpacity; 
    [SerializeField] internal int MeltingStage;
     private float melted;
-
+    private QuickTimeEvents quickTimeEvent;
    private bool active , checkPoint1, checkPoint2, checkPoint3, checkPoint4, checkPoint5;
    private Renderer _renderer;
    [SerializeField]private BoxCollider exitCollider;
@@ -30,6 +30,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
        {
            MeltingStage = PlayerPrefs.GetInt("MeltingStage");
        }
+       quickTimeEvent = FindObjectOfType<QuickTimeEvents>();
        isHeld = true;
        exitCollider.enabled = false;
        //Time.timeScale = 10;
@@ -148,6 +149,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
             print("Held Interact");
             _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().ReduceCount();
             MeltingStage--;
+            quickTimeEvent.StartQTE();
             _playerHotbar.gameObject.GetComponent<PlayerInteraction>().Reset();
             _playerHotbar.GetComponent<PlayerInteraction>().HeldInteractionAction.action.Reset();
             IcemeltingText.text = "";

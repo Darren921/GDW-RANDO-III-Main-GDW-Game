@@ -18,9 +18,11 @@ public class PlayerInteraction : MonoBehaviour
     internal float holdDuration;
     [SerializeField]internal IceMelting iceMelting;
     private bool _isResetting;
+    QuickTimeEvents quickTimeEvents;
   internal FrostSystem _frostSystem;
     private void Start()
     {
+        quickTimeEvents = FindFirstObjectByType<QuickTimeEvents>();
         _playerHotbar = GetComponent<PlayerHotbar>();
         InteractionBar.gameObject.SetActive(false);
         _frostSystem = FindObjectOfType<FrostSystem>();
@@ -55,6 +57,11 @@ public class PlayerInteraction : MonoBehaviour
             isHeldInteraction = other.GetComponent<IceMelting>().isHeld;
         }
      
+    }
+
+    public void InteractWithQTE()
+    {
+        quickTimeEvents.InteractQTE();
     }
 
     private void Update()

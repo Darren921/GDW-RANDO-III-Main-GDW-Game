@@ -69,12 +69,12 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "OffOnHeld",
+                    "name": "QTE",
                     "type": "Button",
                     "id": "b3142366-26b1-48ad-8271-f8d37ddaa84a",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Hold(duration=5)",
+                    "interactions": "",
                     "initialStateCheck": true
                 },
                 {
@@ -340,7 +340,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "OffOnHeld",
+                    "action": "QTE",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

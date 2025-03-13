@@ -91,12 +91,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""OffOnHeld"",
+                    ""name"": ""QTE"",
                     ""type"": ""Button"",
                     ""id"": ""b3142366-26b1-48ad-8271-f8d37ddaa84a"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Hold(duration=5)"",
+                    ""interactions"": """",
                     ""initialStateCheck"": true
                 },
                 {
@@ -362,7 +362,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""OffOnHeld"",
+                    ""action"": ""QTE"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -413,7 +413,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_InGame_Hide = m_InGame.FindAction("Hide", throwIfNotFound: true);
         m_InGame_ItemSwap = m_InGame.FindAction("ItemSwap", throwIfNotFound: true);
         m_InGame_OffOn = m_InGame.FindAction("OffOn", throwIfNotFound: true);
-        m_InGame_OffOnHeld = m_InGame.FindAction("OffOnHeld", throwIfNotFound: true);
+        m_InGame_QTE = m_InGame.FindAction("QTE", throwIfNotFound: true);
         m_InGame_Interact = m_InGame.FindAction("Interact", throwIfNotFound: true);
         m_InGame_HeldInteract = m_InGame.FindAction("HeldInteract", throwIfNotFound: true);
         m_InGame_Defrost = m_InGame.FindAction("Defrost", throwIfNotFound: true);
@@ -492,7 +492,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_InGame_Hide;
     private readonly InputAction m_InGame_ItemSwap;
     private readonly InputAction m_InGame_OffOn;
-    private readonly InputAction m_InGame_OffOnHeld;
+    private readonly InputAction m_InGame_QTE;
     private readonly InputAction m_InGame_Interact;
     private readonly InputAction m_InGame_HeldInteract;
     private readonly InputAction m_InGame_Defrost;
@@ -509,7 +509,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Hide => m_Wrapper.m_InGame_Hide;
         public InputAction @ItemSwap => m_Wrapper.m_InGame_ItemSwap;
         public InputAction @OffOn => m_Wrapper.m_InGame_OffOn;
-        public InputAction @OffOnHeld => m_Wrapper.m_InGame_OffOnHeld;
+        public InputAction @QTE => m_Wrapper.m_InGame_QTE;
         public InputAction @Interact => m_Wrapper.m_InGame_Interact;
         public InputAction @HeldInteract => m_Wrapper.m_InGame_HeldInteract;
         public InputAction @Defrost => m_Wrapper.m_InGame_Defrost;
@@ -545,9 +545,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @OffOn.started += instance.OnOffOn;
             @OffOn.performed += instance.OnOffOn;
             @OffOn.canceled += instance.OnOffOn;
-            @OffOnHeld.started += instance.OnOffOnHeld;
-            @OffOnHeld.performed += instance.OnOffOnHeld;
-            @OffOnHeld.canceled += instance.OnOffOnHeld;
+            @QTE.started += instance.OnQTE;
+            @QTE.performed += instance.OnQTE;
+            @QTE.canceled += instance.OnQTE;
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
@@ -588,9 +588,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @OffOn.started -= instance.OnOffOn;
             @OffOn.performed -= instance.OnOffOn;
             @OffOn.canceled -= instance.OnOffOn;
-            @OffOnHeld.started -= instance.OnOffOnHeld;
-            @OffOnHeld.performed -= instance.OnOffOnHeld;
-            @OffOnHeld.canceled -= instance.OnOffOnHeld;
+            @QTE.started -= instance.OnQTE;
+            @QTE.performed -= instance.OnQTE;
+            @QTE.canceled -= instance.OnQTE;
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
@@ -632,7 +632,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnHide(InputAction.CallbackContext context);
         void OnItemSwap(InputAction.CallbackContext context);
         void OnOffOn(InputAction.CallbackContext context);
-        void OnOffOnHeld(InputAction.CallbackContext context);
+        void OnQTE(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnHeldInteract(InputAction.CallbackContext context);
         void OnDefrost(InputAction.CallbackContext context);
