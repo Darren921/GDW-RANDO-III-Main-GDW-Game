@@ -106,7 +106,16 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
                {
                    print("in here fuel");
                  // if (!_spawnManager.trackedIndexs.Contains((tracker)) || (!_spawnManager.trackedIndexs.Contains(tracker))&& item.name == "Gas canister obj") return;
-                   _playerHotbar.FuelCount++;
+                 if (_playerHotbar.FuelCount < item.item.data.Limit )
+                 {
+                     print("in add fuel");
+                     _playerHotbar.FuelCount++;
+                 }
+                else if(_playerHotbar.FuelCount + 1 > item.item.data.Limit)
+                 {
+                     print("in add fuel alt");
+                     _playerHotbar.FuelCount += (item.item.data.Limit - _playerHotbar.FuelCount);
+                 }
                    _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].CurrentUses = _playerHotbar.FuelCount;
                    print( _playerHotbar.FuelCount);
                    print(  _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].CurrentUses );

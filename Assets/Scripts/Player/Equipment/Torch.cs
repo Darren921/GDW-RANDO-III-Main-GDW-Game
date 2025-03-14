@@ -49,7 +49,7 @@ public class Torch : LightEquipment
             print("Held Interact Self");
             
             frostSystem.reduceFrost();
-            _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().ReduceCount();
+            _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().ReduceCount(0.5f);
             _playerHotbar.gameObject.GetComponent<PlayerInteraction>().Reset();
         }
         
@@ -70,9 +70,18 @@ public class Torch : LightEquipment
     {
     }
 
-    public void ReduceCount()
+    public void ReduceCount(float amount)
     {
-        CurrentUses--;
-        _playerHotbar.FuelCount--;
+        CurrentUses -= amount;
+        _playerHotbar.FuelCount -= amount;
+
+        if (CurrentUses < 0)
+        {
+            CurrentUses = 0;
+        }
+        if(  _playerHotbar.FuelCount < 0)
+        {
+            _playerHotbar.FuelCount = 0;
+        }
     }
 }

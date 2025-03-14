@@ -14,7 +14,7 @@ public class PlayerHotbar : MonoBehaviour
     [SerializeField] internal TextMeshProUGUI CountText;
     [SerializeField] internal Image DisplayImage;
     internal int batteryCount;
-    internal int FuelCount;
+    internal float FuelCount;
     internal EquipmentBase curEquipmentBase;
     internal int inputtedSlot;
 
@@ -45,9 +45,8 @@ public class PlayerHotbar : MonoBehaviour
             Hotbar.AddItem(new Item(EquipmentObjs[1]), 1);
             Hotbar.AddItem(new Item(EquipmentObjs[2]), 1);
         }
-        var currentUsesInInt =
-            (int)_equipmentBases[returnTorchLocation()].CurrentUses; //Stores Current Uses in Torch as int 
-        FuelCount = currentUsesInInt;
+    
+        FuelCount = _equipmentBases[returnTorchLocation()].CurrentUses;
        
 
 //        print($"Forced selection: {_equipmentBases[1].gameObject.name}");

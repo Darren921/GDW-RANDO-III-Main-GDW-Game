@@ -99,7 +99,7 @@ public class SpawnManager : MonoBehaviour
             var rnd = Random.Range(0,i);
             var tempStorage = RandomItems[i];
             lastItem = RandomItems[i];
-            while (RandomItems[i] == lastItem && i > 2)
+            while (RandomItems[i] == lastItem && i > RandomItems.Count - 1)
             {
                 print("send help");
                 rnd = Random.Range(0,i);

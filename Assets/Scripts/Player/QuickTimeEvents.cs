@@ -12,26 +12,33 @@ public class QuickTimeEvents : MonoBehaviour
     [SerializeField] private IceMelting iceMelting;
     [SerializeField] private Slider _slider;
     [SerializeField] internal InputActionReference QTEInteract;
-
+    private PlayerHotbar _playerHotbar;
+    private PlayerInteraction _playerInteraction;
 
     private float valueMin, valueMax;
+    internal static bool QTEActive;
+    internal bool QTESucess, interacted;
+    [SerializeField] internal  float qteMin;
     [SerializeField] private float Range;
     private float PressedValue;
-    private bool interacted;
-    private State state;
-    private bool increasing;
+    private bool  increasing;
+    internal State state;
     [SerializeField] private float _sliderSpeed;
     [SerializeField] private RectTransform  _targetImage;
+    internal bool cooldown;
 
-    private enum State
+    internal enum State
     {
         NotStarted,
         InProgress,
-        Ended
+        Ended,
+        Used
     }
 
     private void Start()
     {
+        _playerInteraction =FindFirstObjectByType<PlayerInteraction>();
+        _playerHotbar = FindFirstObjectByType<PlayerHotbar>();
         increasing = true;
         state = State.NotStarted;
         _slider.gameObject.SetActive(false);
@@ -39,6 +46,7 @@ public class QuickTimeEvents : MonoBehaviour
 
     public void StartQTE()
     {
+        if(cooldown)return;
         //Generate Target Area
         GenerateRange();
         //Activate slider 
@@ -111,20 +119,56 @@ public class QuickTimeEvents : MonoBehaviour
 
     public void InteractQTE()
     {
-        if (state != State.InProgress) return;
+        interacted = true;
+        if (state != State.InProgress || cooldown) return;
         PressedValue = _slider.value;
         Time.timeScale = 0;
         if (PressedValue >= valueMin && PressedValue <= valueMax)
-            print("Successfully Performed");
-        else
-            print("Failed to Perform");
+          QTESucess = true;
+        else 
+            QTESucess = false;
         state = State.Ended;
     }
 
-    private void StopQTE()
+ 
+
+    public void StopQTE()
     {
+        print(QTESucess);
+        print(interacted);
+        if (QTESucess && interacted)
+        {
+            print("triggered");
+            cooldown = true;
+
+        }
+        else if(!QTESucess && interacted)
+        {
+            print("triggered");
+            _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().ReduceCount(1f);
+            cooldown = true;
+        }
+
+        if (_playerInteraction.holdDuration == 0)
+        {
+            if (QTESucess && cooldown)
+            {
+                _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().ReduceCount(0.5f);
+
+            }
+            else if(!QTESucess && cooldown)
+            {
+                _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().ReduceCount(1f);
+            }
+            cooldown = false;
+        }
+         interacted = false;
         _slider.value = 0;
         _slider.gameObject.SetActive(false);
         Time.timeScale = 1;
+        state = State.NotStarted;
+      
     }
+
+    
 }

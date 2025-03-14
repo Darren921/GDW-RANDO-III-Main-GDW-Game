@@ -22,14 +22,15 @@ public class FrostSystem : MonoBehaviour
     [SerializeField] internal Player _player;
 
     protected PlayerHotbar _playerHotbar;
+    private PlayerInteraction _playerInteraction;
     private GameManager.IInteractable currentInteractable;
-
 
     // Start is called before the first frame update
     protected void Start()
     {
         iceMelting = FindObjectOfType<IceMelting>();
         _playerHotbar = FindFirstObjectByType<PlayerHotbar>();
+        _playerInteraction = FindFirstObjectByType<PlayerInteraction>();
         isFreezing = true;
         
         _frost = 0;
@@ -44,9 +45,10 @@ public class FrostSystem : MonoBehaviour
         if (interactable == null) return;
         currentInteractable = interactable; 
 //        print(currentInteractable);
-        if (currentInteractable != null )
+        if (currentInteractable != null)
         {
             DeFrost.SetActive(false); 
+            _playerInteraction.Reset();
         }
         else switch (iceMelting.AtMeltingPoint)
         {
@@ -78,6 +80,7 @@ public class FrostSystem : MonoBehaviour
         {
             case true:
                 DeFrost.SetActive(false); 
+                
                 print("Frost");
                 break;
             case false:
@@ -99,6 +102,7 @@ public class FrostSystem : MonoBehaviour
     {
         yield return null;
         DeFrost.gameObject.SetActive(true); 
+
     }
 
 
@@ -110,7 +114,7 @@ public class FrostSystem : MonoBehaviour
         if (!_player.dead)
         {
             _frost += Time.deltaTime;
-            _curOpacity += 0.012f * Time.deltaTime;
+            _curOpacity += 0.01f * Time.deltaTime;
             _frostTexture.SetFloat("_Opacity" , _curOpacity);     
 
         }

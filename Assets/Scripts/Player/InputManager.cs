@@ -89,15 +89,26 @@ public class InputManager : MonoBehaviour
 
     }
 
-    public static void HoldChange()
+    public static void HoldChange(bool isSelf)
     {
-   //         print("Self");
+        if (isSelf)
+        {
+            //         print("Self");
             controls.InGame.HeldInteract.ApplyBindingOverride(new InputBinding
             {
                 overrideInteractions = "Hold(duration= 5,pressPoint=0.2)"
-            }); 
-     
+            });
+        }
+        else
+        {
+//            print("door melting");
+            controls.InGame.HeldInteract.ApplyBindingOverride(new InputBinding
+            {
+                overrideInteractions = "Hold(duration= 10,pressPoint=0.2)"
+            });
+        }
     }
+
     public static void EnableInGame()
     {
         controls.InGame.Enable();
