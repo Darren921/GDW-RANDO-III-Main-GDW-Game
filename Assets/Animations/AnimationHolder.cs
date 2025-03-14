@@ -16,6 +16,7 @@ public class AnimationHolder : MonoBehaviour
     
     [SerializeField] CinemachineVirtualCamera cam;
     [SerializeField] private Material _frostTexture;
+    [SerializeField] GameObject particle; 
     
 
     private void Start()
@@ -37,9 +38,11 @@ public class AnimationHolder : MonoBehaviour
         
         yield return new WaitForSeconds(36.15f);
         door.GetComponent<Animator>().Play("Slide");
-        yield return new WaitForSeconds(6);
-       
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(4);
+        particle.SetActive(true);
+        yield return new WaitForSeconds(3);
+        
+        
         Fade.Play("Fade out");
         yield return new WaitForSeconds(1);
         SceneManager.LoadScene(GameScene);

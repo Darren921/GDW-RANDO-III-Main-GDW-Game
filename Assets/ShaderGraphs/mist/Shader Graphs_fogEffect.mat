@@ -40,7 +40,7 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _distance_modifier: -71.4
+    - _distance_modifier: 0.37
     - _speed: 0.24
     m_Colors:
     - _Color: {r: 0.0754717, g: 0.0754717, b: 0.0754717, a: 0}
