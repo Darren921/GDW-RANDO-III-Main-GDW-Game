@@ -21,7 +21,7 @@ public class QuickTimeEvents : MonoBehaviour
     private State state;
     private bool increasing;
     [SerializeField] private float _sliderSpeed;
-    [SerializeField] private Image _targetImage;
+    [SerializeField] private RectTransform  _targetImage;
 
     private enum State
     {
@@ -75,8 +75,15 @@ public class QuickTimeEvents : MonoBehaviour
 
     private void PlaceTargetArea()
     {
-        _targetImage.gameObject.GetComponent<RectTransform>().anchorMin = new Vector2(valueMin, 0.5f);
-        _targetImage.gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(valueMax, 0.5f);
+        
+        _targetImage.anchorMin = new Vector2( Mathf.InverseLerp(_slider.minValue, _slider.maxValue, valueMin) , 0.5f);
+        _targetImage.anchorMax = new Vector2( Mathf.InverseLerp(_slider.minValue, _slider.maxValue, valueMax), 0.5f);
+        
+        _targetImage.offsetMin = Vector2.zero;
+        _targetImage.offsetMax = Vector2.zero;
+        var delta = _targetImage.sizeDelta;
+        delta.y = 40;
+        _targetImage.sizeDelta = delta;
     }
 
     private void GenerateRange()

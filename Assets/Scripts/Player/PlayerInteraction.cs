@@ -43,7 +43,6 @@ public class PlayerInteraction : MonoBehaviour
         if (other.GetComponent<SelfInteractionManager>() != null)
         {
             isHeldInteraction = other.GetComponent<SelfInteractionManager>().isHeld;
-            InputManager.HoldChange(true);
 
         }
         else if(other.GetComponent<backGroundInteractable>() != null)
@@ -53,7 +52,6 @@ public class PlayerInteraction : MonoBehaviour
         }
         else if(other.GetComponent<IceMelting>() != null)
         {
-            InputManager.HoldChange(false);
             isHeldInteraction = other.GetComponent<IceMelting>().isHeld;
         }
      
@@ -76,6 +74,11 @@ public class PlayerInteraction : MonoBehaviour
             {
                 _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().torchActive = true;
                 _frostSystem.isFreezing = false;
+            }
+            else
+            {
+                _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().torchActive = false;
+                _frostSystem.isFreezing = true;
             }
             
             InteractionBar.gameObject.SetActive(true);
@@ -203,7 +206,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             InteractText.text = iceMelting.isMelting ? "" : $"Hold E to Melt {iceMelting.MeltingStage} times to fully melt left";
             iceMelting.IcemeltingText.text = iceMelting.isMelting ? $"Melting Ice {iceMelting.MeltingStage} / 5 " : ""   ;
-            InteractionBar.maxValue = 10;
+         
         }
         if (other.GetComponent<backGroundInteractable>() == null) return;
         InteractText.text = _playerHotbar.isOpen ? "" : $"Press E to read {other.GetComponent<backGroundInteractable>().name.ToLower()}";
