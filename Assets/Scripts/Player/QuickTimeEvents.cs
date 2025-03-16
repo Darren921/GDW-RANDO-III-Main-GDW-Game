@@ -136,39 +136,43 @@ public class QuickTimeEvents : MonoBehaviour
     {
         print(QTESucess);
         print(interacted);
+        print(_playerInteraction.holdDuration == 0);
         if (QTESucess && interacted)
         {
-            print("triggered");
+            print("Sucess Noted");
             cooldown = true;
-
+            
         }
         else if(!QTESucess && interacted)
         {
-            print("triggered");
-            _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().ReduceCount(1f);
+            print("Failed Noted"); 
             cooldown = true;
+          
         }
-
-        if (_playerInteraction.holdDuration == 0)
+        if (_playerInteraction.holdDuration == 0 )
         {
             if (QTESucess && cooldown)
             {
+                print("Sucess Triggered");
                 _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().ReduceCount(0.5f);
 
             }
             else if(!QTESucess && cooldown)
             {
+                print("Failed Triggered");
                 _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().ReduceCount(1f);
             }
             cooldown = false;
         }
-         interacted = false;
+        interacted = false;
         _slider.value = 0;
         _slider.gameObject.SetActive(false);
         Time.timeScale = 1;
         state = State.NotStarted;
-      
+
     }
+      
+       
 
     
 }
