@@ -38,7 +38,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 6dd709fac7da29946bbfc11fb10aacd7, type: 3}
+        m_Texture: {fileID: 2800000, guid: f532ec2d7120e1f46aed1a8c29a077bb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalFromTexture_2123a754394b4dd2938f02af1b7fec11_Texture_0_Texture2D:
@@ -46,7 +46,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SnowTex:
-        m_Texture: {fileID: 2800000, guid: 3db2f2f4c74ee574a9099bdb61f783d1, type: 3}
+        m_Texture: {fileID: 2800000, guid: f532ec2d7120e1f46aed1a8c29a077bb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -63,11 +63,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Float: 1
+    - _Float: 3.87
     - _Frost_value: 0.1
-    - _Opacity: 0.5
+    - _Opacity: 0.6
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _Color: {r: 0.25, g: 1, b: 0.93886995, a: 0}
+    - _Color: {r: 0, g: 1, b: 0.91623044, a: 0}
   m_BuildTextureStacks: []
