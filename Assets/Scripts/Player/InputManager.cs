@@ -74,7 +74,7 @@ public class InputManager : MonoBehaviour
         };
         controls.InGame.Interact.canceled += _ =>
         {
-            PlayerInteraction?.Reset();
+            PlayerInteraction?.ResetPlayerInteraction();
         };
        
 

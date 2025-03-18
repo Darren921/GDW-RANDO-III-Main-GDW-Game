@@ -19,9 +19,11 @@ public class backGroundInteractable : MonoBehaviour ,GameManager.IInteractable
         }
         _playerHotbar = FindFirstObjectByType<PlayerHotbar>();
         isHeld = false;
+        QTEAble = false;
     }
 
 
+    public bool QTEAble { get; set; }
     public bool isHeld { get; set; }
 
     public void Interact()

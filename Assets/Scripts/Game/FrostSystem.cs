@@ -48,12 +48,12 @@ public class FrostSystem : MonoBehaviour
         if (currentInteractable != null)
         {
             DeFrost.SetActive(false); 
-            _playerInteraction.Reset();
         }
         else switch (iceMelting.AtMeltingPoint)
         {
             case true:
-                DeFrost.SetActive(false); 
+                DeFrost.SetActive(false);
+                
                 break;
             case false:
                 DeFrost.SetActive(true); 

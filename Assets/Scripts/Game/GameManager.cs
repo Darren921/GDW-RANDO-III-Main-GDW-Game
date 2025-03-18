@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
    
     public interface IInteractable
     {
-        public string name{get;set;}
+        public bool QTEAble{get;set;}
         public bool isHeld{get;set;}
         public void Interact();
         public void HeldInteract();

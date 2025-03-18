@@ -15,6 +15,7 @@ public class SelfInteractionManager : MonoBehaviour, GameManager.IInteractable
         frostSystem = FindObjectOfType<FrostSystem>();
         _playerInteraction = FindObjectOfType<PlayerInteraction>();
         isHeld = true;
+        QTEAble = false;
     }
 
     // Update is called once per frame
@@ -23,6 +24,7 @@ public class SelfInteractionManager : MonoBehaviour, GameManager.IInteractable
         
     }
 
+    public bool QTEAble { get; set; }
     public bool isHeld { get; set; }
     public void Interact()
     {

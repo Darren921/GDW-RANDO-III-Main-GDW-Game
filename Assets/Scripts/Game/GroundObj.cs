@@ -21,11 +21,14 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
        _playerHotbar = _player.GetComponent<PlayerHotbar>();
        equipmentCache = FindObjectOfType<EquipmentBaseCache>();
        isHeld = false;
+       QTEAble = false;
        if (item.name == "Stim")
        {
            equipment = equipmentCache.StimEquipment;
        }
    }
+
+   public bool QTEAble { get; set; }
    public bool isHeld { get; set; }
 
    public void Interact()
@@ -68,7 +71,7 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
                        print("in here battery");
                        _playerHotbar._equipmentBases[1].CurrentUses = _playerHotbar._equipmentBases[1].MaxUses;
                        Destroy(gameObject,0.1f);
-                       _player.GetComponent<PlayerInteraction>().Reset();
+                       _player.GetComponent<PlayerInteraction>().ResetPlayerInteraction();
                        _player.GetComponent<PlayerInteraction>().HeldInteractionAction.action.Reset();  
                        _playerHotbar.GetComponent<PlayerInteraction>().InteractText.text = "";
                        if (CompareTag("Batteries"))
@@ -94,7 +97,7 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
                        print("Spec object");
                    }
                    Destroy(gameObject,0.1f);
-                   _player.GetComponent<PlayerInteraction>().Reset();
+                   _player.GetComponent<PlayerInteraction>().ResetPlayerInteraction();
                    _player.GetComponent<PlayerInteraction>().HeldInteractionAction.action.Reset();  
                    _playerHotbar.GetComponent<PlayerInteraction>().InteractText.text = "";
 
@@ -130,7 +133,7 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
                    }
                    
                    Destroy(gameObject,0.1f);
-                   _player.GetComponent<PlayerInteraction>().Reset();
+                   _player.GetComponent<PlayerInteraction>().ResetPlayerInteraction();
                    _player.GetComponent<PlayerInteraction>().HeldInteractionAction.action.Reset();
                    _playerHotbar.GetComponent<PlayerInteraction>().InteractText.text = "";
                   
@@ -146,7 +149,7 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
    {
        if(_playerHotbar == null) return;
        if(_playerHotbar.GetComponent<PlayerInteraction>().InteractText != null) _playerHotbar.GetComponent<PlayerInteraction>().InteractText.text = "";
-       _player.GetComponent<PlayerInteraction>().Reset();
+       _player.GetComponent<PlayerInteraction>().ResetPlayerInteraction();
        _player.GetComponent<PlayerInteraction>().HeldInteractionAction.action.Reset();
        _player.GetComponentInChildren<FrostSystem>().DeFrost.gameObject.SetActive(true);
    }

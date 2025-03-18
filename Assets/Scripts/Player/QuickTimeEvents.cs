@@ -16,11 +16,10 @@ public class QuickTimeEvents : MonoBehaviour
     private PlayerInteraction _playerInteraction;
 
     private float valueMin, valueMax;
-    internal static bool QTEActive;
-    internal bool QTESucess, interacted;
+    internal bool QTESucess;
     [SerializeField] internal  float qteMin;
     [SerializeField] private float Range;
-    private float PressedValue;
+    internal float PressedValue;
     private bool  increasing;
     internal State state;
     [SerializeField] private float _sliderSpeed;
@@ -119,7 +118,6 @@ public class QuickTimeEvents : MonoBehaviour
 
     public void InteractQTE()
     {
-        interacted = true;
         if (state != State.InProgress || cooldown) return;
         PressedValue = _slider.value;
         Time.timeScale = 0;
@@ -135,36 +133,38 @@ public class QuickTimeEvents : MonoBehaviour
     public void StopQTE()
     {
         print(QTESucess);
-        print(interacted);
         print(_playerInteraction.holdDuration == 0);
-        if (QTESucess && interacted)
+        if (QTESucess && PressedValue > 0)
         {
             print("Sucess Noted");
             cooldown = true;
             
         }
-        else if(!QTESucess && interacted)
+        else if(!QTESucess && PressedValue > 0)
         {
             print("Failed Noted"); 
             cooldown = true;
-          
         }
         if (_playerInteraction.holdDuration == 0 )
         {
+            
             if (QTESucess && cooldown)
             {
                 print("Sucess Triggered");
                 _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().ReduceCount(0.5f);
+                iceMelting.lowerMeltingStage();
+
 
             }
             else if(!QTESucess && cooldown)
             {
                 print("Failed Triggered");
                 _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().ReduceCount(1f);
+                iceMelting.lowerMeltingStage();
             }
+            
             cooldown = false;
         }
-        interacted = false;
         _slider.value = 0;
         _slider.gameObject.SetActive(false);
         Time.timeScale = 1;

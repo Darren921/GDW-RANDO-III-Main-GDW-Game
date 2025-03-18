@@ -50,14 +50,14 @@ public class Torch : LightEquipment
             
             frostSystem.reduceFrost();
             _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().ReduceCount(0.5f);
-            _playerHotbar.gameObject.GetComponent<PlayerInteraction>().Reset();
+            _playerHotbar.gameObject.GetComponent<PlayerInteraction>().ResetPlayerInteraction();
         }
         
         else if(_playerHotbar.gameObject.GetComponent<PlayerInteraction>().holdDuration <= 5.1)
         {
             print("in oh no ");
             print(_playerHotbar.gameObject.GetComponent<PlayerInteraction>().holdDuration);
-            _playerHotbar.gameObject.GetComponent<PlayerInteraction>().Reset();
+            _playerHotbar.gameObject.GetComponent<PlayerInteraction>().ResetPlayerInteraction();
         }
         _playerInteraction.InteractText.text = "";
     }

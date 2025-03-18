@@ -35,6 +35,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
        }
        quickTimeEvent = FindObjectOfType<QuickTimeEvents>();
        isHeld = true;
+       QTEAble = true;
        exitCollider.enabled = false;
        //Time.timeScale = 10;
         _renderer = GetComponent<Renderer>();
@@ -74,7 +75,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
         isMelting = false;
         AtMeltingPoint = false;
         IcemeltingText.text = "";
-        _playerInteraction.Reset();
+        _playerInteraction.ResetPlayerInteraction();
     }
 
     void Update()
@@ -88,6 +89,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
         if (isMelting)
         {
              CheckMeltingProgress();
+
         } 
         
     }
@@ -135,6 +137,12 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
         active = false;
     }
 
+    public void lowerMeltingStage()
+    {
+        MeltingStage--;
+    }
+
+    public bool QTEAble { get; set; }
     public bool isHeld { get; set; }
 
     public void Interact()
@@ -153,24 +161,17 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
         if (_playerHotbar.gameObject.GetComponent<PlayerInteraction>().holdDuration >= 4.9)
         {
             print("Held Interact");
-            print(quickTimeEvent.interacted);
+           
             if ( !quickTimeEvent.cooldown)
             {
                 print("stoping QTE Normal");
-              quickTimeEvent.StopQTE();
               _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].gameObject.GetComponent<Torch>().ReduceCount(1);
-              MeltingStage--;
-              
+              lowerMeltingStage();
+
             }
-            else
-            {
-                quickTimeEvent.StopQTE();
-            }
-         
-           
-            
-            _playerHotbar.gameObject.GetComponent<PlayerInteraction>().Reset();
-            _playerHotbar.GetComponent<PlayerInteraction>().HeldInteractionAction.action.Reset();
+            _playerHotbar.gameObject.GetComponent<PlayerInteraction>().holdDuration = 0; 
+            quickTimeEvent.StopQTE();
+            _playerHotbar.gameObject.GetComponent<PlayerInteraction>().ResetPlayerInteraction();
             IcemeltingText.text = "";
 
         }
@@ -178,8 +179,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
         {
             print("in oh no ");
             print(_playerHotbar.gameObject.GetComponent<PlayerInteraction>().holdDuration);
-            _playerHotbar.gameObject.GetComponent<PlayerInteraction>().Reset();
-            _playerHotbar.GetComponent<PlayerInteraction>().HeldInteractionAction.action.Reset();
+            _playerHotbar.gameObject.GetComponent<PlayerInteraction>().ResetPlayerInteraction();
 
         }
 

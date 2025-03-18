@@ -11,6 +11,7 @@ public class PlayerInteraction : MonoBehaviour
 {
     private GameManager.IInteractable currentInteractable;
     private bool isHeldInteraction;
+    private bool QTEAble;
     [SerializeField] internal TextMeshProUGUI InteractText;
     PlayerHotbar _playerHotbar;
     [SerializeField] private Slider InteractionBar;
@@ -20,6 +21,7 @@ public class PlayerInteraction : MonoBehaviour
     private bool _isResetting;
     QuickTimeEvents quickTimeEvents;
     internal FrostSystem _frostSystem;
+    internal bool isCurrentlyInteracting;
 
     private void Start()
     {
@@ -31,27 +33,36 @@ public class PlayerInteraction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        
         if (!InteractText.enabled)
         {
             InteractText.enabled = true;
         }
-
         var interactable = other.GetComponent<GameManager.IInteractable>();
         if (interactable == null) return;
         currentInteractable = interactable;
+        ResetPlayerInteraction();
+     
+        
+      
         //  print(currentInteractable);
         if (other.GetComponent<SelfInteractionManager>() != null)
         {
             isHeldInteraction = other.GetComponent<SelfInteractionManager>().isHeld;
+            QTEAble = other.GetComponent<SelfInteractionManager>().QTEAble;
         }
         else if (other.GetComponent<backGroundInteractable>() != null)
         {
             InteractText.text = $"Press E to read {other.GetComponent<backGroundInteractable>().name.ToLower()}";
             isHeldInteraction = other.GetComponent<backGroundInteractable>().isHeld;
+            QTEAble = other.GetComponent<backGroundInteractable>().QTEAble;
+
         }
         else if (other.GetComponent<IceMelting>() != null)
         {
             isHeldInteraction = other.GetComponent<IceMelting>().isHeld;
+            QTEAble = other.GetComponent<IceMelting>().QTEAble;
+
         }
     }
 
@@ -75,12 +86,12 @@ public class PlayerInteraction : MonoBehaviour
                     true;
                 _frostSystem.isFreezing = false;
             }
-
+            isCurrentlyInteracting = true;
             InteractionBar.gameObject.SetActive(true);
             holdDuration += Time.deltaTime;
             InteractionBar.value = holdDuration;
-
-            if (quickTimeEvents.state == QuickTimeEvents.State.NotStarted && holdDuration >= quickTimeEvents.qteMin && QuickTimeEvents.QTEActive)
+         
+            if (quickTimeEvents.state == QuickTimeEvents.State.NotStarted && holdDuration >= quickTimeEvents.qteMin && QTEAble)
             {
                 quickTimeEvents.StartQTE();
             }
@@ -88,30 +99,29 @@ public class PlayerInteraction : MonoBehaviour
             if (!iceMelting.AtMeltingPoint &&
                 _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].equipped && !isHeldInteraction)
             {
+                
                 _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].gameObject.GetComponent<Torch>()
                     .torchActive = false;
             }
         }
     }
 
-    public void Reset()
+    public void ResetPlayerInteraction()
     {
-        if (_isResetting || _playerHotbar.GetComponent<Player>().dead) return;
-        _isResetting = true;
+        holdDuration = 0;
+        if ( _playerHotbar.GetComponent<Player>().dead) return;
         _frostSystem.isFreezing = true;
         _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().torchActive = false;
         HeldInteractionAction.action.Reset();
-        holdDuration = 0;
         InteractionBar?.gameObject.SetActive(false);
-        _isResetting = false;
-        quickTimeEvents.StopQTE();
     }
 
     private void OnTriggerStay(Collider other)
     {
-        var interactable = other.GetComponent<GameManager.IInteractable>();
-        if (interactable == null) return;
-        currentInteractable = interactable;
+            var interactable = other.GetComponent<GameManager.IInteractable>();
+            if (interactable == null) return;
+            currentInteractable = interactable;
+       
         // print(currentInteractable);
         if (other.GetComponent<GroundObj>() != null)
         {
@@ -209,15 +219,11 @@ public class PlayerInteraction : MonoBehaviour
         if (other.GetComponent<IceMelting>() != null &&
             _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].CurrentUses > 0)
         {
-            if (!quickTimeEvents.interacted && quickTimeEvents.state != QuickTimeEvents.State.InProgress && !quickTimeEvents.cooldown)
-            {
-                QuickTimeEvents.QTEActive = true;
-            }
-
+            QTEAble = iceMelting.QTEAble;
             InteractText.text = iceMelting.isMelting
                 ? ""
                 : $"Hold E to Melt {iceMelting.MeltingStage} times to fully melt left";
-            iceMelting.IcemeltingText.text = iceMelting.isMelting ? $"Melting Ice {iceMelting.MeltingStage} / 5 " : "";
+                  iceMelting.IcemeltingText.text = iceMelting.isMelting && holdDuration > 0  ? $"Melting Ice {iceMelting.MeltingStage} / 5 " : "";
         }
 
         if (other.GetComponent<backGroundInteractable>() == null) return;
@@ -239,8 +245,8 @@ public class PlayerInteraction : MonoBehaviour
         iceMelting.IcemeltingText.text = "";
         holdDuration = 0;
         isHeldInteraction = false;
-        quickTimeEvents.StopQTE();
-        Reset();
+        isCurrentlyInteracting = false;
+        ResetPlayerInteraction();
     }
 
     public void TryInteract()
