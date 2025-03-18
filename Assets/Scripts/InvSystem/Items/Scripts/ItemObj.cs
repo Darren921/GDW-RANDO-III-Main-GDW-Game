@@ -36,6 +36,7 @@ using UnityEngine.Serialization;
     [System.Serializable]
     public class Item
     {
+        public ItemObj MatchingItemObj;
         public string Name;
         public int Id = -1;
         [TextArea(15, 20)] public string Description;
@@ -60,6 +61,7 @@ using UnityEngine.Serialization;
             ItemRarity = item.data.ItemRarity;
             Limit = item.data.Limit;
             Id = item.data.Id;
+            MatchingItemObj = item.data.MatchingItemObj;
             Categories = new Classification[item.data.Categories.Length];
             for (int i = 0; i < item.data.Categories.Length; i++)
             {

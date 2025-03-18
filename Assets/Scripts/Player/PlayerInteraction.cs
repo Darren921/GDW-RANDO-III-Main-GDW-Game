@@ -79,7 +79,7 @@ public class PlayerInteraction : MonoBehaviour
             _playerHotbar._equipmentBases?[_playerHotbar.inputtedSlot].CurrentUses > 0 &&
             _playerHotbar.curEquipmentBase.ID != 1)
         {
-            print("Holding");
+          //  print("Holding");
             if (_playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().equipped)
             {
                 _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().torchActive =

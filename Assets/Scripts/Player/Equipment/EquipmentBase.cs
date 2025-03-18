@@ -17,7 +17,7 @@ public abstract class EquipmentBase : MonoBehaviour
     protected PlayerHotbar _playerHotbar;
     protected PlayerInteraction _playerInteraction;
     protected PlayerMovement _playerMovement;
-
+    
 
     protected virtual void Awake()
     {
@@ -33,6 +33,5 @@ public abstract class EquipmentBase : MonoBehaviour
 
     
     internal abstract void CheckIfUsable();
-    internal abstract void CheckHeldInteract();
 }
 

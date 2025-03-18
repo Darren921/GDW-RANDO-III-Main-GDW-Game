@@ -13,13 +13,12 @@ MonoBehaviour:
   m_Name: Flashlight
   m_EditorClassIdentifier: 
   stackable: 0
-  description: 
-  prefab: {fileID: 6434571087379855294, guid: 83b18ff302f22bf45b0a27ca34d2b190, type: 3}
   data:
+    MatchingItemObj: {fileID: 11400000, guid: be4b5b00e147cc340a4739e88b713cd1, type: 2}
     Name: 
     Id: 1
     Description: 
-    UiDisplay: {fileID: 21300000, guid: ea0ba6edce4cb9d48ab552d3e193f16d, type: 3}
+    UiDisplay: {fileID: 21300000, guid: 3b94e7b59c54a244b98184e7a7afbdfa, type: 3}
     ItemType: 3
     Prefab: {fileID: 6434571087379855294, guid: 83b18ff302f22bf45b0a27ca34d2b190,
       type: 3}

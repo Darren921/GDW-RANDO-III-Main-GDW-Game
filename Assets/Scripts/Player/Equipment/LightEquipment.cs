@@ -6,15 +6,17 @@ using UnityEngine.UI;
 
 public abstract class LightEquipment : EquipmentBase
 {
+    
     [SerializeField] EquipmentObj equipmentObj;
     protected GameObject lightSource;
     protected Slider slider;
     internal bool active;
-
+   
     protected override void Awake()
     {
         base.Awake();
         ID = equipmentObj.data.Id;
+         
         MaxUses = equipmentObj.data.Limit;
         CurrentUses = 0;
         RefillAmount = equipmentObj.refuel;
@@ -23,6 +25,7 @@ public abstract class LightEquipment : EquipmentBase
         lightSource = gameObject.transform.Find("LightSource").gameObject;
         lightSource.SetActive(false);
         slider = baseObj.GetComponentInChildren<Slider>();
+    
     }
 
     protected virtual void Update()

@@ -37,19 +37,21 @@ public class InventoryObj : ScriptableObject
         return true;
     }
 
-    public void RemoveItem(Item _item, int _amount)
+    public void RemoveItem(Item _item, int _amount, int slotnumber)
     {
-        var slot = FindItemOnInventory(_item);
 
         for (var i = 0; i < GetSlots.Length; i++)
         {
-            if (GetSlots[i] != slot) continue;
+            if (GetSlots[i] != GetSlots[slotnumber]) continue;
+            Debug.Log(i + slotnumber);
+            Debug.Log(GetSlots[slotnumber].amount - _amount);
             if (GetSlots[i].amount - _amount > 0)
             {
                 GetSlots[i].removeAmount(_amount);
             }
             else
             {
+                
                 GetSlots[i].RemoveSlot();
             }
         }
@@ -230,7 +232,8 @@ public class InventoryObj : ScriptableObject
         public void RemoveSlot()
         {
             item.Id= -1;
-            item = new Item();   
+            item = new Item();  
+            item.UiDisplay = null;
             amount = 0;
             OnBeforeUpdate?.Invoke(this);
             OnAfterUpdate?.Invoke(this);

@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stackable: 0
   data:
+    MatchingItemObj: {fileID: 0}
     Name: Fuel
     Id: 4
     Description: 
-    UiDisplay: {fileID: 21300000, guid: f59ad82925182644dbcaddeabcbde943, type: 3}
+    UiDisplay: {fileID: 21300000, guid: d5ffd6496a0b96842944d2722fdfcb5d, type: 3}
     ItemType: 2
     Prefab: {fileID: 8266241314038867389, guid: fce6ce3c65a480949bd51ec38c3236c6,
       type: 3}

@@ -125,13 +125,26 @@ public class PlayerHotbar : MonoBehaviour
         }
         if (inputtedSlot < _equipmentBases.Count)
         {
-            print("in log");
+//            print("in log");
 //            print(Hotbar.Container.Slots[inputtedSlot - 1].item.Id);
 //            print(_equipmentBases[inputtedSlot].ID);
             if (Hotbar.Container.Slots[inputtedSlot - 1].item.Id == _equipmentBases[inputtedSlot].ID)
             {
 //                print(Hotbar.Container.Slots[inputtedSlot - 1].item.Id);
-                DisplayImage.sprite = Hotbar.Container.Slots[inputtedSlot - 1].item.UiDisplay;
+                if (Hotbar.Container.Slots[inputtedSlot - 1].item == null)
+                {
+                    DisplayImage.gameObject.SetActive(false);
+                    CountText.gameObject.SetActive(false);
+                }
+                if ( Hotbar.Container.Slots[inputtedSlot - 1].item.MatchingItemObj != null)
+                {
+                    DisplayImage.sprite = Hotbar.Container.Slots[inputtedSlot - 1].item.MatchingItemObj.data.UiDisplay;
+                }
+                else
+                {
+                    DisplayImage.sprite = Hotbar.Container.Slots[inputtedSlot - 1].item.UiDisplay;
+                }
+             
                 
                    
               
@@ -172,7 +185,7 @@ public class PlayerHotbar : MonoBehaviour
         }
         else if (Hotbar.Container.Slots[inputtedSlot - 1].item.Id == - 1 )
         {
-            print("out log");
+//            print("out log");
             DisplayImage.gameObject.SetActive(false);
             CountText.gameObject.SetActive(false);
         }
@@ -217,14 +230,5 @@ public class PlayerHotbar : MonoBehaviour
         return -1;
     }
 
-    public void checkIfActiveHeld()
-    {
-        for (var i = 0; i < _equipmentBases.Count; i++)
-        {
-            if (_equipmentBases[i].equipped )
-            {
-                _equipmentBases[i].CheckIfUsable();
-            }
-        }
-    }
+    
 }

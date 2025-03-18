@@ -147,14 +147,11 @@ public class QuickTimeEvents : MonoBehaviour
         }
         if (_playerInteraction.holdDuration == 0 )
         {
-            
             if (QTESucess && cooldown)
             {
                 print("Sucess Triggered");
                 _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().ReduceCount(0.5f);
                 iceMelting.lowerMeltingStage();
-
-
             }
             else if(!QTESucess && cooldown)
             {

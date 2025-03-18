@@ -14,9 +14,6 @@ public class Empty : EquipmentBase
         
     }
 
-    internal override void CheckHeldInteract()
-    {
-        throw new System.NotImplementedException();
-    }
+
 }
 

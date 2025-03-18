@@ -65,10 +65,7 @@ public class Torch : LightEquipment
     internal override void CheckIfUsable()
     {
     }
-
-    internal override void CheckHeldInteract()
-    {
-    }
+    
 
     public void ReduceCount(float amount)
     {

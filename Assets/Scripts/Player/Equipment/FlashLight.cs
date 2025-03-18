@@ -41,10 +41,7 @@ public class FlashLight : LightEquipment
         }
     }
 
-    internal override void CheckHeldInteract()
-    {
-       
-    }
+ 
 
 
     private void OnDisable()
