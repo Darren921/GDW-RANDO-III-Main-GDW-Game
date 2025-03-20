@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
+using static UnityEngine.Rendering.DebugUI;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] Transform player;
     NavMeshAgent _Agent;
     bool Spotted;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +23,7 @@ public class EnemyAI : MonoBehaviour
     {
         Destination();
     }
+
     private void Destination()
     {
         if (Spotted)
@@ -55,4 +59,5 @@ public class EnemyAI : MonoBehaviour
         yield return new WaitForSeconds(3);
         Spotted = false;
     }
+
 }

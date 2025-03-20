@@ -51,7 +51,6 @@ public class Player : MonoBehaviour
     private string carpet = "Carpet Footstep Sound";
 
     private string currentFootstep;
-
     private string lastFootstep;
 
     //Item switching 

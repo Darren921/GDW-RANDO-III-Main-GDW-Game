@@ -18,11 +18,27 @@ public class MonsterAIPathfinding : MonoBehaviour
     [SerializeField] bool CanRoam;
     [SerializeField] public GameObject[] positions;
 
+    private Coroutine footstepCoroutine;
+    private bool spotCue = true;
+
+    private string metal = "Monster Metal Footstep";
+    private string stone = "Monster Stone Footstep";
+    private string marble = "Monster Marble Footstep";
+    private string carpet = "Monster Carpet Footstep";
+
+    private string currentFootstep;  
+    private string lastFootstep;
+
+    float lastSpotted = 0f;
+    float spotCD = 10f;
+
     // Start is called before the first frame update
     void Start()
     {
         CanRoam = true;
         agent = gameObject.GetComponent<NavMeshAgent>();
+
+        StartCoroutine(DelayWalkingSound(0.15f));
     }
 
     // Update is called once per frame
@@ -58,9 +74,9 @@ public class MonsterAIPathfinding : MonoBehaviour
             
             }
         }
-        
 
 
+        DetectTerrain();
     }
     void GetLineOfSight()
     {
@@ -89,16 +105,27 @@ public class MonsterAIPathfinding : MonoBehaviour
             if (facing.z > 0)
             {
                 Spotted = true;
+                Debug.Log("Spotted");
+
+                if (Spotted && spotCue && Time.time >= lastSpotted + spotCD)
+                {
+                    spotCue = false;
+                    AudioManager.Instance.PlayMonsterSingleSFX("Monster Spotted Sound");
+                    AudioManager.Instance.PlaySingleSFX("Monster Spotted Cue");
+                    lastSpotted = Time.time;
+                }
             }
             else
             {
-                Spotted = false; 
+                spotCue = true;
+                Spotted = false;
             }
             
 
         }
         else
         {
+            spotCue = true;
             Spotted = false;
         }
     }
@@ -110,4 +137,49 @@ public class MonsterAIPathfinding : MonoBehaviour
 
     }
 
+    public void DetectTerrain()
+    {
+        Ray ray = new Ray(transform.position, Vector3.down);
+        if (Physics.Raycast(ray, out RaycastHit hit, 5f))
+        {
+            // Debug.Log($"Hit: {hit.collider.name}, Tag: {hit.collider.tag}");
+
+            switch (hit.collider.tag)
+            {
+                case "MetalFloor":
+                    currentFootstep = metal;
+                    break;
+                case "StoneFloor":
+                    currentFootstep = stone;
+                    break;
+                case "MarbleFloor":
+                    currentFootstep = marble;
+                    break;
+                case "CarpetFloor":
+                    currentFootstep = carpet;
+                    break;
+            }
+
+            if (lastFootstep != currentFootstep)
+            {
+                if (footstepCoroutine != null)
+                {
+                    StopCoroutine(footstepCoroutine);
+                }
+                AudioManager.Instance.StopMonsterSFX(lastFootstep);
+                StartCoroutine(DelayWalkingSound(0.15f));
+
+                lastFootstep = currentFootstep;
+            }
+
+        }
+    }
+
+    private IEnumerator DelayWalkingSound(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        AudioManager.Instance.StopMonsterSFX(lastFootstep);
+        AudioManager.Instance.PlayMonsterSFX(currentFootstep);
+    }
 }

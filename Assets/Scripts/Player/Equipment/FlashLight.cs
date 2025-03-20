@@ -26,10 +26,12 @@ public class FlashLight : LightEquipment
             active = !active;
             if (active)
             {
+                AudioManager.Instance.PlaySingleSFX("Flashlight On");
                 lightSource.SetActive(true);
             }
             else
             {
+                AudioManager.Instance.PlaySingleSFX("Flashlight Off");
                 active = false;
                 lightSource.SetActive(false);
             }

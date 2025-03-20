@@ -16,12 +16,22 @@ public class AnimationHolder : MonoBehaviour
     
     [SerializeField] CinemachineVirtualCamera cam;
     [SerializeField] private Material _frostTexture;
-    [SerializeField] GameObject particle; 
+    [SerializeField] GameObject particle;
+
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip cutsceneSFX;
     
 
     private void Start()
     {
         _frostTexture.SetFloat("_Opacity", -1);
+
+        audioSource = gameObject.GetComponent<AudioSource>();
+
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
     private void Update()
     {
@@ -29,10 +39,13 @@ public class AnimationHolder : MonoBehaviour
     }
     public void OnStart()
     {
+        audioSource.clip = cutsceneSFX;
+        audioSource.Play();
         StartCoroutine(PlayCutsceneMainMenu());
     }
     IEnumerator PlayCutsceneMainMenu()
     {
+
         animator.Play("MenuTransition");
         PlayerAnim.Play("Move");
         

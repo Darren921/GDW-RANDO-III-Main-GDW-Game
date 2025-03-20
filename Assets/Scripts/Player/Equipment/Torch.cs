@@ -11,7 +11,10 @@ public class Torch : LightEquipment
     internal bool torchActive;
     [SerializeField] private TextMeshProUGUI interactText;
     [SerializeField] internal BoxCollider torchCollider;
-  [SerializeField] internal FrostSystem frostSystem;
+    [SerializeField] internal FrostSystem frostSystem;
+
+    private bool torchCue = false;
+
     protected override void Update()
     {
         slider.value = CurrentUses;
@@ -24,10 +27,22 @@ public class Torch : LightEquipment
 
         if (torchActive)
         {
+            if (torchCue)
+            {
+                torchCue = false;
+                AudioManager.Instance.PlaySFX("Torch Gun");
+            }
+
             lightSource.gameObject.SetActive(true);
         }
         else
         {
+            if (!torchCue)
+            {
+                torchCue = true;
+                AudioManager.Instance.StopSFX("Torch Gun");
+            }
+
             lightSource.gameObject.SetActive(false);
         }
     }
