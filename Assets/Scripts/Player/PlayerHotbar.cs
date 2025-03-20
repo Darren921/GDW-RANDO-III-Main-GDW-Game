@@ -16,6 +16,7 @@ public class PlayerHotbar : MonoBehaviour
     internal int batteryCount;
     internal float FuelCount;
     internal EquipmentBase curEquipmentBase;
+    [SerializeField]internal EquipmentBase emptyEquipmentBase;
     internal int inputtedSlot;
 
     public void ManageHotbar()
@@ -183,15 +184,14 @@ public class PlayerHotbar : MonoBehaviour
              
             }
         }
-        else if (Hotbar.Container.Slots[inputtedSlot - 1].item.Id == - 1 )
-        {
-//            print("out log");
-            DisplayImage.gameObject.SetActive(false);
-            CountText.gameObject.SetActive(false);
-        }
-        
 
-       
+        if (Hotbar.Container.Slots[inputtedSlot - 1].item.Id != -1) return;
+        print("out log");
+        DisplayImage.gameObject.SetActive(false);
+        CountText.gameObject.SetActive(false);
+
+
+
 
 
     }

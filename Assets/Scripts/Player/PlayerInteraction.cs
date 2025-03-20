@@ -22,6 +22,7 @@ public class PlayerInteraction : MonoBehaviour
     QuickTimeEvents quickTimeEvents;
     internal FrostSystem _frostSystem;
     internal bool isCurrentlyInteracting;
+    internal bool textLocked;
 
     private void Start()
     {
@@ -38,13 +39,16 @@ public class PlayerInteraction : MonoBehaviour
         {
             InteractText.enabled = true;
         }
-        var interactable = other.GetComponent<GameManager.IInteractable>();
-        if (interactable == null) return;
-        currentInteractable = interactable;
-        ResetPlayerInteraction();
-     
+        if(other.GetComponent<IceMelting>())  ResetPlayerInteraction();
+        if (isCurrentlyInteracting && textLocked ) return;
         
-      
+       
+            var interactable = other.GetComponent<GameManager.IInteractable>();
+            if (interactable == null) return;
+            currentInteractable = interactable;
+            ResetPlayerInteraction();
+        
+        
         //  print(currentInteractable);
         if (other.GetComponent<SelfInteractionManager>() != null)
         {
@@ -87,6 +91,7 @@ public class PlayerInteraction : MonoBehaviour
                 _frostSystem.isFreezing = false;
             }
             isCurrentlyInteracting = true;
+            textLocked = true;
             InteractionBar.gameObject.SetActive(true);
             holdDuration += Time.deltaTime;
             InteractionBar.value = holdDuration;
@@ -99,7 +104,6 @@ public class PlayerInteraction : MonoBehaviour
             if (!iceMelting.AtMeltingPoint &&
                 _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].equipped && !isHeldInteraction)
             {
-                
                 _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].gameObject.GetComponent<Torch>()
                     .torchActive = false;
             }
@@ -114,20 +118,28 @@ public class PlayerInteraction : MonoBehaviour
         _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().torchActive = false;
         HeldInteractionAction.action.Reset();
         InteractionBar?.gameObject.SetActive(false);
+        isCurrentlyInteracting = false;
+        QTEAble = false;
+        textLocked = false;
+
     }
 
     private void OnTriggerStay(Collider other)
     {
+        if (!isCurrentlyInteracting)
+        {
             var interactable = other.GetComponent<GameManager.IInteractable>();
             if (interactable == null) return;
             currentInteractable = interactable;
-       
+        }
+
         // print(currentInteractable);
         if (other.GetComponent<GroundObj>() != null)
         {
             var groundObj = other.GetComponent<GroundObj>();
             if (groundObj != null)
             {
+                if(textLocked)return;
                 switch (other.GetComponent<GroundObj>().item.data.Name)
                 {
                     case "Battery":
@@ -176,6 +188,7 @@ public class PlayerInteraction : MonoBehaviour
 
         if (other.GetComponent<SelfInteractionManager>() != null)
         {
+            isHeldInteraction = other.GetComponent<SelfInteractionManager>().isHeld;
 //           print(_frostSystem._frost > 50);
 //           print(!_playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().torchActive);
             if (_playerHotbar.curEquipmentBase != null)
@@ -187,9 +200,11 @@ public class PlayerInteraction : MonoBehaviour
                         break;
 
                     case 2:
-                        if (_playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>()
-                                .torchActive &&
-                            !iceMelting.AtMeltingPoint)
+                        if (_playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().torchActive && !iceMelting.AtMeltingPoint && isCurrentlyInteracting)
+                        {
+                            InteractText.text = "Defrosting Self";
+                        }
+                        else if (_playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().torchActive && !iceMelting.AtMeltingPoint)
                         {
                             InteractText.text = "Defrosting Self";
                         }
@@ -226,14 +241,18 @@ public class PlayerInteraction : MonoBehaviour
                   iceMelting.IcemeltingText.text = iceMelting.isMelting && holdDuration > 0  ? $"Melting Ice {iceMelting.MeltingStage} / 5 " : "";
         }
 
-        if (other.GetComponent<backGroundInteractable>() == null) return;
-        InteractText.text = _playerHotbar.isOpen
-            ? ""
-            : $"Press E to read {other.GetComponent<backGroundInteractable>().name.ToLower()}";
-        if (!_playerHotbar.isOpen)
+        if (other.GetComponent<backGroundInteractable>() != null)
         {
-            InteractText.enabled = true;
+            if(textLocked)return;
+            InteractText.text = _playerHotbar.isOpen
+                ? ""
+                : $"Press E to read {other.GetComponent<backGroundInteractable>().name.ToLower()}";
+            if (!_playerHotbar.isOpen)
+            {
+                InteractText.enabled = true;
+            }
         }
+      
     }
 
     private void OnTriggerExit(Collider other)
@@ -247,6 +266,7 @@ public class PlayerInteraction : MonoBehaviour
         isHeldInteraction = false;
         isCurrentlyInteracting = false;
         ResetPlayerInteraction();
+        textLocked = false;
     }
 
     public void TryInteract()

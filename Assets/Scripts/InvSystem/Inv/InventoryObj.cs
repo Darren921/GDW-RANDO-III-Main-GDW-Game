@@ -47,11 +47,13 @@ public class InventoryObj : ScriptableObject
             Debug.Log(GetSlots[slotnumber].amount - _amount);
             if (GetSlots[i].amount - _amount > 0)
             {
+                Debug.Log("RemoveAmount");
                 GetSlots[i].removeAmount(_amount);
             }
             else
             {
-                
+                Debug.Log("RemoveSlot");
+
                 GetSlots[i].RemoveSlot();
             }
         }
@@ -231,11 +233,11 @@ public class InventoryObj : ScriptableObject
         }
         public void RemoveSlot()
         {
+            OnBeforeUpdate?.Invoke(this);
             item.Id= -1;
-            item = new Item();  
+            item = new Item();
             item.UiDisplay = null;
             amount = 0;
-            OnBeforeUpdate?.Invoke(this);
             OnAfterUpdate?.Invoke(this);
         }
       

@@ -25,6 +25,7 @@ public class QuickTimeEvents : MonoBehaviour
     [SerializeField] private float _sliderSpeed;
     [SerializeField] private RectTransform  _targetImage;
     internal bool cooldown;
+    internal bool interacted;
 
     internal enum State
     {
@@ -120,6 +121,7 @@ public class QuickTimeEvents : MonoBehaviour
     {
         if (state != State.InProgress || cooldown) return;
         PressedValue = _slider.value;
+        interacted = true;
         Time.timeScale = 0;
         if (PressedValue >= valueMin && PressedValue <= valueMax)
           QTESucess = true;
@@ -134,33 +136,36 @@ public class QuickTimeEvents : MonoBehaviour
     {
         print(QTESucess);
         print(_playerInteraction.holdDuration == 0);
-        if (QTESucess && PressedValue > 0)
+        if (QTESucess && PressedValue > 0 && interacted)
         {
             print("Sucess Noted");
             cooldown = true;
             
         }
-        else if(!QTESucess && PressedValue > 0)
+        else if(!QTESucess && PressedValue > 0 && interacted)
         {
             print("Failed Noted"); 
             cooldown = true;
         }
         if (_playerInteraction.holdDuration == 0 )
         {
-            if (QTESucess && cooldown)
+            switch (QTESucess)
             {
-                print("Sucess Triggered");
-                _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().ReduceCount(0.5f);
-                iceMelting.lowerMeltingStage();
+                case true when cooldown:
+                    print("Sucess Triggered");
+                    _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().ReduceCount(0.5f);
+                    iceMelting.lowerMeltingStage();
+                    cooldown = false;
+                    interacted = false;
+                    break;
+                case false when cooldown:
+                    print("Failed Triggered");
+                    _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().ReduceCount(1f);
+                    iceMelting.lowerMeltingStage();
+                    cooldown = false;
+                    interacted = false;
+                    break;
             }
-            else if(!QTESucess && cooldown)
-            {
-                print("Failed Triggered");
-                _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().ReduceCount(1f);
-                iceMelting.lowerMeltingStage();
-            }
-            
-            cooldown = false;
         }
         _slider.value = 0;
         _slider.gameObject.SetActive(false);

@@ -52,7 +52,24 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
                        _player.GetComponent<PlayerInteraction>().InteractText.text = "";
 
                        Destroy(gameObject);
+                       for (int i = 0; i < _playerHotbar._equipmentBases.Count; i++)
+                       {
+                           if (_playerHotbar._equipmentBases[i] == _playerHotbar.emptyEquipmentBase && i != 0)
+                           {
+                               print(i);
+                               _playerHotbar._equipmentBases.RemoveAt(i );
+                               _playerHotbar._equipmentBases.Insert(i, equipment);
+                               if (i == _playerHotbar.inputtedSlot )
+                               {
+                                   _playerHotbar.ChangeItem(i );
+                               }
+                               return;
+                           }
+                           
+                       }
                        _playerHotbar._equipmentBases.Add(equipment);
+                    
+                   
                             
                     
                           

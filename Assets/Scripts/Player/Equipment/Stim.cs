@@ -26,9 +26,7 @@ public class Stim : ConsumableEquipment
             {
                 ActivateEffect();
                 _playerHotbar.curEquipmentBase.gameObject.SetActive(false);
-                _playerHotbar._equipmentBases.Remove(_playerHotbar.curEquipmentBase);
-                _playerHotbar.ChangeItem(_playerHotbar.inputtedSlot );
-                
+                RemoveEquipmentBase();
             }   
             _playerHotbar.gameObject.GetComponent<PlayerInteraction>().ResetPlayerInteraction();
         }
@@ -43,7 +41,7 @@ public class Stim : ConsumableEquipment
         _playerInteraction.InteractText.text = "";
     }
 
-    
+   
 
 
     internal override void CheckIfUsable()

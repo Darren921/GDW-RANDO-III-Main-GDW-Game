@@ -162,7 +162,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
         {
             print("Held Interact");
            
-            if ( !quickTimeEvent.cooldown)
+            if ( !quickTimeEvent.interacted)
             {
                 print("stoping QTE Normal");
               _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].gameObject.GetComponent<Torch>().ReduceCount(1);

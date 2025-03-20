@@ -27,6 +27,24 @@ public abstract class EquipmentBase : MonoBehaviour
         baseObj = gameObject;
     }
   
+    protected void RemoveEquipmentBase()
+    {
+        if (_playerHotbar._equipmentBases[_playerHotbar.inputtedSlot -1] != null)
+        {
+            if (_playerHotbar._equipmentBases[_playerHotbar.inputtedSlot ] != _playerHotbar.emptyEquipmentBase)
+            {
+                _playerHotbar._equipmentBases.Remove(_playerHotbar.curEquipmentBase);
+                _playerHotbar._equipmentBases.Insert(_playerHotbar.inputtedSlot , _playerHotbar.emptyEquipmentBase);
+            }
+            else
+            {
+                _playerHotbar._equipmentBases.RemoveAt(_playerHotbar.inputtedSlot - 1);
+            }
+                       
+        }
+
+        _playerHotbar.ChangeItem(_playerHotbar.inputtedSlot );
+    }
 
     internal abstract void HeldInteract();
    
