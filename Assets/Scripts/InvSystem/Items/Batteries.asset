@@ -22,7 +22,7 @@ MonoBehaviour:
     ItemType: 2
     Prefab: {fileID: 5002360986888236374, guid: c7834891679ef4247bea190951332a31,
       type: 3}
-    ItemSpawnLimit: 5
+    ItemSpawnLimit: 4
     Limit: 3
     ItemRarity: 0.5
     Categories: []

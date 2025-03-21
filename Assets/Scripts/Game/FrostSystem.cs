@@ -24,6 +24,8 @@ public class FrostSystem : MonoBehaviour
     protected PlayerHotbar _playerHotbar;
     private PlayerInteraction _playerInteraction;
     private GameManager.IInteractable currentInteractable;
+    [SerializeField] private float _frostRate;
+    [SerializeField] private float opacityRate;
 
     // Start is called before the first frame update
     protected void Start()
@@ -113,8 +115,8 @@ public class FrostSystem : MonoBehaviour
         if (!isFreezing) return;
         if (!_player.dead)
         {
-            _frost += Time.deltaTime;
-            _curOpacity += 0.01f * Time.deltaTime;
+            _frost += _frostRate * Time.deltaTime;
+            _curOpacity += opacityRate * Time.deltaTime;
             _frostTexture.SetFloat("_Opacity" , _curOpacity);     
 
         }
