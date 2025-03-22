@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
-using Random = Unity.Mathematics.Random;
+using Random = UnityEngine.Random;
 
 public class QuickTimeEvents : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class QuickTimeEvents : MonoBehaviour
     internal State state;
     [SerializeField] private float _sliderSpeed;
     [SerializeField] private RectTransform  _targetImage;
+    [SerializeField] internal TextMeshProUGUI  qteResult;
     internal bool cooldown;
     internal bool interacted;
 
@@ -47,6 +49,7 @@ public class QuickTimeEvents : MonoBehaviour
     public void StartQTE()
     {
         if(cooldown)return;
+        qteResult.text = "Attempt to save fuel?, left click to attempt";
         //Generate Target Area
         GenerateRange();
         //Activate slider 
@@ -98,9 +101,9 @@ public class QuickTimeEvents : MonoBehaviour
     {
         //generate min value
         valueMin = UnityEngine.Random.Range(_slider.minValue, _slider.maxValue);
-
+      qteMin = Random.Range(1.9f, 3.1f);
         //choose between value that is + or - valueMin 
-        var Choice = UnityEngine.Random.Range(1, 2);
+        var Choice = Random.Range(1, 2);
         switch (Choice)
         {
             case 1:
@@ -130,7 +133,12 @@ public class QuickTimeEvents : MonoBehaviour
         state = State.Ended;
     }
 
- 
+    public void ResetQTE()
+    {
+        interacted = false;
+        qteResult.text = " ";
+    }
+
 
     public void StopQTE()
     {
@@ -138,13 +146,13 @@ public class QuickTimeEvents : MonoBehaviour
         print(_playerInteraction.holdDuration == 0);
         if (QTESucess && PressedValue > 0 && interacted)
         {
-            print("Sucess Noted");
+            qteResult.text =  "Saved 0.5 fuel";
             cooldown = true;
             
         }
         else if(!QTESucess && PressedValue > 0 && interacted)
         {
-            print("Failed Noted"); 
+            qteResult.text =  "Consumed full tank";
             cooldown = true;
         }
         if (_playerInteraction.holdDuration == 0 )
@@ -156,6 +164,7 @@ public class QuickTimeEvents : MonoBehaviour
                     _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().ReduceCount(0.5f);
                     iceMelting.lowerMeltingStage();
                     cooldown = false;
+                    qteResult.text = "";
                     interacted = false;
                     break;
                 case false when cooldown:
@@ -164,6 +173,10 @@ public class QuickTimeEvents : MonoBehaviour
                     iceMelting.lowerMeltingStage();
                     cooldown = false;
                     interacted = false;
+                    qteResult.text = "";
+                    break;
+                default:
+                    ResetQTE();
                     break;
             }
         }

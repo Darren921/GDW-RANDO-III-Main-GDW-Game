@@ -26,10 +26,11 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
    private bool torchActive;
    
    [SerializeField] internal TextMeshProUGUI IcemeltingText;
+   private QuickTimeEvents quickTimeEvents;
 
    void Start()
    {
-       if (GameManager.loaded)
+       if (GameManager.loaded && PlayerPrefs.HasKey("MeltingStage"))
        {
            MeltingStage = PlayerPrefs.GetInt("MeltingStage");
        }
@@ -110,22 +111,22 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
             case 1:
                 checkPoint2 = true;
                 //  print("third last checkpoint");
-                PlayerPrefs.SetFloat("MeltingStage", 1);
+                PlayerPrefs.SetInt("MeltingStage", 1);
                 break;
             case 2:
                 checkPoint3 = true;
                 //   print("second checkpoint");
-                PlayerPrefs.SetFloat("MeltingStage", 2);
+                PlayerPrefs.SetInt("MeltingStage", 2);
                 break;
             case 3:
                 checkPoint4 = true;
                 // print("first checkpoint");
-                PlayerPrefs.SetFloat("MeltingStage", 3);
+                PlayerPrefs.SetInt("MeltingStage", 3);
                 break;
             case 4:
                 checkPoint5 = true;
                 // print("first checkpoint");
-                PlayerPrefs.SetFloat("MeltingStage", 4);
+                PlayerPrefs.SetInt("MeltingStage", 4);
                 break;
         }
      
@@ -135,6 +136,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
     {
         yield return new WaitUntil(() => isMelting == false || torchActive== false );
         active = false;
+        quickTimeEvent.StopQTE();
     }
 
     public void lowerMeltingStage()
@@ -180,7 +182,8 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
             print("in oh no ");
             print(_playerHotbar.gameObject.GetComponent<PlayerInteraction>().holdDuration);
             _playerHotbar.gameObject.GetComponent<PlayerInteraction>().ResetPlayerInteraction();
-
+            quickTimeEvent.StopQTE();
+            quickTimeEvent.qteResult.text = "";
         }
 
     }

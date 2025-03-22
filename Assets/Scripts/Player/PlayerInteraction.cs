@@ -132,6 +132,7 @@ public class PlayerInteraction : MonoBehaviour
             if (interactable == null) return;
             currentInteractable = interactable;
         }
+        print(currentInteractable);
 
         // print(currentInteractable);
         if (other.GetComponent<GroundObj>() != null)
@@ -266,6 +267,8 @@ public class PlayerInteraction : MonoBehaviour
         isHeldInteraction = false;
         isCurrentlyInteracting = false;
         ResetPlayerInteraction();
+        quickTimeEvents.StopQTE();
+        quickTimeEvents.qteResult.text = "";
         textLocked = false;
     }
 

@@ -130,10 +130,10 @@ public class GroundObj : MonoBehaviour,GameManager.IInteractable
                  {
                      print("in add fuel");
                      _playerHotbar.FuelCount++;
-                 }
-                else if(_playerHotbar.FuelCount  > item.item.data.Limit)
-                 {
-                     _playerHotbar.FuelCount = 3;
+                     if (_playerHotbar.FuelCount > item.item.data.Limit)
+                     {
+                         _playerHotbar.FuelCount = 3;
+                     }
                  }
                    _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].CurrentUses = _playerHotbar.FuelCount;
                    print( _playerHotbar.FuelCount);

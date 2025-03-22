@@ -36,6 +36,7 @@ public class Stim : ConsumableEquipment
             print("in oh no ");
             print(_playerHotbar.gameObject.GetComponent<PlayerInteraction>().holdDuration);
             _playerHotbar.gameObject.GetComponent<PlayerInteraction>().ResetPlayerInteraction();
+
         }
 
         _playerInteraction.InteractText.text = "";
