@@ -111,7 +111,7 @@ public class MonsterAIPathfinding : MonoBehaviour
                 {
                     spotCue = false;
                     AudioManager.Instance.PlayMonsterSingleSFX("Monster Spotted Sound");
-                    AudioManager.Instance.PlaySingleSFX("Monster Spotted Cue");
+                    AudioManager.Instance.PlaySpotCueSFX("Spot Cue Sound");
                     lastSpotted = Time.time;
                 }
             }
@@ -166,7 +166,7 @@ public class MonsterAIPathfinding : MonoBehaviour
                 {
                     StopCoroutine(footstepCoroutine);
                 }
-                AudioManager.Instance.StopMonsterSFX(lastFootstep);
+                AudioManager.Instance.StopMonsterFootstepSFX(lastFootstep);
                 StartCoroutine(DelayWalkingSound(0.15f));
 
                 lastFootstep = currentFootstep;
@@ -179,7 +179,7 @@ public class MonsterAIPathfinding : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
-        AudioManager.Instance.StopMonsterSFX(lastFootstep);
-        AudioManager.Instance.PlayMonsterSFX(currentFootstep);
+        AudioManager.Instance.StopMonsterFootstepSFX(lastFootstep);
+        AudioManager.Instance.PlayMonsterFootstepSFX(currentFootstep);
     }
 }

@@ -30,7 +30,7 @@ public class Torch : LightEquipment
             if (torchCue)
             {
                 torchCue = false;
-                AudioManager.Instance.PlaySFX("Torch Gun");
+                AudioManager.Instance.PlayTorchSFX("Torch Gun Sound");
             }
 
             lightSource.gameObject.SetActive(true);
@@ -40,7 +40,7 @@ public class Torch : LightEquipment
             if (!torchCue)
             {
                 torchCue = true;
-                AudioManager.Instance.StopSFX("Torch Gun");
+                AudioManager.Instance.StopTorchSFX("Torch Gun Sound");
             }
 
             lightSource.gameObject.SetActive(false);
