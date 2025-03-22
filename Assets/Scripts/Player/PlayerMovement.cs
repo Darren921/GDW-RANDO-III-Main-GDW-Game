@@ -33,9 +33,13 @@ public class PlayerMovement : MonoBehaviour
     private PlayerHotbar _playerHotbar;
     private Torch _torch;
     [SerializeField]private Slider _SprintSlider;
+     Color currentColor; 
+    [SerializeField]  private Image _SprintSliderfill;
+    [SerializeField]  private Image _SprintSliderBackground;
     // Start is called before the first frame update
     void Start()
     {
+        currentColor = _SprintSliderfill.color;
         _player = GetComponent<Player>();
         CamTransform = Camera.main.transform;
         _playerHotbar = GetComponent<PlayerHotbar>();
@@ -56,12 +60,16 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator SetStimSpeed()
     {
+        _SprintSliderBackground.color = Color.red;
+        _SprintSliderfill.color = Color.red;
         print("Speed Changed");
         moveSpeed = 17;
         sprintSpeed = 1.7f;
         yield return new WaitForSecondsRealtime(15);
         moveSpeed = 15f;
         sprintSpeed = 1.5f;
+        _SprintSliderfill.color = currentColor;
+        _SprintSliderBackground.color = Color.white;
         
     }
 

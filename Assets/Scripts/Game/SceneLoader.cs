@@ -38,6 +38,7 @@ public class SceneLoader : MonoBehaviour
     
         public void restartGame()
         {
+            PlayerPrefs.SetInt("MeltingStage", 5);
             Scene = "NewMap";
             SceneManager.LoadScene(Scene);
         }
