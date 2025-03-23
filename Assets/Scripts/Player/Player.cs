@@ -18,6 +18,9 @@ public class Player : MonoBehaviour
     [SerializeField] CinemachineVirtualCamera cineCam;
     public bool dead;
     [SerializeField] GameObject enemylookat;
+    [SerializeField] GameObject DeathMonster;
+    [SerializeField] GameObject NormalMonster;
+    [SerializeField] MonsterAIPathfinding monAI;
 
     //testing 
     private Vector3 mousePos;
@@ -145,7 +148,7 @@ public class Player : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (!collision.gameObject.CompareTag("Enemy")) return;
-        dead = true;
+        StartCoroutine(DeathCutscene());
 
         StartCoroutine(LookAtDeath("Monster"));
 
@@ -173,6 +176,7 @@ public class Player : MonoBehaviour
 
     public static IEnumerator LookAtDeath(string deathmessage)
     {
+        
         //heartBeat.clip = heartbeatF;
         //heartBeat.Play();
         //cineCam.Priority = 100;
@@ -182,8 +186,9 @@ public class Player : MonoBehaviour
         print($"death by {deathmessage}");
         yield return null;
         Cursor.lockState = CursorLockMode.None;
-        isDead = true;
-        SceneManager.LoadScene("DeathScreen");
+        
+        
+
     }
 
     public void DetectTerrain()
@@ -267,6 +272,16 @@ public class Player : MonoBehaviour
             AudioManager.Instance.StopSFX(lastFootstep);
             AudioManager.Instance.PlaySFX(currentFootstep);
         }
+    }
+    IEnumerator DeathCutscene()
+    {
+        monAI.enabled = false;
+        NormalMonster.SetActive(false);
+        DeathMonster.SetActive(true);
+        
+        isDead = true;
+        yield return new WaitForSeconds(5);
+        SceneManager.LoadScene("DeathScreen");
     }
 
 }

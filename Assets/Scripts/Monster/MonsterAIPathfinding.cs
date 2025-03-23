@@ -7,6 +7,9 @@ using UnityEngine.ProBuilder.Shapes;
 
 public class MonsterAIPathfinding : MonoBehaviour
 {
+    [SerializeField] Animator animator;
+    [SerializeField] float walkValue;
+    [SerializeField] float RunValue;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] GameObject player;
     [SerializeField] GameObject forwardFace;
@@ -17,6 +20,9 @@ public class MonsterAIPathfinding : MonoBehaviour
     [SerializeField] bool RoamDestination;
     [SerializeField] bool CanRoam;
     [SerializeField] public GameObject[] positions;
+
+
+
 
     private Coroutine footstepCoroutine;
     private bool spotCue = true;
@@ -44,6 +50,52 @@ public class MonsterAIPathfinding : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
+        if (agent.speed == 0 )
+        {
+            if (walkValue > 0)
+            {
+                walkValue -= 0.1f;
+            }
+            if (RunValue > 0)
+            {
+                RunValue -= 0.1f;
+            }
+        }
+        if (agent.speed == 10)
+        {
+            if (walkValue < 1)
+            {
+                walkValue += 0.1f;
+            }
+            if (RunValue > 0)
+            {
+                RunValue -= 0.1f;
+            }
+
+        }
+        if (agent.speed == 14)
+        {
+            if (walkValue > 0 )
+            {
+                walkValue -= 0.1f;
+            }
+            if ( RunValue < 1 )
+            {
+
+                RunValue += 0.1f;
+            }
+        }
+        if (Spotted)
+        {
+            agent.speed = 14;
+        }
+        else
+        {
+            agent.speed = 10;
+        }
+        animator.SetLayerWeight(1, walkValue);
+        animator.SetLayerWeight(2, RunValue);
+
         Debug.DrawRay(gameObject.transform.position, forwardFace.transform.position - gameObject.transform.position);
         GetLineOfSight();
         
