@@ -126,6 +126,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        if(_playerHotbar.GetComponent<Player>().dead) return;
         if (!isCurrentlyInteracting)
         {
             var interactable = other.GetComponent<GameManager.IInteractable>();

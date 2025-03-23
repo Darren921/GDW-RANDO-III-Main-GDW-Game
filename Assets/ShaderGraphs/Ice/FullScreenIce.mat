@@ -50,7 +50,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Opacity: -0.7787076
+    - _Opacity: -0.7870717
     - _Smoothness: 0
     - _fuzziness: 0
     - _range: 0

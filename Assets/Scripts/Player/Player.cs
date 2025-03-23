@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject DeathMonster;
     [SerializeField] GameObject NormalMonster;
     [SerializeField] MonsterAIPathfinding monAI;
-
+ 
     //testing 
     private Vector3 mousePos;
     Camera playerCam;
@@ -64,6 +64,7 @@ public class Player : MonoBehaviour
     public static bool isDead;
     private PlayerHotbar _playerHotbar;
     private PlayerMovement _playerMovement;
+    [SerializeField] GameObject UI;
 
     private void Awake()
     {
@@ -174,22 +175,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public static IEnumerator LookAtDeath(string deathmessage)
-    {
-        
-        //heartBeat.clip = heartbeatF;
-        //heartBeat.Play();
-        //cineCam.Priority = 100;
-        //sound.Play();
-        //yield return new WaitForSeconds(3);
-        InputManager.DisableInGame();
-        print($"death by {deathmessage}");
-        yield return null;
-        Cursor.lockState = CursorLockMode.None;
-        
-        
-
-    }
+  
 
     public void DetectTerrain()
     {
@@ -233,7 +219,7 @@ public class Player : MonoBehaviour
 
     public void walkingSound()
     {
-        if (!isWalking)
+        if (!isWalking && !dead)
         {
             isWalking = true;
             footstepCoroutine = StartCoroutine(DelayWalkingSound(0.15f));
@@ -273,14 +259,32 @@ public class Player : MonoBehaviour
             AudioManager.Instance.PlaySFX(currentFootstep);
         }
     }
+    public static IEnumerator LookAtDeath(string deathmessage)
+    {
+        
+        //heartBeat.clip = heartbeatF;
+        //heartBeat.Play();
+        //cineCam.Priority = 100;
+        //sound.Play();
+        //yield return new WaitForSeconds(3);
+        InputManager.DisableInGame();
+        print($"death by {deathmessage}");
+        yield return null;
+        Cursor.lockState = CursorLockMode.None;
+        
+        
+
+    }
     IEnumerator DeathCutscene()
     {
         monAI.enabled = false;
         NormalMonster.SetActive(false);
         DeathMonster.SetActive(true);
-        
         isDead = true;
+        _playerHotbar.curEquipmentBase.gameObject.SetActive(false);
+        UI.gameObject.SetActive(false);
         yield return new WaitForSeconds(5);
+        Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene("DeathScreen");
     }
 

@@ -18,7 +18,7 @@ MonoBehaviour:
     Name: Stim
     Id: 5
     Description: 
-    UiDisplay: {fileID: 21300000, guid: 4665a831499bb7044b208180006e5f8c, type: 3}
+    UiDisplay: {fileID: 21300000, guid: aa5ff820d4f536148b95370698a485dc, type: 3}
     ItemType: 2
     Prefab: {fileID: 167074595619511749, guid: a6070e1b11cc2ef4eb12323ba132c7c7, type: 3}
     ItemSpawnLimit: 5
