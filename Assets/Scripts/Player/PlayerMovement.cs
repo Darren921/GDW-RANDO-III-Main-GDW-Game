@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] internal float sprintSpeed;
 
     [SerializeField] private float maxSprintTime;
+    [SerializeField] private float sprintRegenModifer;
 
     [SerializeField] CinemachineInputProvider inputProvider;
     //Camera location
@@ -63,6 +64,7 @@ public class PlayerMovement : MonoBehaviour
         _SprintSliderBackground.color = Color.red;
         _SprintSliderfill.color = Color.red;
         print("Speed Changed");
+        sprintTime = maxSprintTime;
         moveSpeed = 17;
         sprintSpeed = 1.7f;
         yield return new WaitForSecondsRealtime(15);
@@ -151,7 +153,7 @@ public class PlayerMovement : MonoBehaviour
         else if (!onCoolDownFull && !onCoolDownNormal && sprintTime !<= maxSprintTime)
         {
       //      print("Increasing sprint");
-            sprintTime += Time.deltaTime;   
+            sprintTime +=  sprintRegenModifer * Time.deltaTime;   
         }
         
     }

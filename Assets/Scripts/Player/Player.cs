@@ -281,7 +281,7 @@ public class Player : MonoBehaviour
         NormalMonster.SetActive(false);
         DeathMonster.SetActive(true);
         isDead = true;
-        _playerHotbar.curEquipmentBase.gameObject.SetActive(false);
+        _playerHotbar.curEquipmentBase?.gameObject.SetActive(false);
         UI.gameObject.SetActive(false);
         yield return new WaitForSeconds(5);
         Cursor.lockState = CursorLockMode.None;
