@@ -44,7 +44,7 @@ Material:
     m_Floats:
     - _ColourResolution: 8
     - _Float: 0
-    - _ditherSpread: 0.04
+    - _ditherSpread: 0.046
     m_Colors:
     - _Vector4: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
