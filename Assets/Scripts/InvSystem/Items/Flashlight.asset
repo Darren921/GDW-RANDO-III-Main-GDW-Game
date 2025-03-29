@@ -18,7 +18,7 @@ MonoBehaviour:
     Name: 
     Id: 1
     Description: 
-    UiDisplay: {fileID: 21300000, guid: 3b94e7b59c54a244b98184e7a7afbdfa, type: 3}
+    UiDisplay: {fileID: 21300000, guid: d7af7ba3f5d5cab48b15726ca4563a54, type: 3}
     ItemType: 3
     Prefab: {fileID: 6434571087379855294, guid: 83b18ff302f22bf45b0a27ca34d2b190,
       type: 3}
