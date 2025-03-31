@@ -36,7 +36,6 @@ public class MonsterAIPathfinding : MonoBehaviour
     private string currentFootstep;  
     private string lastFootstep;
 
-    float lastSpotted = 0f;
     float lastSpottedFalse = 0f;
     float spotCD = 10f;
 
@@ -170,7 +169,7 @@ public class MonsterAIPathfinding : MonoBehaviour
                 Spotted = true;
                 Debug.Log("Spotted");
 
-                if (spotCue && Time.time >= lastSpotted + spotCD)
+                if (spotCue)
                 {
                     spotCue = false;
                     changeTheme = true;
@@ -178,7 +177,6 @@ public class MonsterAIPathfinding : MonoBehaviour
                     AudioManager.Instance.PlayMusic("Spot Theme");
                     AudioManager.Instance.PlayMonsterSingleSFX("Monster Spotted Sound");
                     AudioManager.Instance.PlaySpotCueSFX("Spot Cue Sound");
-                    lastSpotted = Time.time;
                 }
 
             }
