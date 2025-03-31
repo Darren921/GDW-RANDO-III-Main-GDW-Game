@@ -57,8 +57,8 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _dist_ammount: 0.02
+    - _dist_ammount: -0.14
     m_Colors:
-    - _Color: {r: 0, g: 1, b: 0.81803536, a: 0}
+    - _Color: {r: 0.990566, g: 0.8978397, b: 0.2569865, a: 0}
     - _fire_area: {r: 0, g: -3.34, b: 0, a: 0}
   m_BuildTextureStacks: []

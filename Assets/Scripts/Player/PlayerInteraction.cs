@@ -23,6 +23,7 @@ public class PlayerInteraction : MonoBehaviour
     internal FrostSystem _frostSystem;
     internal bool isCurrentlyInteracting;
     internal bool textLocked;
+    [SerializeField] Animator StimAnim;
 
     private void Start()
     {
@@ -77,8 +78,32 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Update()
     {
-//        print(isHeldInteraction);
-//33        print(  _playerHotbar._equipmentBases?[_playerHotbar.inputtedSlot].CurrentUses > 0 );
+        if (_playerHotbar.curEquipmentBase != null)
+        {
+
+
+            if (_playerHotbar.curEquipmentBase.GetComponent<Stim>() != null)
+            {
+                if (holdDuration != 0)
+                {
+                    StimAnim.SetBool("Stimming", true);
+                }
+                else
+                {
+                    StimAnim.SetBool("Stimming", false);
+                    _playerHotbar.curEquipmentBase.GetComponent<Stim>().transform.localPosition = new Vector3(0.249f, -0.1961374f, 0.6077278f);
+                    _playerHotbar.curEquipmentBase.GetComponent<Stim>().transform.localRotation = Quaternion.Euler(0,0, 0.023f);
+                }
+
+                
+
+
+
+
+            }
+        }
+        //        print(isHeldInteraction);
+        //33        print(  _playerHotbar._equipmentBases?[_playerHotbar.inputtedSlot].CurrentUses > 0 );
         if (HeldInteractionAction.action.IsPressed() && currentInteractable != null  && isHeldInteraction &&
             _playerHotbar._equipmentBases?[_playerHotbar.inputtedSlot].CurrentUses > 0 &&
             _playerHotbar.curEquipmentBase.ID != 1)
