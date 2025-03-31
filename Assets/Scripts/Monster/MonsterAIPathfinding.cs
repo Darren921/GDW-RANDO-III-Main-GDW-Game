@@ -37,6 +37,7 @@ public class MonsterAIPathfinding : MonoBehaviour
     private string lastFootstep;
 
     float lastSpotted = 0f;
+    float lastSpottedFalse = 0f;
     float spotCD = 10f;
 
     // Start is called before the first frame update
@@ -46,6 +47,15 @@ public class MonsterAIPathfinding : MonoBehaviour
         agent = gameObject.GetComponent<NavMeshAgent>();
 
         StartCoroutine(DelayWalkingSound(0.15f));
+    }
+
+    private void Update()
+    {
+        if (Spotted)
+        {
+            lastSpottedFalse = 0f;
+            lastSpottedFalse = Time.time;
+        }
     }
 
     // Update is called once per frame
@@ -160,7 +170,7 @@ public class MonsterAIPathfinding : MonoBehaviour
                 Spotted = true;
                 Debug.Log("Spotted");
 
-                if (Spotted && spotCue && Time.time >= lastSpotted + spotCD)
+                if (spotCue && Time.time >= lastSpotted + spotCD)
                 {
                     spotCue = false;
                     changeTheme = true;
@@ -170,6 +180,7 @@ public class MonsterAIPathfinding : MonoBehaviour
                     AudioManager.Instance.PlaySpotCueSFX("Spot Cue Sound");
                     lastSpotted = Time.time;
                 }
+
             }
             else
             {
@@ -180,13 +191,14 @@ public class MonsterAIPathfinding : MonoBehaviour
         }
         else
         {
-            spotCue = true;
             Spotted = false;
-            if (changeTheme && Time.time >= lastSpotted + spotCD)
+            if (changeTheme && Time.time >= lastSpottedFalse + spotCD)
             {
+                spotCue = true;
                 changeTheme = false;
                 AudioManager.Instance.StopMusic("Spot Theme");
                 AudioManager.Instance.PlayMusic("Theme");
+                lastSpottedFalse = Time.time;
             }
 
         }
