@@ -134,15 +134,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""MainMenu"",
-                    ""type"": ""Button"",
-                    ""id"": ""3372bad4-dd91-48a7-a20d-a524fa2fc909"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -387,10 +378,27 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Defrost"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
+                }
+            ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""b5b2701f-0c7b-45d4-851e-024f0376f7d0"",
+            ""actions"": [
+                {
+                    ""name"": ""MainMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""ce975d58-1b1f-4260-a63d-f01687d37091"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""2eb925a2-eeaf-4355-bcce-83dd4ac4fd3a"",
+                    ""id"": ""29b31c7f-0c8a-43c1-b514-3eae84c1b5ef"",
                     ""path"": ""<Keyboard>/backquote"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -418,12 +426,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_InGame_HeldInteract = m_InGame.FindAction("HeldInteract", throwIfNotFound: true);
         m_InGame_Defrost = m_InGame.FindAction("Defrost", throwIfNotFound: true);
         m_InGame_OpenAndCloseInv = m_InGame.FindAction("OpenAndCloseInv", throwIfNotFound: true);
-        m_InGame_MainMenu = m_InGame.FindAction("MainMenu", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_MainMenu = m_UI.FindAction("MainMenu", throwIfNotFound: true);
     }
 
     ~@Controls()
     {
         UnityEngine.Debug.Assert(!m_InGame.enabled, "This will cause a leak and performance issues, Controls.InGame.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, Controls.UI.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -497,7 +508,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_InGame_HeldInteract;
     private readonly InputAction m_InGame_Defrost;
     private readonly InputAction m_InGame_OpenAndCloseInv;
-    private readonly InputAction m_InGame_MainMenu;
     public struct InGameActions
     {
         private @Controls m_Wrapper;
@@ -514,7 +524,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @HeldInteract => m_Wrapper.m_InGame_HeldInteract;
         public InputAction @Defrost => m_Wrapper.m_InGame_Defrost;
         public InputAction @OpenAndCloseInv => m_Wrapper.m_InGame_OpenAndCloseInv;
-        public InputAction @MainMenu => m_Wrapper.m_InGame_MainMenu;
         public InputActionMap Get() { return m_Wrapper.m_InGame; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -560,9 +569,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @OpenAndCloseInv.started += instance.OnOpenAndCloseInv;
             @OpenAndCloseInv.performed += instance.OnOpenAndCloseInv;
             @OpenAndCloseInv.canceled += instance.OnOpenAndCloseInv;
-            @MainMenu.started += instance.OnMainMenu;
-            @MainMenu.performed += instance.OnMainMenu;
-            @MainMenu.canceled += instance.OnMainMenu;
         }
 
         private void UnregisterCallbacks(IInGameActions instance)
@@ -603,9 +609,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @OpenAndCloseInv.started -= instance.OnOpenAndCloseInv;
             @OpenAndCloseInv.performed -= instance.OnOpenAndCloseInv;
             @OpenAndCloseInv.canceled -= instance.OnOpenAndCloseInv;
-            @MainMenu.started -= instance.OnMainMenu;
-            @MainMenu.performed -= instance.OnMainMenu;
-            @MainMenu.canceled -= instance.OnMainMenu;
         }
 
         public void RemoveCallbacks(IInGameActions instance)
@@ -623,6 +626,52 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         }
     }
     public InGameActions @InGame => new InGameActions(this);
+
+    // UI
+    private readonly InputActionMap m_UI;
+    private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
+    private readonly InputAction m_UI_MainMenu;
+    public struct UIActions
+    {
+        private @Controls m_Wrapper;
+        public UIActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MainMenu => m_Wrapper.m_UI_MainMenu;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void AddCallbacks(IUIActions instance)
+        {
+            if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
+            @MainMenu.started += instance.OnMainMenu;
+            @MainMenu.performed += instance.OnMainMenu;
+            @MainMenu.canceled += instance.OnMainMenu;
+        }
+
+        private void UnregisterCallbacks(IUIActions instance)
+        {
+            @MainMenu.started -= instance.OnMainMenu;
+            @MainMenu.performed -= instance.OnMainMenu;
+            @MainMenu.canceled -= instance.OnMainMenu;
+        }
+
+        public void RemoveCallbacks(IUIActions instance)
+        {
+            if (m_Wrapper.m_UIActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IUIActions instance)
+        {
+            foreach (var item in m_Wrapper.m_UIActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_UIActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public UIActions @UI => new UIActions(this);
     public interface IInGameActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -637,6 +686,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnHeldInteract(InputAction.CallbackContext context);
         void OnDefrost(InputAction.CallbackContext context);
         void OnOpenAndCloseInv(InputAction.CallbackContext context);
+    }
+    public interface IUIActions
+    {
         void OnMainMenu(InputAction.CallbackContext context);
     }
 }

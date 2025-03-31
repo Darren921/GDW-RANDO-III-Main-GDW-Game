@@ -112,15 +112,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "MainMenu",
-                    "type": "Button",
-                    "id": "3372bad4-dd91-48a7-a20d-a524fa2fc909",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -365,10 +356,27 @@
                     "action": "Defrost",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "b5b2701f-0c7b-45d4-851e-024f0376f7d0",
+            "actions": [
+                {
+                    "name": "MainMenu",
+                    "type": "Button",
+                    "id": "ce975d58-1b1f-4260-a63d-f01687d37091",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
                 {
                     "name": "",
-                    "id": "2eb925a2-eeaf-4355-bcce-83dd4ac4fd3a",
+                    "id": "29b31c7f-0c8a-43c1-b514-3eae84c1b5ef",
                     "path": "<Keyboard>/backquote",
                     "interactions": "",
                     "processors": "",

@@ -142,7 +142,7 @@ public class PlayerInteraction : MonoBehaviour
         _frostSystem.isFreezing = true;
         _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().torchActive = false;
         HeldInteractionAction.action.Reset();
-        InteractionBar?.gameObject.SetActive(false);
+        InteractionBar.gameObject?.SetActive(false);
         isCurrentlyInteracting = false;
         QTEAble = false;
         textLocked = false;

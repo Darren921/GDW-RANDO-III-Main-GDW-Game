@@ -12,6 +12,7 @@ public class inGameMenu : MonoBehaviour
     [SerializeField]Slider Sens;
     [SerializeField] CinemachineVirtualCamera _camera;
     [SerializeField]  PlayerMovement player;
+    private bool isOpen;
     private void Awake()
     {
         menu = gameObject;
@@ -24,7 +25,7 @@ public class inGameMenu : MonoBehaviour
 
     void Start()
     {
-        CloseMenu();
+        menu.SetActive(false);
     }
 
     
@@ -36,20 +37,26 @@ public class inGameMenu : MonoBehaviour
     
     public void OpenMenu()
     {
-        player.DisableInput();
-        Cursor.lockState = CursorLockMode.Confined;
-        Time.timeScale = 0;
-        menu.SetActive(true);
+        if (!isOpen)
+        {
+            isOpen = true;
+            player.DisableInput();
+            Cursor.lockState = CursorLockMode.Confined;
+            Time.timeScale = 0;
+            menu.SetActive(true);
+        }
+        else
+        {
+            player.EnableInput();
+            Cursor.lockState = CursorLockMode.Locked;
+            Time.timeScale = 1;
+            menu.SetActive(false);
+            isOpen = false;
+        }
+      
     }
 
-    public void CloseMenu()
-    {
-        player.EnableInput();
-        Cursor.lockState = CursorLockMode.Locked;
-        Time.timeScale = 1;
-        menu.SetActive(false);
-    }
-
+ 
     // Update is called once per frame
     void Update()
     {

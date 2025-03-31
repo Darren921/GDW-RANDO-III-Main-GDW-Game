@@ -27,7 +27,7 @@ public class SceneLoader : MonoBehaviour
 
         public void LoadScene(string scene)
         {
-            InputManager.DisableInGame();
+         
             SceneManager.LoadScene(scene);
         }
         public void  goToMainMenu()
@@ -45,6 +45,7 @@ public class SceneLoader : MonoBehaviour
     
         public void GoToLastCheckpoint()
         {
+           
             GameManager.loaded = true;
             SceneManager.LoadScene("NewMap");
         }

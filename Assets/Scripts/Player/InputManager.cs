@@ -82,40 +82,28 @@ public class InputManager : MonoBehaviour
         {
             PlayerInteraction?.TryHeldInteract();
         };
-        controls.InGame.MainMenu.performed += _ =>
+        controls.UI.MainMenu.performed += _ =>
         {
             player.OpenMenu();
         };
 
     }
 
-    public static void HoldChange(bool isSelf)
-    {
-        if (isSelf)
-        {
-            //         print("Self");
-            controls.InGame.HeldInteract.ApplyBindingOverride(new InputBinding
-            {
-                overrideInteractions = "Hold(duration= 5,pressPoint=0.2)"
-            });
-        }
-        else
-        {
-//            print("door melting");
-            controls.InGame.HeldInteract.ApplyBindingOverride(new InputBinding
-            {
-                overrideInteractions = "Hold(duration= 10,pressPoint=0.2)"
-            });
-        }
-    }
+   
 
     public static void EnableInGame()
     {
         controls.InGame.Enable();
+        controls.UI.Enable();
     }
     public static void DisableInGame()
     {
         controls.InGame.Disable();
+    }
+
+    public static void DisableUI()
+    {
+        controls.UI.Disable();
     }
 
 }

@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerHotbar _playerHotbar;
     private Torch _torch;
     [SerializeField]private Slider _SprintSlider;
-     Color currentColor; 
+    [SerializeField]Color currentColor; 
     [SerializeField]  private Image _SprintSliderfill;
     [SerializeField]  private Image _SprintSliderBackground;
     // Start is called before the first frame update
@@ -102,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
     {
 //        if(!onCoolDownFull && !onCoolDownNormal)
             isSprinting = true;
-        virtualCamera.m_Lens.FieldOfView = 45;
+       
         
         
     }
@@ -117,18 +117,20 @@ public class PlayerMovement : MonoBehaviour
             onCoolDownNormal = true;
             StartCoroutine(onSprintEnd(1));
         }
-        virtualCamera.m_Lens.FieldOfView = 40;
 
     }
 
     public void DisableInput()
     {
         inputProvider.enabled = false;
+        InputManager.DisableInGame();
+        
     }
 
     public void EnableInput()
     {
         inputProvider.enabled = true;
+        InputManager.EnableInGame();
     }
 
     private void CheckSprint()
@@ -136,6 +138,7 @@ public class PlayerMovement : MonoBehaviour
         
         if (isSprinting && !onCoolDownFull && !onCoolDownNormal && !_torch.torchActive)
         {
+            virtualCamera.m_Lens.FieldOfView = 45;
 //            print("Decreasing sprint");
             sprintTime -= Time.deltaTime;
             if (sprintTime <= 0)
@@ -161,24 +164,28 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!onCoolDownFull)
         {
+            virtualCamera.m_Lens.FieldOfView = 40;
+
             onCoolDownNormal = true;
   //          print("cooldown normal sprint");
             yield return new WaitForSecondsRealtime(cooldown);
             onCoolDownNormal = false;
-            
+
         }
     }
     private IEnumerator onSprintEmpty(int cooldown )
     {
         if (!onCoolDownNormal)
         {
+            virtualCamera.m_Lens.FieldOfView = 40;
+
             onCoolDownFull = true;
   //          print("cooldown full sprint");
 
             yield return new WaitForSecondsRealtime(cooldown);
             onCoolDownFull = false;
             sprintTime = maxSprintTime;
-            
+
         }
     
     }
