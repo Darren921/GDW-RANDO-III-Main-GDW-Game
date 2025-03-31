@@ -39105,6 +39105,8 @@ MonoBehaviour:
   maxFrost: 200
   _frostTexture: {fileID: 0}
   _player: {fileID: 0}
+  _frostRate: 0
+  opacityRate: 0
 --- !u!23 &1377034314
 MeshRenderer:
   m_ObjectHideFlags: 0
