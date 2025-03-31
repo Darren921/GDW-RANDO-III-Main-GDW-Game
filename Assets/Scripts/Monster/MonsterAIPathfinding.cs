@@ -26,6 +26,7 @@ public class MonsterAIPathfinding : MonoBehaviour
 
     private Coroutine footstepCoroutine;
     private bool spotCue = true;
+    private bool changeTheme = false;
 
     private string metal = "Monster Metal Footstep";
     private string stone = "Monster Stone Footstep";
@@ -162,6 +163,9 @@ public class MonsterAIPathfinding : MonoBehaviour
                 if (Spotted && spotCue && Time.time >= lastSpotted + spotCD)
                 {
                     spotCue = false;
+                    changeTheme = true;
+                    AudioManager.Instance.StopMusic("Theme");
+                    AudioManager.Instance.PlayMusic("Spot Theme");
                     AudioManager.Instance.PlayMonsterSingleSFX("Monster Spotted Sound");
                     AudioManager.Instance.PlaySpotCueSFX("Spot Cue Sound");
                     lastSpotted = Time.time;
@@ -169,7 +173,6 @@ public class MonsterAIPathfinding : MonoBehaviour
             }
             else
             {
-                spotCue = true;
                 Spotted = false;
             }
             
@@ -179,6 +182,13 @@ public class MonsterAIPathfinding : MonoBehaviour
         {
             spotCue = true;
             Spotted = false;
+            if (changeTheme && Time.time >= lastSpotted + spotCD)
+            {
+                changeTheme = false;
+                AudioManager.Instance.StopMusic("Spot Theme");
+                AudioManager.Instance.PlayMusic("Theme");
+            }
+
         }
     }
     void NewRoamDestination()
