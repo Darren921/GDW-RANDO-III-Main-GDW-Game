@@ -284,6 +284,8 @@ public class Player : MonoBehaviour
         _playerHotbar.curEquipmentBase?.gameObject.SetActive(false);
         UI.gameObject.SetActive(false);
         yield return new WaitForSeconds(5);
+        AudioManager.Instance.StopMusic("Theme");
+        AudioManager.Instance.StopMusic("Spot Theme");
         Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene("DeathScreen");
     }

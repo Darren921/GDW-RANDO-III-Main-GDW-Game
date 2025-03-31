@@ -33,7 +33,11 @@ public class AudioManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        FindNewMonsterSource();
+        if (scene.name == "newMap")
+        {
+            PlayMusic("Theme");
+            FindNewMonsterSource();
+        }
     }
 
     private void FindNewMonsterSource()
