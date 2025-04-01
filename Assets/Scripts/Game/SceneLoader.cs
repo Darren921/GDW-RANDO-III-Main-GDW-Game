@@ -49,6 +49,11 @@ public class SceneLoader : MonoBehaviour
             GameManager.loaded = true;
             SceneManager.LoadScene("NewMap");
         }
+
+        public void QuitGame()
+        {
+            Application.Quit();
+        }
     public void mainScene()
     {
         SceneManager.LoadScene(Scene);
