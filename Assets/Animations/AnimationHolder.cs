@@ -20,10 +20,11 @@ public class AnimationHolder : MonoBehaviour
 
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip cutsceneSFX;
-    
 
+    [SerializeField] bool Skip;
     private void Start()
     {
+        Skip = false;
         _frostTexture.SetFloat("_Opacity", -1);
 
         audioSource = gameObject.GetComponent<AudioSource>();
@@ -35,7 +36,10 @@ public class AnimationHolder : MonoBehaviour
     }
     private void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SceneManager.LoadScene(GameScene);
+        }
     }
     public void OnStart()
     {
@@ -45,7 +49,7 @@ public class AnimationHolder : MonoBehaviour
     }
     IEnumerator PlayCutsceneMainMenu()
     {
-
+        Skip = true;
         animator.Play("MenuTransition");
         PlayerAnim.Play("Move");
         
