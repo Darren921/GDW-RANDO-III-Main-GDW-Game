@@ -100,7 +100,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
              _renderer.enabled = false;
             _DoorHitbox.SetActive(false);
             exitCollider.enabled = true;
-            if (_DoorHitbox.gameObject.name == "Door1")
+            if (_DoorHitbox.gameObject.name == "TutorialDoor")
             {
                 GameManager.TutorialActive = false;
                 FrostSystem.FrostOnOff();
