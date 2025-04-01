@@ -28,6 +28,8 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
    [SerializeField] internal TextMeshProUGUI IcemeltingText;
    private QuickTimeEvents quickTimeEvents;
 
+    [SerializeField] Animator TutorialDoorAnimator;
+
    void Start()
    {
        if (GameManager.loaded && PlayerPrefs.HasKey("MeltingStage"))
@@ -107,8 +109,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
             StartCoroutine(CutSceneDelay());
             if (_DoorHitbox.gameObject.name == "CubeTut")
             {
-                GameManager.TutStop();
-                FrostSystem.isFreezing = true;
+                StartCoroutine(TutDoorOpen());
             }
             
         } 
@@ -127,7 +128,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
 
     private IEnumerator Delay()
     {
-        yield return null;
+        yield return new WaitForSeconds(10);
         _DoorHitbox.SetActive(false);
     }
 
@@ -184,5 +185,16 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
             quickTimeEvent.qteResult.text = "";
         }
 
+    }
+    IEnumerator TutDoorOpen()
+    {
+        
+        gameObject.GetComponent<BoxCollider>().enabled = false;
+        gameObject.GetComponent<Renderer>().enabled = false;
+        TutorialDoorAnimator.Play("Tutorial Door First open");
+        yield return new WaitForSeconds(4);
+        FrostSystem.isFreezing = true;
+        yield return null;
+        GameManager.TutStop();
     }
 }

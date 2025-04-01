@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     public static void TutStop()
     {
+
         TutorialActive = false;
     }
     public interface IInteractable
@@ -30,5 +31,6 @@ public class GameManager : MonoBehaviour
         public void Interact();
         public void HeldInteract();
     }
+    
    
 }
