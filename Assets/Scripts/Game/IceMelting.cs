@@ -87,17 +87,12 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
             active = true;
             StartCoroutine(CheckIsMelting());
         }
-        if (isMelting)
-        {
-             CheckMeltingProgress();
-
-        } 
-        
     }
     
 
     private void CheckMeltingProgress()
     {
+     
         if (MeltingStage <= melted)
         {
             checkPoint1 = true;
@@ -105,29 +100,15 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
              _renderer.enabled = false;
             _DoorHitbox.SetActive(false);
             exitCollider.enabled = true;
+            if (_DoorHitbox.gameObject.name == "Door1")
+            {
+                GameManager.TutorialActive = false;
+                FrostSystem.FrostOnOff();
+            }
         } 
-        else switch (MeltingStage)
-        {
-            case 1:
-                checkPoint2 = true;
-                //  print("third last checkpoint");
-                PlayerPrefs.SetInt("MeltingStage", 1);
-                break;
-            case 2:
-                checkPoint3 = true;
-                //   print("second checkpoint");
-                PlayerPrefs.SetInt("MeltingStage", 2);
-                break;
-            case 3:
-                checkPoint4 = true;
-                // print("first checkpoint");
-                PlayerPrefs.SetInt("MeltingStage", 3);
-                break;
-            case 4:
-                checkPoint5 = true;
-                // print("first checkpoint");
-                PlayerPrefs.SetInt("MeltingStage", 4);
-                break;
+        else if(MeltingStage >= melted && !GameManager.TutorialActive)
+        { 
+            PlayerPrefs.SetInt("MeltingStage", MeltingStage);
         }
      
     }
@@ -169,8 +150,8 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
                 print("stoping QTE Normal");
               _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].gameObject.GetComponent<Torch>().ReduceCount(1);
               lowerMeltingStage();
-
             }
+            CheckMeltingProgress();
             _playerHotbar.gameObject.GetComponent<PlayerInteraction>().holdDuration = 0; 
             quickTimeEvent.StopQTE();
             _playerHotbar.gameObject.GetComponent<PlayerInteraction>().ResetPlayerInteraction();

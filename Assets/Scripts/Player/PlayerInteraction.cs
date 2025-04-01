@@ -113,7 +113,7 @@ public class PlayerInteraction : MonoBehaviour
             {
                 _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().torchActive =
                     true;
-                _frostSystem.isFreezing = false;
+                FrostSystem.isFreezing = false;
             }
             isCurrentlyInteracting = true;
             textLocked = true;
@@ -139,7 +139,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         holdDuration = 0;
         if ( _playerHotbar.GetComponent<Player>().dead) return;
-        _frostSystem.isFreezing = true;
+        FrostSystem.isFreezing = true;
         _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().torchActive = false;
         HeldInteractionAction.action.Reset();
         InteractionBar.gameObject?.SetActive(false);

@@ -9,7 +9,7 @@ using UnityEngine.Serialization;
 public class FrostSystem : MonoBehaviour
 {
     [Header("Frost")]
-    internal bool isFreezing;
+    internal static bool isFreezing;
     [SerializeField]internal float _frost;
     internal bool DeFrosting;
     [SerializeField] internal GameObject DeFrost;
@@ -33,7 +33,7 @@ public class FrostSystem : MonoBehaviour
         iceMelting = FindObjectOfType<IceMelting>();
         _playerHotbar = FindFirstObjectByType<PlayerHotbar>();
         _playerInteraction = FindFirstObjectByType<PlayerInteraction>();
-        isFreezing = true;
+        isFreezing = false;
         
         _frost = 0;
         _frostTexture.SetFloat("_Opacity", -1);
@@ -107,7 +107,12 @@ public class FrostSystem : MonoBehaviour
 
     }
 
-
+    public static void FrostOnOff()
+    {
+        isFreezing = !isFreezing;
+    }
+    
+    
     // Update is called once per frame
     void Update()
     {

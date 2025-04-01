@@ -7,11 +7,12 @@ using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
+    public static bool TutorialActive;
     public static bool firstLoad;
     public static bool loaded;
     private void Start()
     {
-
+        TutorialActive = true;
     }
     private void Update()
     {
