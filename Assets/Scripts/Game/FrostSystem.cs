@@ -107,11 +107,7 @@ public class FrostSystem : MonoBehaviour
 
     }
 
-    public static void FrostOnOff()
-    {
-        isFreezing = !isFreezing;
-    }
-    
+   
     
     // Update is called once per frame
     void Update()

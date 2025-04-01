@@ -12,8 +12,9 @@ public class inGameMenu : MonoBehaviour
     [SerializeField]Slider Sens;
     [SerializeField] CinemachineVirtualCamera _camera;
     [SerializeField]  PlayerMovement player;
-    List<AudioSource> sources;
-    
+    GameObject[]  sfxSources;
+    GameObject[] musicSources;
+
     private bool isOpen;
     private void Awake()
     {
@@ -23,6 +24,9 @@ public class inGameMenu : MonoBehaviour
 //        print(Sens.value);
         Sens.value = _camera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed;
         Sens.value = _camera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed;
+        
+        sfxSources = GameObject.FindGameObjectsWithTag("SFX");
+        musicSources = GameObject.FindGameObjectsWithTag("Music");
         
         
         

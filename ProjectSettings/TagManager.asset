@@ -19,6 +19,8 @@ TagManager:
   - CarpetFloor
   - MarbleFloor
   - Stim
+  - Music
+  - SFX
   layers:
   - Default
   - TransparentFX

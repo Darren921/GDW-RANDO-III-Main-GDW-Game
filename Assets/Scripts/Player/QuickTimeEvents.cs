@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 
 public class QuickTimeEvents : MonoBehaviour
 {
-    [SerializeField] private IceMelting iceMelting;
+     internal IceMelting iceMelting;
     [SerializeField] private Slider _slider;
     [SerializeField] internal InputActionReference QTEInteract;
     private PlayerHotbar _playerHotbar;
@@ -41,6 +41,8 @@ public class QuickTimeEvents : MonoBehaviour
     {
         _playerInteraction =FindFirstObjectByType<PlayerInteraction>();
         _playerHotbar = FindFirstObjectByType<PlayerHotbar>();
+        iceMelting = _playerInteraction.iceMelting;
+
         increasing = true;
         state = State.NotStarted;
         _slider.gameObject.SetActive(false);
@@ -138,6 +140,8 @@ public class QuickTimeEvents : MonoBehaviour
         interacted = false;
         qteResult.text = " ";
     }
+
+   
 
 
     public void StopQTE()

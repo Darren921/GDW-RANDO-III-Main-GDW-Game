@@ -16,8 +16,8 @@ public class PlayerInteraction : MonoBehaviour
     PlayerHotbar _playerHotbar;
     [SerializeField] private Slider InteractionBar;
     [SerializeField] internal InputActionReference HeldInteractionAction;
-    internal float holdDuration;
-    [SerializeField] internal IceMelting iceMelting;
+    internal float holdDuration; 
+    internal IceMelting iceMelting;
     private bool _isResetting;
     QuickTimeEvents quickTimeEvents;
     internal FrostSystem _frostSystem;
@@ -67,6 +67,8 @@ public class PlayerInteraction : MonoBehaviour
         {
             isHeldInteraction = other.GetComponent<IceMelting>().isHeld;
             QTEAble = other.GetComponent<IceMelting>().QTEAble;
+            iceMelting = other.GetComponent<IceMelting>();
+            quickTimeEvents.iceMelting = other.GetComponent<IceMelting>();
 
         }
     }
@@ -139,7 +141,11 @@ public class PlayerInteraction : MonoBehaviour
     {
         holdDuration = 0;
         if ( _playerHotbar.GetComponent<Player>().dead) return;
-        FrostSystem.isFreezing = true;
+        if (!GameManager.TutorialActive)
+        {
+            print("Why");
+            FrostSystem.isFreezing = true;
+        }
         _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().torchActive = false;
         HeldInteractionAction.action.Reset();
         InteractionBar.gameObject?.SetActive(false);
@@ -259,10 +265,10 @@ public class PlayerInteraction : MonoBehaviour
         }
 
         if (other.GetComponent<IceMelting>() != null &&
-            _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].CurrentUses > 0)
+            _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].CurrentUses > 0 && iceMelting.MeltingStage != 0)
         {
             QTEAble = iceMelting.QTEAble;
-            InteractText.text = iceMelting.isMelting
+            InteractText.text = iceMelting.isMelting 
                 ? ""
                 : $"Hold E to Melt {iceMelting.MeltingStage} times to fully melt left";
                   iceMelting.IcemeltingText.text = iceMelting.isMelting && holdDuration > 0  ? $"Melting Ice {iceMelting.MeltingStage} / 5 " : "";
@@ -288,7 +294,10 @@ public class PlayerInteraction : MonoBehaviour
         currentInteractable = null;
         InteractText.text = "";
         InteractionBar.gameObject.SetActive(false);
-        iceMelting.IcemeltingText.text = "";
+        if (iceMelting != null)
+        {
+            iceMelting.IcemeltingText.text = "";
+        }
         holdDuration = 0;
         isHeldInteraction = false;
         isCurrentlyInteracting = false;

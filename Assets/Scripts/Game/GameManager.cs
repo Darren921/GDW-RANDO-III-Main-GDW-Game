@@ -16,9 +16,13 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-       
+       print(TutorialActive);
     }
-   
+
+    public static void TutStop()
+    {
+        TutorialActive = false;
+    }
     public interface IInteractable
     {
         public bool QTEAble{get;set;}
