@@ -56,11 +56,15 @@ public abstract class UserInterface : MonoBehaviour
     {
         if (_slot.item.Id >= 0)
         {
+            _slot.slotDisplay.transform.GetChild(0).GetComponentInChildren<Image>().enabled = true;
+            _slot.slotDisplay.GetComponentInChildren<TextMeshProUGUI>().enabled = true;
             _slot.slotDisplay.transform.GetChild(0).GetComponentInChildren<Image>().sprite = _slot.ItemObj.data.UiDisplay;
             _slot.slotDisplay.GetComponentInChildren<TextMeshProUGUI>().text = _slot.amount == 1 ? ""  : _slot.amount.ToString("n0");
         }
         else
         {
+            _slot.slotDisplay.transform.GetChild(0).GetComponentInChildren<Image>().enabled = false;
+            _slot.slotDisplay.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
             _slot.slotDisplay.transform.GetChild(0).GetComponentInChildren<Image>().sprite = null;
             _slot.slotDisplay.GetComponentInChildren<TextMeshProUGUI>().text = "" ;
 

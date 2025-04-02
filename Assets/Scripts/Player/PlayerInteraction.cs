@@ -128,12 +128,16 @@ public class PlayerInteraction : MonoBehaviour
                 quickTimeEvents.StartQTE();
             }
 
-            if (!iceMelting.AtMeltingPoint &&
-                _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].equipped && !isHeldInteraction)
+            if (iceMelting is not null)
             {
-                _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].gameObject.GetComponent<Torch>()
-                    .torchActive = false;
+                if (!iceMelting.AtMeltingPoint &&
+                    _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].equipped && !isHeldInteraction)
+                {
+                    _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].gameObject.GetComponent<Torch>()
+                        .torchActive = false;
+                }
             }
+            
         }
     }
 

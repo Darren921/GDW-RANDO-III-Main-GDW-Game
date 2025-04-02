@@ -33,10 +33,13 @@ public class PlayerMovement : MonoBehaviour
     private Player _player;
     private PlayerHotbar _playerHotbar;
     private Torch _torch;
-    [SerializeField]private Slider _SprintSlider;
+    [SerializeField]private Image _SprintSlider;
     [SerializeField]Color currentColor; 
     [SerializeField]  private Image _SprintSliderfill;
     [SerializeField]  private Image _SprintSliderBackground;
+
+    private float sprintFill;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -47,7 +50,6 @@ public class PlayerMovement : MonoBehaviour
         _torch = _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>();
         rb = GetComponent<Rigidbody>();
         sprintTime = maxSprintTime;
-        _SprintSlider.maxValue = maxSprintTime;
     }
     //this handles movement 
     public void SetMoveDirection(Vector3 newDir)
@@ -194,6 +196,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         CheckSprint();
-        _SprintSlider.value = sprintTime;
+        sprintFill = sprintTime * 0.1f;
+        _SprintSlider.fillAmount = sprintFill;
     }
 }
