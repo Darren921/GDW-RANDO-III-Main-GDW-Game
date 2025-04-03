@@ -5,6 +5,7 @@ using TMPro;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Serialization;
 
 public class IceMelting : MonoBehaviour,GameManager.IInteractable
@@ -29,6 +30,8 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
    private QuickTimeEvents quickTimeEvents;
 
     [SerializeField] Animator TutorialDoorAnimator;
+    [SerializeField] NavMeshAgent monster;
+    [SerializeField] Transform DoorPos;
 
    void Start()
    {
@@ -142,6 +145,8 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
     public void lowerMeltingStage()
     {
         MeltingStage--;
+        monster.SetDestination(DoorPos.position);
+
     }
 
     public bool QTEAble { get; set; }
