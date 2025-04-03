@@ -17,7 +17,7 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private Slider InteractionBar;
     [SerializeField] internal InputActionReference HeldInteractionAction;
     internal float holdDuration; 
-    internal IceMelting iceMelting;
+   [SerializeField] internal IceMelting iceMelting;
     private bool _isResetting;
     QuickTimeEvents quickTimeEvents;
     internal FrostSystem _frostSystem;
@@ -237,20 +237,22 @@ public class PlayerInteraction : MonoBehaviour
                         break;
 
                     case 2:
-                        if (_playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().torchActive && !iceMelting.AtMeltingPoint && isCurrentlyInteracting)
+                        if (iceMelting != null)
                         {
-                            InteractText.text = "Defrosting Self";
+                            if (_playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().torchActive && !iceMelting.AtMeltingPoint && isCurrentlyInteracting)
+                            {
+                                InteractText.text = "Defrosting Self";
+                            }
+                            else if (_playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().torchActive && !iceMelting.AtMeltingPoint)
+                            {
+                                InteractText.text = "Defrosting Self";
+                            }
+                            else
+                            {
+                                //    print("in display");
+                                InteractText.text = _frostSystem._frost > 50 ? "Hold E to warm up with the Torch " : "";
+                            } 
                         }
-                        else if (_playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().torchActive && !iceMelting.AtMeltingPoint)
-                        {
-                            InteractText.text = "Defrosting Self";
-                        }
-                        else
-                        {
-                            //    print("in display");
-                            InteractText.text = _frostSystem._frost > 50 ? "Hold E to warm up with the Torch " : "";
-                        }
-
                         break;
                     default:
                         if (_playerHotbar.Hotbar.Container.Slots[_playerHotbar.inputtedSlot - 1].item.Id != -1)

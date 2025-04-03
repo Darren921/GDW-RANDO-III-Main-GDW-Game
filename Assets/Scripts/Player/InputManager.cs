@@ -89,7 +89,15 @@ public class InputManager : MonoBehaviour
 
     }
 
-   
+
+    public static void DisableItemSwap()
+    {
+        controls.InGame.ItemSwap.Disable();
+    }
+    public static void EnableItemSwap()
+    {
+        controls.InGame.ItemSwap.Enable();
+    }
 
     public static void EnableInGame()
     {
