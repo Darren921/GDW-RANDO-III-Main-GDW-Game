@@ -144,8 +144,16 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
 
     public void lowerMeltingStage()
     {
-        MeltingStage--;
-        monster.SetDestination(DoorPos.position);
+        if (_DoorHitbox.gameObject.name == "CubeTut")
+        {
+            MeltingStage--;
+        }
+        else
+        {
+            MeltingStage--;
+            monster.SetDestination(DoorPos.position);
+        }
+            
 
     }
 
