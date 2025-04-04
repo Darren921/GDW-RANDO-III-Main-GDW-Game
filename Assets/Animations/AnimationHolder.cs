@@ -20,6 +20,7 @@ public class AnimationHolder : MonoBehaviour
 
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip cutsceneSFX;
+    [SerializeField] GameObject playerBody;
 
     [SerializeField] bool Skip;
     private void Start()
@@ -52,8 +53,9 @@ public class AnimationHolder : MonoBehaviour
         Skip = true;
         animator.Play("MenuTransition");
         PlayerAnim.Play("Move");
-        
-        yield return new WaitForSeconds(36.15f);
+        yield return new WaitForSeconds(3);
+        playerBody.SetActive(false);
+        yield return new WaitForSeconds(33.15f);
         door.GetComponent<Animator>().Play("Slide");
         yield return new WaitForSeconds(4);
         particle.SetActive(true);
