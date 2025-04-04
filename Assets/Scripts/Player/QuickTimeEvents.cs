@@ -11,6 +11,7 @@ using Random = UnityEngine.Random;
 public class QuickTimeEvents : MonoBehaviour
 {
      internal IceMelting iceMelting;
+    
     [SerializeField] private Slider _slider;
     [SerializeField] internal InputActionReference QTEInteract;
     private PlayerHotbar _playerHotbar;
@@ -28,6 +29,8 @@ public class QuickTimeEvents : MonoBehaviour
     [SerializeField] internal TextMeshProUGUI  qteResult;
     internal bool cooldown;
     internal bool interacted;
+    internal float qtevalue;
+
 
     internal enum State
     {
@@ -50,8 +53,10 @@ public class QuickTimeEvents : MonoBehaviour
 
     public void StartQTE()
     {
+        qtevalue = 1;
         if(cooldown)return;
         qteResult.text = "Attempt to save fuel?, left click to attempt";
+        
         //Generate Target Area
         GenerateRange();
         //Activate slider 
@@ -75,6 +80,12 @@ public class QuickTimeEvents : MonoBehaviour
                 _slider.value -= _sliderSpeed * Time.deltaTime;
                 if (_slider.value <= _slider.minValue) increasing = true;
             }
+        }
+
+        if (!_playerInteraction.InteractionBar.gameObject.activeInHierarchy)
+        {
+            cooldown = false;
+            qteResult.text = "";
         }
     }
 
@@ -159,7 +170,7 @@ public class QuickTimeEvents : MonoBehaviour
             qteResult.text =  "Consumed full tank";
             cooldown = true;
         }
-        if (_playerInteraction.holdDuration == 0 )
+        if (_playerInteraction.holdDuration == 0  && _playerInteraction.InteractionBar.value == _playerInteraction.InteractionBar.maxValue  )
         {
             switch (QTESucess)
             {

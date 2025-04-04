@@ -14,7 +14,7 @@ public class PlayerInteraction : MonoBehaviour
     private bool QTEAble;
     [SerializeField] internal TextMeshProUGUI InteractText;
     PlayerHotbar _playerHotbar;
-    [SerializeField] private Slider InteractionBar;
+    [SerializeField] internal Slider InteractionBar;
     [SerializeField] internal InputActionReference HeldInteractionAction;
     internal float holdDuration; 
    [SerializeField] internal IceMelting iceMelting;
