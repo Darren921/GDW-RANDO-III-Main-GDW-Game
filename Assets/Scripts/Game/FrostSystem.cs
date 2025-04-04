@@ -112,7 +112,7 @@ public class FrostSystem : MonoBehaviour
     {
         if (DeFrosting && !GameManager.TutorialActive)
         {
-            Mathf.Lerp(_frost,0, 5 * Time.fixedDeltaTime);
+            _frost = 0;
             _curOpacity = Mathf.Lerp(_curOpacity, -1, 5 * Time.fixedDeltaTime);
         }
         
