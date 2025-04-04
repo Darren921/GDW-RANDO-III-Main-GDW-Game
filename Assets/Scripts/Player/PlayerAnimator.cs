@@ -9,7 +9,7 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField] Animator PodDoorAnim;
     [SerializeField] Animator Camera;
     [SerializeField] Player player;
-    
+    [SerializeField] PlayerMovement playerMovement;
     
     
 
@@ -18,6 +18,7 @@ public class PlayerAnimator : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         player = GetComponent<Player>();
+        playerMovement = GetComponent<PlayerMovement>();
         animator.enabled = true;
         StartCoroutine(GetOutPod());
 
@@ -25,7 +26,7 @@ public class PlayerAnimator : MonoBehaviour
 
     IEnumerator GetOutPod()
     {
-        
+        playerMovement.DisableInput();
         player.dead = true;
         animator.Play("GetOutOfPod");
         Camera.Play("Wake up");
@@ -34,6 +35,7 @@ public class PlayerAnimator : MonoBehaviour
         yield return new WaitForSeconds(10);
         player.dead = false;
         animator.enabled=false;
+        playerMovement.EnableInput();
         
     }
 }

@@ -32,6 +32,9 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
     [SerializeField] Animator TutorialDoorAnimator;
     [SerializeField] NavMeshAgent monster;
     [SerializeField] Transform DoorPos;
+    [SerializeField] Animator IceBlock;
+    [SerializeField] Animator ElevatorDoor;
+    [SerializeField] GameObject iceCollider;
 
    void Start()
    {
@@ -110,9 +113,15 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
              StartCoroutine(Delay());
             print(_DoorHitbox.name);
             StartCoroutine(CutSceneDelay());
+            
             if (_DoorHitbox.gameObject.name == "CubeTut")
             {
                 StartCoroutine(TutDoorOpen());
+            }
+            else
+            {
+                ElevatorDoor.SetBool("OpenDoor",true);
+                iceCollider.SetActive(false);
             }
             
         } 
@@ -125,13 +134,14 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
 
     private IEnumerator CutSceneDelay()
     {
-        yield return new WaitForSeconds(10);
+        
         exitCollider.enabled = true;
+        yield return null;  
     }
 
     private IEnumerator Delay()
     {
-        yield return new WaitForSeconds(10);
+        yield return null;
         _DoorHitbox.SetActive(false);
     }
 
@@ -205,9 +215,12 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
         gameObject.GetComponent<BoxCollider>().enabled = false;
         gameObject.GetComponent<Renderer>().enabled = false;
         TutorialDoorAnimator.Play("Tutorial Door First open");
+        iceCollider.SetActive(false);
         yield return new WaitForSeconds(4);
+
         FrostSystem.isFreezing = true;
         yield return null;
         GameManager.TutStop();
+
     }
 }

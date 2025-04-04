@@ -65,9 +65,11 @@ public class Player : MonoBehaviour
     private PlayerHotbar _playerHotbar;
     private PlayerMovement _playerMovement;
     [SerializeField] GameObject UI;
+    bool GameEnd;
 
     private void Awake()
     {
+        GameEnd = false;
         _menu = FindObjectOfType<inGameMenu>();
         _playerHotbar = GetComponent<PlayerHotbar>();
         _playerMovement = GetComponent<PlayerMovement>(); 
@@ -132,18 +134,28 @@ public class Player : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Exit")) return;
-        InputManager.DisableInGame();
-        SceneManager.LoadScene("DeathScreen");
-        Cursor.lockState = CursorLockMode.None;
-        isDead = false;
-       _playerHotbar.Hotbar.Container.Clear();
-        GameManager.firstLoad = false;
-        if (footstepCoroutine != null)
+        if (GameEnd == false)
         {
-            StopCoroutine(footstepCoroutine);
+
+
+            if (other.gameObject.tag == "Exit")
+            {
+                GameEnd = true;
+                gameObject.GetComponent<PlayerMovement>().DisableInput();
+                InputManager.DisableInGame();
+
+                Cursor.lockState = CursorLockMode.None;
+                isDead = false;
+                _playerHotbar.Hotbar.Container.Clear();
+                GameManager.firstLoad = false;
+
+                AudioManager.Instance.StopSFX(currentFootstep);
+
+
+                _playerHotbar.curEquipmentBase.gameObject.SetActive(false);
+                StartCoroutine(FinishGame());
+            }
         }
-        AudioManager.Instance.StopSFX(currentFootstep);
     }
     
     private void OnCollisionEnter(Collision collision)
@@ -162,9 +174,10 @@ public class Player : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (!other.CompareTag("hidingSpot")) return;
-        inhidingRange = true;
-        HidingCam = other.gameObject.GetComponent<CinemachineVirtualCamera>();
+        //if (!other.CompareTag("hidingSpot")) return;
+        //inhidingRange = true;
+        //HidingCam = other.gameObject.GetComponent<CinemachineVirtualCamera>();
+        
     }
 
     private void OnTriggerExit(Collider other)
@@ -287,6 +300,17 @@ public class Player : MonoBehaviour
         AudioManager.Instance.StopMusic("Theme");
         AudioManager.Instance.StopMusic("Spot Theme");
         Cursor.lockState = CursorLockMode.None;
+        SceneManager.LoadScene("DeathScreen");
+    }
+    IEnumerator FinishGame()
+    {
+        
+        gameObject.GetComponent<PlayerMovement>().DisableInput();
+        InputManager.DisableInGame();
+        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        gameObject.GetComponent<Animator>().Play("Elevator");
+        yield return new WaitForSeconds(2.5f);
+        
         SceneManager.LoadScene("DeathScreen");
     }
 
