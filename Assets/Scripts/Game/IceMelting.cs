@@ -38,10 +38,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
     [SerializeField] GameObject Monster;
    void Start()
    {
-       if (GameManager.loaded && PlayerPrefs.HasKey("MeltingStage"))
-       {
-           MeltingStage = PlayerPrefs.GetInt("MeltingStage");
-       }
+       
        quickTimeEvent = FindObjectOfType<QuickTimeEvents>();
        isHeld = true;
        QTEAble = true;
