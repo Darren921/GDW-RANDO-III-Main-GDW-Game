@@ -83,7 +83,7 @@ public class MonsterAIPathfinding : MonoBehaviour
             }
 
         }
-        if (agent.speed == 14)
+        if (agent.speed == 18)
         {
             if (walkValue > 0 )
             {

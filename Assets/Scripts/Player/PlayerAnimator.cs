@@ -10,7 +10,7 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField] Animator Camera;
     [SerializeField] Player player;
     [SerializeField] PlayerMovement playerMovement;
-    
+    [SerializeField] bool SKIP;
     
 
 
@@ -21,11 +21,20 @@ public class PlayerAnimator : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         animator.enabled = true;
         StartCoroutine(GetOutPod());
-
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (SKIP)
+            {
+                SKIP = false;
+                animator.SetBool("",false);
+                Camera.SetBool("", false);
+            }
+        }
     }
 
     IEnumerator GetOutPod()
     {
+        SKIP = true;
         playerMovement.DisableInput();
         player.dead = true;
         animator.Play("GetOutOfPod");

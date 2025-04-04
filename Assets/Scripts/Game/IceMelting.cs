@@ -141,7 +141,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
 
     private IEnumerator Delay()
     {
-        yield return null;
+        yield return new WaitForSeconds(0.2f);
         _DoorHitbox.SetActive(false);
     }
 
