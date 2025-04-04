@@ -21,7 +21,13 @@ public class SelfInteractionManager : MonoBehaviour, GameManager.IInteractable
     // Update is called once per frame
     void Update()
     {
-        
+        if (frostSystem.DeFrosting == true)
+        {
+            if (frostSystem._curOpacity < -0.98)
+            {
+                frostSystem.DeFrosting = false;
+            }
+        }
     }
 
     public bool QTEAble { get; set; }

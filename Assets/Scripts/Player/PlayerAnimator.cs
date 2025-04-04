@@ -11,8 +11,8 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField] Player player;
     [SerializeField] PlayerMovement playerMovement;
     [SerializeField] bool SKIP;
-    
-
+    [SerializeField] GameObject skip;
+    [SerializeField] Animator panel;
 
     private void Start()
     {
@@ -21,13 +21,25 @@ public class PlayerAnimator : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         animator.enabled = true;
         StartCoroutine(GetOutPod());
+        skip.SetActive(true);
+    }
+    private void Update()
+    {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (SKIP)
             {
                 SKIP = false;
-                animator.SetBool("",false);
-                Camera.SetBool("", false);
+                animator.SetBool("skip", true);
+                Camera.SetBool("skip", true);
+                player.dead = false;
+                animator.enabled = false;
+                playerMovement.EnableInput();
+                StopCoroutine(GetOutPod());
+
+                PodDoorAnim.Play("Door Close");
+                skip.SetActive(false);
+
             }
         }
     }
@@ -35,10 +47,12 @@ public class PlayerAnimator : MonoBehaviour
     IEnumerator GetOutPod()
     {
         SKIP = true;
+        
         playerMovement.DisableInput();
         player.dead = true;
         animator.Play("GetOutOfPod");
         Camera.Play("Wake up");
+        panel.Play("Wake");
         yield return new WaitForSeconds(14);
         PodDoorAnim.Play("Door Close");
         yield return new WaitForSeconds(10);

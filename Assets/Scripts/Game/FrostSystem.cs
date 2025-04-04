@@ -16,7 +16,7 @@ public class FrostSystem : MonoBehaviour
     [SerializeField] private float maxFrost;
     [SerializeField] private Material _frostTexture;
     private IceMelting iceMelting;
-    private float _curOpacity;
+    public float _curOpacity;
 
     [Header("References")]
     [SerializeField] internal Player _player;
@@ -110,7 +110,7 @@ public class FrostSystem : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (DeFrosting && !GameManager.TutorialActive)
+        if (DeFrosting )
         {
             _frost = 0;
             _curOpacity = Mathf.Lerp(_curOpacity, -1, 5 * Time.fixedDeltaTime);

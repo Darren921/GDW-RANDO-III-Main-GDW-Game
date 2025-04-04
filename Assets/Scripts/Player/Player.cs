@@ -65,6 +65,7 @@ public class Player : MonoBehaviour
     private PlayerHotbar _playerHotbar;
     private PlayerMovement _playerMovement;
     [SerializeField] GameObject UI;
+    [SerializeField] Animator ElevatorAnim;
     bool GameEnd;
 
     private void Awake()
@@ -141,8 +142,8 @@ public class Player : MonoBehaviour
             if (other.gameObject.tag == "Exit")
             {
                 GameEnd = true;
-                gameObject.GetComponent<PlayerMovement>().DisableInput();
-                InputManager.DisableInGame();
+                //gameObject.GetComponent<PlayerMovement>().DisableInput();
+                //InputManager.DisableInGame();
 
                 Cursor.lockState = CursorLockMode.None;
                 isDead = false;
@@ -304,14 +305,14 @@ public class Player : MonoBehaviour
     }
     IEnumerator FinishGame()
     {
+
+
+
+        ElevatorAnim.Play("Close");
         
-        gameObject.GetComponent<PlayerMovement>().DisableInput();
-        InputManager.DisableInGame();
-        gameObject.GetComponent<Rigidbody>().maxLinearVelocity = 0;
-        dead = true;
-        gameObject.GetComponent<Animator>().Play("Elevator");
-        yield return new WaitForSeconds(2.5f);
         
+        yield return new WaitForSeconds(3);
+        Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene("DeathScreen");
     }
 

@@ -35,7 +35,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
     [SerializeField] Animator IceBlock;
     [SerializeField] Animator ElevatorDoor;
     [SerializeField] GameObject iceCollider;
-
+    [SerializeField] GameObject Monster;
    void Start()
    {
        if (GameManager.loaded && PlayerPrefs.HasKey("MeltingStage"))
@@ -117,6 +117,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
             if (_DoorHitbox.gameObject.name == "CubeTut")
             {
                 StartCoroutine(TutDoorOpen());
+                Monster.SetActive(true);
             }
             else
             {
