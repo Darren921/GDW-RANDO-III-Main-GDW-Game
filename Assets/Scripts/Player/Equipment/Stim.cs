@@ -59,5 +59,5 @@ public class Stim : ConsumableEquipment
     protected override void ActivateEffect()
     {
         _playerMovement.StartCoroutine(_playerMovement.SetStimSpeed());
-    }
+    } 
 }
