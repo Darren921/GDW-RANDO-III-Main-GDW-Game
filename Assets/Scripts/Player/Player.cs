@@ -307,7 +307,8 @@ public class Player : MonoBehaviour
         
         gameObject.GetComponent<PlayerMovement>().DisableInput();
         InputManager.DisableInGame();
-        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        gameObject.GetComponent<Rigidbody>().maxLinearVelocity = 0;
+        dead = true;
         gameObject.GetComponent<Animator>().Play("Elevator");
         yield return new WaitForSeconds(2.5f);
         
