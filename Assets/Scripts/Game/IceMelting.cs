@@ -212,6 +212,7 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
     IEnumerator TutDoorOpen()
     {
         GameManager.TutStop();
+        _playerInteraction.iceMelting = GameObject.Find("MainIce").GetComponent<IceMelting>();
         gameObject.GetComponent<BoxCollider>().enabled = false;
         gameObject.GetComponent<Renderer>().enabled = false;
         TutorialDoorAnimator.Play("Tutorial Door First open");
