@@ -63,7 +63,7 @@ public class Torch : LightEquipment
         {
             print("Held Interact Self");
             
-            frostSystem.reduceFrost();
+            StartCoroutine(frostSystem.reduceFrost());
             _playerHotbar._equipmentBases[_playerHotbar.returnTorchLocation()].GetComponent<Torch>().ReduceCount(0.5f);
             _playerHotbar.gameObject.GetComponent<PlayerInteraction>().ResetPlayerInteraction();
         }

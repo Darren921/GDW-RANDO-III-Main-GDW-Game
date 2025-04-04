@@ -21,8 +21,8 @@ public class GameManager : MonoBehaviour
 
     public static void TutStop()
     {
-
         TutorialActive = false;
+        FrostSystem.isFreezing = true;
     }
     public interface IInteractable
     {

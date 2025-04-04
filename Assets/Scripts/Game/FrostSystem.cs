@@ -9,7 +9,7 @@ using UnityEngine.Serialization;
 public class FrostSystem : MonoBehaviour
 {
     [Header("Frost")]
-    internal static bool isFreezing;
+    public static bool isFreezing;
     [SerializeField]internal float _frost;
     internal bool DeFrosting;
     [SerializeField] internal GameObject DeFrost;
@@ -107,8 +107,17 @@ public class FrostSystem : MonoBehaviour
 
     }
 
-   
-    
+
+    void FixedUpdate()
+    {
+        if (!isFreezing && !GameManager.TutorialActive)
+        {
+            Mathf.Lerp(_frost,0, 5 * Time.fixedDeltaTime);
+            _curOpacity = Mathf.Lerp(_curOpacity, -1, 5 * Time.fixedDeltaTime);
+        }
+        _frost -= _frost;
+        _curOpacity = -1;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -136,10 +145,13 @@ public class FrostSystem : MonoBehaviour
 
     }
 
-    public void reduceFrost()
+    public IEnumerator reduceFrost()
     {
-        _frost -= _frost;
-        _curOpacity = -1;
+        isFreezing = false;
+        
+        yield return new WaitUntil (() => _frost == 0);
+        isFreezing = true;
+        
     }
     
     

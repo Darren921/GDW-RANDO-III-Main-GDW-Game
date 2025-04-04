@@ -211,16 +211,14 @@ public class IceMelting : MonoBehaviour,GameManager.IInteractable
     }
     IEnumerator TutDoorOpen()
     {
-        
+        GameManager.TutStop();
         gameObject.GetComponent<BoxCollider>().enabled = false;
         gameObject.GetComponent<Renderer>().enabled = false;
         TutorialDoorAnimator.Play("Tutorial Door First open");
         iceCollider.SetActive(false);
         yield return new WaitForSeconds(4);
-
         FrostSystem.isFreezing = true;
         yield return null;
-        GameManager.TutStop();
 
     }
 }
