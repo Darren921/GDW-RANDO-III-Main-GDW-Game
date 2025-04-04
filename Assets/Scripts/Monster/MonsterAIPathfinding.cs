@@ -97,7 +97,7 @@ public class MonsterAIPathfinding : MonoBehaviour
         }
         if (Spotted)
         {
-            agent.speed = 14;
+            agent.speed = 18;
         }
         else
         {
