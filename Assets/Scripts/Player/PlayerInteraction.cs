@@ -277,7 +277,7 @@ public class PlayerInteraction : MonoBehaviour
             InteractText.text = iceMelting.isMelting 
                 ? ""
                 : $"Hold E to Melt {iceMelting.MeltingStage} times to fully melt left";
-                  iceMelting.IcemeltingText.text = iceMelting.isMelting && holdDuration > 0  ? $"Melting Ice {iceMelting.MeltingStage} / 5 " : "";
+                  iceMelting.IcemeltingText.text = iceMelting.isMelting && holdDuration > 0  ? $"Melting Ice {iceMelting.MeltingStage} / 8 " : "";
         }
 
         if (other.GetComponent<backGroundInteractable>() != null)

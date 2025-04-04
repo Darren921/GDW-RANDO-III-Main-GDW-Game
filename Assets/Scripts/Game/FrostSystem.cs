@@ -149,7 +149,7 @@ public class FrostSystem : MonoBehaviour
     {
         isFreezing = false;
         DeFrosting = true;
-        yield return new WaitUntil (() => _frost == 0);
+        yield return new WaitForSeconds(2);
         isFreezing = true;
         DeFrosting = false;
         
