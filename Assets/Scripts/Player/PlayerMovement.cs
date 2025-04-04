@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     //Sprinting
     [Header("Sprinting")]
     Vector3 previousPos;
-
+    [SerializeField] int FOVSpeed;
     internal bool isSprinting;
     [SerializeField] float sprintTime;
     private bool onCoolDownFull;
@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        FOVSpeed = 10;
         currentColor = _SprintSliderfill.color;
         _player = GetComponent<Player>();
         CamTransform = Camera.main.transform;
@@ -98,6 +99,16 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = isSprinting && !onCoolDownFull && !onCoolDownNormal ? new Vector3(smoothedMoveDir.x * (moveSpeed * sprintSpeed) , -3, smoothedMoveDir.z * (moveSpeed * sprintSpeed)) : new Vector3(smoothedMoveDir.x * moveSpeed, -3, smoothedMoveDir.z * moveSpeed);
             }
         }
+
+        if (isSprinting)
+        {
+            virtualCamera.m_Lens.FieldOfView = Mathf.Lerp(virtualCamera.m_Lens.FieldOfView, 45f, Time.deltaTime * FOVSpeed);
+        }
+        else
+        {
+            virtualCamera.m_Lens.FieldOfView = Mathf.Lerp(virtualCamera.m_Lens.FieldOfView, 40f, Time.deltaTime * FOVSpeed);
+        }
+
     }
     
     public void startSprint()
@@ -140,7 +151,6 @@ public class PlayerMovement : MonoBehaviour
         
         if (isSprinting && !onCoolDownFull && !onCoolDownNormal && !_torch.torchActive)
         {
-            virtualCamera.m_Lens.FieldOfView = 45;
 //            print("Decreasing sprint");
             sprintTime -= Time.deltaTime;
             if (sprintTime <= 0)
@@ -166,7 +176,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!onCoolDownFull)
         {
-            virtualCamera.m_Lens.FieldOfView = 40;
 
             onCoolDownNormal = true;
   //          print("cooldown normal sprint");
@@ -179,8 +188,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!onCoolDownNormal)
         {
-            virtualCamera.m_Lens.FieldOfView = 40;
-
+            
             onCoolDownFull = true;
   //          print("cooldown full sprint");
 
