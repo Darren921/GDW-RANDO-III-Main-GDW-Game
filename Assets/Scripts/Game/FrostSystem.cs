@@ -110,17 +110,17 @@ public class FrostSystem : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!isFreezing && !GameManager.TutorialActive)
+        if (DeFrosting && !GameManager.TutorialActive)
         {
             Mathf.Lerp(_frost,0, 5 * Time.fixedDeltaTime);
             _curOpacity = Mathf.Lerp(_curOpacity, -1, 5 * Time.fixedDeltaTime);
         }
-        _frost -= _frost;
-        _curOpacity = -1;
+        
     }
     // Update is called once per frame
     void Update()
     {
+        print(isFreezing);
         if (_player is null) return;
         if (!isFreezing) return;
         if (!_player.dead)
@@ -148,9 +148,10 @@ public class FrostSystem : MonoBehaviour
     public IEnumerator reduceFrost()
     {
         isFreezing = false;
-        
+        DeFrosting = true;
         yield return new WaitUntil (() => _frost == 0);
         isFreezing = true;
+        DeFrosting = false;
         
     }
     
