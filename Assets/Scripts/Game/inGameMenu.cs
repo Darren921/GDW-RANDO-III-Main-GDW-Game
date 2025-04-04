@@ -10,28 +10,51 @@ public class inGameMenu : MonoBehaviour
 {
     GameObject menu;
     [SerializeField]Slider Sens;
+    [SerializeField]Slider Music;
+    [SerializeField]Slider SFX;
+   
+    public static bool MusicState;
+    public static bool SFXState;
     [SerializeField] CinemachineVirtualCamera _camera;
     [SerializeField]  PlayerMovement player;
-    GameObject[]  sfxSources;
-    GameObject[] musicSources;
+    List<AudioSource> sfxSources = new List<AudioSource>();
+    List<AudioSource> musicSources = new List<AudioSource>();
 
     private bool isOpen;
     private void Awake()
     {
+        MusicState = true;
+        SFXState = true;
         menu = gameObject;
         Sens.minValue = 0.09f;
         Sens.maxValue = 0.1f;
+        Music.maxValue = 1;
+        SFX.maxValue = 1;
+        
+        var allSourcesSFX = GameObject.FindGameObjectsWithTag("SFX");
+        for (var i = 0; i < allSourcesSFX.Length; i++)
+        {
+            sfxSources.Add(allSourcesSFX[i].GetComponent<AudioSource>());
+        }
+        var allSourcesMusic = GameObject.FindGameObjectsWithTag("Music");
+        for (var i = 0; i < allSourcesMusic.Length; i++)
+        {
+            musicSources.Add(allSourcesMusic[i].GetComponent<AudioSource>());
+        }
+        foreach (var sfxSource in sfxSources)
+        {
+            sfxSource.volume = SFX.value;
+        }
+        foreach (var musicSource in musicSources)
+        {
+            musicSource.volume = Music.value;
+        }
+        
 //        print(Sens.value);
         Sens.value = _camera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed;
         Sens.value = _camera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed;
         
-        sfxSources = GameObject.FindGameObjectsWithTag("SFX");
-        musicSources = GameObject.FindGameObjectsWithTag("Music");
-        
-        
-        
-        
-        
+      
     }
 
     void Start()
@@ -44,6 +67,20 @@ public class inGameMenu : MonoBehaviour
     {
         _camera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = Sens.value;
         _camera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = Sens.value;
+    }
+    public void ModifySFX()
+    {
+        foreach (var sfxSource in sfxSources)
+        {
+            sfxSource.volume = SFX.value;
+        }
+    }
+    public void ModifyMusic()
+    {
+        foreach (var musicSource in musicSources)
+        {
+            musicSource.volume = Music.value;
+        }
     }
     
     public void OpenMenu()
